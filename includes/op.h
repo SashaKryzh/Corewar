@@ -75,7 +75,7 @@ typedef struct					s_op
 	char		*name;
 	uint8_t		code;
 	uint8_t		args_num;
-	u_int8_t	is_args_types;
+	uint8_t		is_args_types;
 	uint8_t		args_types[3];
 	uint8_t		t_dir_size;
 }								t_op;
