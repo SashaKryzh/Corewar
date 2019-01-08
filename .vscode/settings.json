@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"op.h": "c"
+		"op.h": "c",
+		"libft.h": "c",
+		"corewar.h": "c"
 	}
 }
