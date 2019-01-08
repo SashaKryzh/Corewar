@@ -17,9 +17,15 @@ int		read_champ(char *file, unsigned char *champ)
 {
 	int		fd;
 	int		ret;
+	int		max_read;
+	int		min_read;
 
+	min_read = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4;
+	max_read = min_read + CHAMP_MAX_SIZE;
 	fd = open(file, O_RDONLY);
-	ret = read(fd, champ, 5000);
+	ret = read(fd, champ, max_read + 1);
+	if (ret < min_read || ret > max_read)
+		ft_printf("SIZE ERROR\n");
 	close(fd);
 	return (ret);
 }
@@ -70,7 +76,7 @@ void	parse_players(t_player *champs, int ac, char *av[])
 		get_name(&champs[j], &champ[4]);
 		get_size(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4]);
 		get_comment(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4 + 4]);
-		get_code(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4], ret);
+		get_code(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4], ret, champ);
 		i++;
 		j++;
 	}

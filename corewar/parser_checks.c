@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-void	check_null(uint8_t	*champ)
+void	check_null(uint8_t *champ)
 {
 	int i;
 

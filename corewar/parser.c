@@ -15,7 +15,7 @@
 
 void	get_name(t_player *champs, uint8_t *champ)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
 	while (i < PROG_NAME_LENGTH && champ[i])
@@ -31,6 +31,8 @@ void	get_size(t_player *champs, uint8_t *champ)
 {
 	ft_memcpy(&champs->code_size, champ, 4);
 	ft_memrev(&champs->code_size, 4);
+	if (champs->code_size < 0 || champs->code_size > CHAMP_MAX_SIZE)
+		ft_printf("CODE SIZE ERROR\n");
 }
 
 void	get_comment(t_player *champs, uint8_t *champ)
@@ -47,7 +49,7 @@ void	get_comment(t_player *champs, uint8_t *champ)
 	check_null(&champ[COMMENT_LENGTH]);
 }
 
-void	get_code(t_player *champs, uint8_t *champ, int ret)
+void	get_code(t_player *champs, uint8_t *champ, int ret, uint8_t *start)
 {
 	int i;
 
@@ -58,4 +60,6 @@ void	get_code(t_player *champs, uint8_t *champ, int ret)
 		champs->code[i] = champ[i];
 		i++;
 	}
+	if (&champ[i] - start != ret)
+		ft_printf("CODE SIZE AND CODE HAVE DIFF SIZES\n");
 }

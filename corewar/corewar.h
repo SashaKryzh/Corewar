@@ -31,18 +31,18 @@ typedef struct	s_player
 **	Parser
 */
 
-void	get_name(t_player *champs, uint8_t *champ);
-void	get_size(t_player *champs, uint8_t *champ);
-void	get_comment(t_player *champs, uint8_t *champ);
-void	get_code(t_player *champs, uint8_t *champ, int ret);
+void			get_name(t_player *champs, uint8_t *champ);
+void			get_size(t_player *champs, uint8_t *champ);
+void			get_comment(t_player *champs, uint8_t *champ);
+void			get_code(t_player *champs, uint8_t *champ, int ret, uint8_t *start);
 
-void	check_null(uint8_t	*champ);
-void	check_magic(uint8_t *champ);
+void			check_null(uint8_t	*champ);
+void			check_magic(uint8_t *champ);
 
 /*
 **	Tests
 */
 
-void	print_players(t_player *champs);
+void			print_players(t_player *champs);
 
 #endif
