@@ -16,6 +16,10 @@ FLAGS = -Wall -Werror -Wextra
 CC = gcc
 
 SRCS = main.c \
+init_func.c \
+parser.c \
+parser_checks \
+tests.c
 
 OBJS_DIR = ./objs
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
