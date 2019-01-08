@@ -24,7 +24,7 @@ typedef struct	s_player
 	char		name[PROG_NAME_LENGTH + 1];
 	char		comment[COMMENT_LENGTH + 1];
 	int			code_size;
-	char		*code;
+	uint8_t		*code;
 }				t_player;
 
 /*
@@ -44,5 +44,6 @@ void			check_magic(uint8_t *champ);
 */
 
 void			print_players(t_player *champs);
+void			putfile(int ret, uint8_t *file);
 
 #endif

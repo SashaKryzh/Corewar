@@ -54,7 +54,7 @@ void	get_code(t_player *champs, uint8_t *champ, int ret, uint8_t *start)
 	int i;
 
 	i = 0;
-	champs->code = ft_memalloc(champs->code_size);
+	champs->code = (uint8_t *)ft_memalloc(sizeof(uint8_t) * champs->code_size);
 	while (i < champs->code_size && i < ret)
 	{
 		champs->code[i] = champ[i];
