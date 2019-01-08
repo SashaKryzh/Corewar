@@ -62,7 +62,7 @@ int		free_id(t_player *champs)
 	return (-1);
 }
 
-void	set_players_id(t_player *champs)
+int		set_players_id(t_player *champs)
 {
 	int i;
 
@@ -85,4 +85,5 @@ void	set_players_id(t_player *champs)
 			exit_func("Invalid id");
 		i++;
 	}
+	return (i);
 }

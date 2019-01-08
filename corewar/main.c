@@ -82,7 +82,7 @@ int		check_flag(int ac, char *av[], int *i)
 	return (MAX_PLAYERS + 1);
 }
 
-void	parse_players(t_player *champs, int ac, char *av[])
+int		parse_players(t_player *champs, int ac, char *av[])
 {
 	uint8_t			champ[5000];
 	int				ret;
@@ -106,14 +106,17 @@ void	parse_players(t_player *champs, int ac, char *av[])
 			exit_func("Too many players");
 	}
 	champs[j].id = -1;
-	set_players_id(champs);
+	return (set_players_id(champs));
 }
 
 int		main(int ac, char *av[])
 {
 	t_player		champs[MAX_PLAYERS + 1];
+	int				cnt_champs;
 
-	parse_players(champs, ac, av);
+	cnt_champs = parse_players(champs, ac, av);
 	print_players(champs); //
+	ft_printf("\nCNT: %d\n", cnt_champs);
+	// init_battlefield(champs, cnt_champs);
 	return (0);
 }
