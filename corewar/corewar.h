@@ -39,6 +39,14 @@ void			get_code(t_player *champs, uint8_t *champ, int ret, uint8_t *start);
 void			check_null(uint8_t	*champ);
 void			check_magic(uint8_t *champ);
 
+void			set_players_id(t_player *champs);
+
+/*
+**	Utils
+*/
+
+void			exit_func(char *msg);
+
 /*
 **	Tests
 */

@@ -19,6 +19,7 @@ SRCS = main.c \
 init_func.c \
 parser.c \
 parser_checks.c \
+players_id.c \
 tests.c
 
 OBJS_DIR = ./objs

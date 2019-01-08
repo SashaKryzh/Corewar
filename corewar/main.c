@@ -13,6 +13,12 @@
 #include "libft.h"
 #include "corewar.h"
 
+void	exit_func(char *msg)
+{
+	ft_printf("[Error]: %s\n", msg);
+	exit(0);
+}
+
 int		read_champ(char *file, unsigned char *champ)
 {
 	int		fd;
@@ -22,7 +28,8 @@ int		read_champ(char *file, unsigned char *champ)
 
 	min_read = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4;
 	max_read = min_read + CHAMP_MAX_SIZE;
-	fd = open(file, O_RDONLY);
+	if ((fd = open(file, O_RDONLY)) < 0)
+		exit_func("Invalid file");
 	ret = read(fd, champ, max_read + 1);
 	if (ret < min_read || ret > max_read)
 		ft_printf("SIZE ERROR\n");
@@ -66,97 +73,13 @@ int		check_flag(int ac, char *av[], int *i)
 	if (ft_strequ(av[*i], "-n"))
 	{
 		if (*i + 2 >= ac)
-		{
-			ft_printf("n flag error\n");
-			exit(0);
-		}
+			exit_func("-n error");
 		*i += 2;
 		if ((id = ft_atoi(av[*i - 1])) < 1 || id > MAX_PLAYERS)
-		{
-			ft_printf("n < 1\n");
-			exit(0);
-		}
+			exit_func("Unreal id");
 		return (id);
 	}
 	return (MAX_PLAYERS + 1);
-}
-
-void	sort_players_id(t_player *champs)
-{
-	t_player	tmp;
-	int			i;
-	int			j;
-
-	i = 0;
-	while (champs[i + 1].id != -1)
-	{
-		j = 0;
-		while (champs[j + 1]. id != -1)
-		{
-			if (champs[j].id > champs[j + 1].id)
-			{
-				tmp = champs[j];
-				champs[j] = champs[j + 1];
-				champs[j + 1] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-int 	free_id(t_player *champs)
-{
-	int id;
-	int	j;
-	int	ret;
-
-	id = 1;
-	while (id != MAX_PLAYERS + 1)
-	{
-		j = 0;
-		ret = 1;
-		while (champs[j].id != -1)
-		{
-			if (champs[j].id == id)
-				ret = 0;
-			j++;
-		}
-		if (ret)
-			return (id);
-		id++;
-	}
-	ft_printf("bad id\n");
-	exit(0);
-}
-
-void	set_players_id(t_player *champs)
-{
-	int i;
-
-	i = 0;
-	if (champs[0].id == -1)
-	{
-		ft_printf("no players\n");
-		exit(0);
-	}
-	while (champs[i].id != -1)
-	{
-		if (champs[i].id == MAX_PLAYERS + 1)
-			champs[i].id = free_id(champs);
-		i++;
-	}
-	sort_players_id(champs);
-	i = 0;
-	while (champs[i + 1].id != -1)
-	{
-		if (champs[i].id == champs[i + 1].id)
-		{
-			ft_printf("same id\n");
-			exit(0);
-		}
-		i++;
-	}
 }
 
 void	parse_players(t_player *champs, int ac, char *av[])
@@ -180,10 +103,7 @@ void	parse_players(t_player *champs, int ac, char *av[])
 		get_code(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4], ret, champ);
 		i++;
 		if (++j == MAX_PLAYERS)
-		{
-			ft_printf("Too many players\n");
-			exit(0);
-		}
+			exit_func("Too many players");
 	}
 	champs[j].id = -1;
 	set_players_id(champs);
