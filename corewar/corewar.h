@@ -42,7 +42,9 @@ typedef struct	s_carriage
 	int					remain_cycles;
 	int					position;
 	int					to_jump;
-	uint8_t				regs[REG_NUMBER];
+	uint32_t			regs[REG_NUMBER];
+
+	uint8_t				op;
 	struct s_carriage	*next;
 }				t_carriage;
 
@@ -78,5 +80,6 @@ uint8_t			*init_battlefield(t_player *champs);
 void			print_players(t_player *champs);
 void			print_carriages(t_carriage *carriage);
 void			putfile_hex(int ret, uint8_t *file, int space, int newline);
+void			putbyte_hex(uint8_t n);
 
 #endif

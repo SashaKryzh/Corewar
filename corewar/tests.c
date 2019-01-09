@@ -55,7 +55,7 @@ void	print_carriages(t_carriage *carriage)
 {
 	while (carriage)
 	{
-		ft_printf("id: %d, pos: %d\n", carriage->id, carriage->position);
+		ft_printf("id: %d, pos: %d, champ: %d\n", carriage->id, carriage->position, carriage->regs[0]);
 		carriage = carriage->next;
 	}
 }
