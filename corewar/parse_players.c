@@ -59,9 +59,11 @@ int		parse_players(t_player *champs, int ac, char *av[])
 	int				j;
 
 	i = 1;
-	j = 0;
+	j = -1;
 	while (i < ac)
 	{
+		if (++j == MAX_PLAYERS)
+			exit_func("Too many players");
 		champs[j].id = check_flag(ac, av, &i);
 		ret = read_champ(av[i], champ);
 		// putfile_hex(ret, champ);
@@ -71,9 +73,7 @@ int		parse_players(t_player *champs, int ac, char *av[])
 		get_comment(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4 + 4]);
 		get_code(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4], ret, champ);
 		i++;
-		if (++j == MAX_PLAYERS)
-			exit_func("Too many players");
 	}
-	champs[j].id = -1;
+	champs[j + 1].id = -1;
 	return (set_players_id(champs));
 }

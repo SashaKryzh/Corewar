@@ -32,11 +32,13 @@ int			main(int ac, char *av[])
 	uint8_t			*arena;
 
 	g_last_alive = parse_players(champs, ac, av);
-	print_players(champs); //
-	ft_printf("\nCNT: %d\n", g_last_alive);
 	arena = init_battlefield(champs);
-	putfile_hex(MEM_SIZE, arena, 1, 32); // 
 	carriage = init_carriages();
-	print_carriages(carriage); // 
+
+	print_players(champs); //
+	ft_printf("\nCNT: %d\n", g_last_alive); //
+	putfile_hex(MEM_SIZE, arena, 1, 32); // 
+	print_carriages(carriage); //
+
 	return (0);
 }
