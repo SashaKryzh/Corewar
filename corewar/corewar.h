@@ -27,9 +27,22 @@ typedef struct	s_player
 	uint8_t		*code;
 }				t_player;
 
+typedef struct	s_carriage
+{
+	int			id;
+	t_bool		carry;
+	int			last_live;
+	int			remain_cycles;
+	int			position;
+	int			to_jump;
+	uint8_t		regs[REG_NUMBER];
+}				t_carriage;
+
 /*
 **	Parser
 */
+
+int				parse_players(t_player *champs, int ac, char *av[]);
 
 void			get_name(t_player *champs, uint8_t *champ);
 void			get_size(t_player *champs, uint8_t *champ);
@@ -52,6 +65,6 @@ void			exit_func(char *msg);
 */
 
 void			print_players(t_player *champs);
-void			putfile(int ret, uint8_t *file);
+void			putfile_hex(int ret, uint8_t *file, int space, int newline);
 
 #endif

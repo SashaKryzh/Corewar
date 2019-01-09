@@ -32,8 +32,6 @@ void	check_magic(uint8_t *champ)
 
 	ft_memcpy(&magic, champ, 4);
 	ft_memrev(&magic, 4);
-	if (magic == COREWAR_EXEC_MAGIC)
-		ft_printf("MAGIC OK\n");
-	else
+	if (magic != COREWAR_EXEC_MAGIC)
 		ft_printf("MAGIC ERROR\n");
 }
