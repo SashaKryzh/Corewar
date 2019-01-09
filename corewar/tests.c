@@ -50,3 +50,12 @@ void	print_players(t_player *champs)
 			ft_printf("\n");
 	}
 }
+
+void	print_carriages(t_carriage *carriage)
+{
+	while (carriage)
+	{
+		ft_printf("id: %d, pos: %d\n", carriage->id, carriage->position);
+		carriage = carriage->next;
+	}
+}

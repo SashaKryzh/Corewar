@@ -17,6 +17,7 @@ CC = gcc
 
 SRCS = main.c \
 init_func.c \
+init_battle.c \
 parse_players.c \
 parser.c \
 parser_checks.c \
