@@ -34,84 +34,99 @@ void		get_op_code(t_carriage *car, uint8_t op)
 		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
-void		check_reg_num(uint8_t *arena, t_carriage *car, int reg_pos)
+int		check_reg_num(uint8_t *arena, t_carriage *car, int reg_pos)
 {
-	uint8_t		byte;
+	int			reg_num;
 	uint8_t		to_jump;
 	uint8_t		i;
-	uint8_t		j;
-	int			reg_num;
 
-	i = 6;
-	j = 0;
+	i = 0;
 	to_jump = 1;
-	byte = arena[(car->position + 1) % MEM_SIZE];
-	while (j < reg_pos)
+	while (i < reg_pos)
 	{
-		if (((byte >> i) % 4) == REG_CODE) // checks fot active bit at needed position
-		{
-			to_jump += REG_SIZE;
-		}
-		else if (((byte >> i) % 4) == IND_CODE)
-		{
-			to_jump += IND_SIZE;
-		}
-		else if (((byte >> i) % 4) == DIR_CODE)
-		{
-			to_jump += g_op[car->op - 1].t_dir_size;
-		}
-		i -= 2;
-		j++;
+		to_jump += car->args_sizes[i];
+		i++;
 	}
 	reg_num = arena[(car->position + 1 + to_jump) % MEM_SIZE];
 	if (reg_num <= 0 || reg_num > REG_NUMBER)
-		exit_func("Invalid REG NUMBER");
-	ft_printf("reg num : %d\n", reg_num);
+	{
+		ft_printf("Invalid REG NUMBER\n");
+		return (0);
+	}
+	ft_printf("num: %d\n", reg_num);
+	return (1);
 }
 
-void		get_op_data(uint8_t *arena, t_carriage *car)
+int		get_op_data(uint8_t *arena, t_carriage *car)
 {
 	uint8_t		byte;
 	uint8_t		i;
 	uint8_t		j;
+	uint8_t		ret;
 
 	i = 6;
 	j = 0;
+	ret = 1;
 	byte = arena[(car->position + 1) % MEM_SIZE];
 	while (j < g_op[car->op - 1].args_num)
 	{
-		if (g_op[car->op - 1].args_types[j] >> ((byte >> i) % 4 - 1)) // checks fot active bit at needed position
+		if (((byte >> i) % 4) == IND_CODE)
 		{
-			if (((byte >> i) % 4) == IND_CODE)
-			{
-				ft_printf("T_IND\n");
-				car->args_sizes[j] = IND_SIZE;
-			}
-			else if (((byte >> i) % 4) == DIR_CODE)
-			{
-				ft_printf("T_DIR\n");
-				car->args_sizes[j] = g_op[car->op - 1].t_dir_size;
-			}
-			else
-			{
-				ft_printf("T_REG\n");
-				car->args_sizes[j] = REG_SIZE;
-				check_reg_num(arena, car, j);
-			}
+			ft_printf("T_IND\n");
+			car->args_sizes[j] = IND_SIZE;
+		}
+		else if (((byte >> i) % 4) == DIR_CODE)
+		{
+			ft_printf("T_DIR\n");
+			car->args_sizes[j] = g_op[car->op - 1].t_dir_size;
+		}
+		else if (((byte >> i) % 4) == REG_CODE)
+		{
+			ft_printf("T_REG ");
+			car->args_sizes[j] = 1;
+			if (!check_reg_num(arena, car, j))
+				ret = 0;
 		}
 		else
+			car->args_sizes[j] = 0;
+		if (!(g_op[car->op - 1].args_types[j] >> ((byte >> i) % 4 - 1)))
 		{
-			exit_func("Error in ARGS TYPES");
+			ft_printf("Error in ARGS TYPES\n");
+			ret = 0;
 		}
 		i -= 2;
 		j++;
 	}
+	return (ret);
+}
+
+void		skip_invalid_op(uint8_t *arena, t_carriage *car)
+{
+	int i;
+
+	i = 0;
+	ft_printf("from: %d ", car->position);
+	car->position += 2;
+	while (i < g_op[car->op - 1].args_num)
+	{
+		car->position += car->args_sizes[i];
+		ft_printf("%d ", car->args_sizes[i]);
+		i++;
+	}
+	car->position %= MEM_SIZE;
+	ft_printf("to: %d\n", car->position);
 }
 
 void		execute_op(uint8_t *arena, t_carriage *car)
 {
 	if (g_op[car->op - 1].is_args_types)
-		get_op_data(arena, car);
+	{
+		if (!get_op_data(arena, car))
+		{
+			skip_invalid_op(arena, car);
+			exit_func("Invalid data, skip command");
+		}
+	}
 }
 
 void		battle(uint8_t *arena, t_carriage *car)
@@ -129,6 +144,7 @@ void		battle(uint8_t *arena, t_carriage *car)
 		{
 			if (tmp->op >= 0x01 && tmp->op <= 0x10)
 			{
+				ft_printf("%s:\n", g_op[tmp->op - 1].name);
 				execute_op(arena, tmp);
 			}
 			else
@@ -153,6 +169,7 @@ int			main(int ac, char *av[])
 	putfile_hex(MEM_SIZE, arena, 1, 32); //
 	print_carriages(carriage); //
 
+	ft_printf("\n");
 	battle(arena, carriage);
 	return (0);
 }
