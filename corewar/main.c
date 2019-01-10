@@ -34,14 +34,84 @@ void		get_op_code(t_carriage *car, uint8_t op)
 		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
-void		check_op_data(uint8_t *arena, t_carriage *car)
+void		check_reg_num(uint8_t *arena, t_carriage *car, int reg_pos)
 {
-	// if (car->op != )
+	uint8_t		byte;
+	uint8_t		to_jump;
+	uint8_t		i;
+	uint8_t		j;
+	int			reg_num;
+
+	i = 6;
+	j = 0;
+	to_jump = 1;
+	byte = arena[(car->position + 1) % MEM_SIZE];
+	while (j < reg_pos)
+	{
+		if (((byte >> i) % 4) == REG_CODE) // checks fot active bit at needed position
+		{
+			to_jump += REG_SIZE;
+		}
+		else if (((byte >> i) % 4) == IND_CODE)
+		{
+			to_jump += IND_SIZE;
+		}
+		else if (((byte >> i) % 4) == DIR_CODE)
+		{
+			to_jump += g_op[car->op - 1].t_dir_size;
+		}
+		i -= 2;
+		j++;
+	}
+	reg_num = arena[(car->position + 1 + to_jump) % MEM_SIZE];
+	if (reg_num <= 0 || reg_num > REG_NUMBER)
+		exit_func("Invalid REG NUMBER");
+	ft_printf("reg num : %d\n", reg_num);
+}
+
+void		get_op_data(uint8_t *arena, t_carriage *car)
+{
+	uint8_t		byte;
+	uint8_t		i;
+	uint8_t		j;
+
+	i = 6;
+	j = 0;
+	byte = arena[(car->position + 1) % MEM_SIZE];
+	while (j < g_op[car->op - 1].args_num)
+	{
+		if (g_op[car->op - 1].args_types[j] >> ((byte >> i) % 4 - 1)) // checks fot active bit at needed position
+		{
+			if (((byte >> i) % 4) == IND_CODE)
+			{
+				ft_printf("T_IND\n");
+				car->args_sizes[j] = IND_SIZE;
+			}
+			else if (((byte >> i) % 4) == DIR_CODE)
+			{
+				ft_printf("T_DIR\n");
+				car->args_sizes[j] = g_op[car->op - 1].t_dir_size;
+			}
+			else
+			{
+				ft_printf("T_REG\n");
+				car->args_sizes[j] = REG_SIZE;
+				check_reg_num(arena, car, j);
+			}
+		}
+		else
+		{
+			exit_func("Error in ARGS TYPES");
+		}
+		i -= 2;
+		j++;
+	}
 }
 
 void		execute_op(uint8_t *arena, t_carriage *car)
 {
-	check_op_data(arena, car);
+	if (g_op[car->op - 1].is_args_types)
+		get_op_data(arena, car);
 }
 
 void		battle(uint8_t *arena, t_carriage *car)
@@ -54,14 +124,15 @@ void		battle(uint8_t *arena, t_carriage *car)
 		if (!tmp->remain_cycles)
 			get_op_code(tmp, arena[tmp->position]);
 		tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
+		tmp->remain_cycles = 0;
 		if (!tmp->remain_cycles)
 		{
-			if (car->op >= 0x01 && car->op <= 0x10)
+			if (tmp->op >= 0x01 && tmp->op <= 0x10)
 			{
-				execute_op(arena, car);
+				execute_op(arena, tmp);
 			}
 			else
-				car->position = car->position % MEM_SIZE;
+				tmp->position = (tmp->position + 1) % MEM_SIZE;
 		}
 		tmp = tmp->next;
 	}

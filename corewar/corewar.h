@@ -45,6 +45,7 @@ typedef struct	s_carriage
 	uint32_t			regs[REG_NUMBER];
 
 	uint8_t				op;
+	uint8_t				args_sizes[3];
 	struct s_carriage	*next;
 }				t_carriage;
 
