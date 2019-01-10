@@ -15,8 +15,12 @@ NAME = corewar
 FLAGS = -Wall -Werror -Wextra
 CC = gcc
 
+VPATH = ./parser
+
 SRCS = main.c \
-init_func.c \
+check_args_byte.c \
+utils.c \
+init_oper.c \
 init_battle.c \
 parse_players.c \
 parser.c \
@@ -35,13 +39,15 @@ LIBFT = $(LIB_DIR)/libft.a
 
 INCL = ../includes
 
+INCLFORPARSER = .
+
 all: $(NAME)
 
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT)
-	$(CC) -o $(NAME) $(OBJS) $(LIB) -I $(LIB_HEAD) -I $(INCL)
+	$(CC) -o $(NAME) $(OBJS) $(LIB) -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
 
 $(OBJS_DIR)/%.o: %.c
-	$(CC) -o $@ -c $< -I $(LIB_HEAD) -I $(INCL)
+	$(CC) -o $@ -c $< -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
 
 $(OBJS_DIR):
 	@mkdir objs

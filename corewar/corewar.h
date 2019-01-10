@@ -19,6 +19,8 @@
 
 # include "op.h"
 
+# define OP g_op[car->op - 1]
+
 extern int	g_last_alive;
 extern int	g_cnt_cycles;
 extern int	g_cnt_live;
@@ -45,9 +47,26 @@ typedef struct	s_carriage
 	uint32_t			regs[REG_NUMBER];
 
 	uint8_t				op;
+	uint8_t				args_types[3];
 	uint8_t				args_sizes[3];
+	int					(*f)[3];
 	struct s_carriage	*next;
 }				t_carriage;
+
+/*
+**	Get values
+*/
+
+uint8_t			get_reg_num(uint8_t *arena, t_carriage *car, int arg_num);
+
+int				get_op_data(uint8_t *arena, t_carriage *car);
+
+/*
+**	Utils
+*/
+
+void			skip_op(uint8_t *arena, t_carriage *car);
+uint8_t			*to_arg(uint8_t *arena, t_carriage *car, int arg_num);
 
 /*
 **	Parser

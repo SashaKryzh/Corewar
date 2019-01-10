@@ -34,99 +34,55 @@ void		get_op_code(t_carriage *car, uint8_t op)
 		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
-int		check_reg_num(uint8_t *arena, t_carriage *car, int reg_pos)
+int			get_dir(uint8_t *arena, t_carriage *car, uint8_t size)
 {
-	int			reg_num;
-	uint8_t		to_jump;
-	uint8_t		i;
+	char	n[4];
+	int		res;
 
-	i = 0;
-	to_jump = 1;
-	while (i < reg_pos)
-	{
-		to_jump += car->args_sizes[i];
-		i++;
-	}
-	reg_num = arena[(car->position + 1 + to_jump) % MEM_SIZE];
-	if (reg_num <= 0 || reg_num > REG_NUMBER)
-	{
-		ft_printf("Invalid REG NUMBER\n");
-		return (0);
-	}
-	ft_printf("num: %d\n", reg_num);
-	return (1);
+	ft_bzero(n, 4);
+	if (size == 2)
+		ft_memcpy(&n[2], arena, size);
+	else
+		ft_memcpy(n, arena, size);
+	ft_memcpy(&res, n, 4);
+	ft_memrev(&res, 4); // BIG ENDIAN
+	return (res);
 }
 
-int		get_op_data(uint8_t *arena, t_carriage *car)
+void		sti_op(uint8_t *arena, t_carriage *car)
 {
-	uint8_t		byte;
-	uint8_t		i;
-	uint8_t		j;
-	uint8_t		ret;
+	int res;
+	int	reg;
+	int	arg2;
+	int	arg3;
 
-	i = 6;
-	j = 0;
-	ret = 1;
-	byte = arena[(car->position + 1) % MEM_SIZE];
-	while (j < g_op[car->op - 1].args_num)
-	{
-		if (((byte >> i) % 4) == IND_CODE)
-		{
-			ft_printf("T_IND\n");
-			car->args_sizes[j] = IND_SIZE;
-		}
-		else if (((byte >> i) % 4) == DIR_CODE)
-		{
-			ft_printf("T_DIR\n");
-			car->args_sizes[j] = g_op[car->op - 1].t_dir_size;
-		}
-		else if (((byte >> i) % 4) == REG_CODE)
-		{
-			ft_printf("T_REG ");
-			car->args_sizes[j] = 1;
-			if (!check_reg_num(arena, car, j))
-				ret = 0;
-		}
-		else
-			car->args_sizes[j] = 0;
-		if (!(g_op[car->op - 1].args_types[j] >> ((byte >> i) % 4 - 1)))
-		{
-			ft_printf("Error in ARGS TYPES\n");
-			ret = 0;
-		}
-		i -= 2;
-		j++;
-	}
-	return (ret);
-}
-
-void		skip_invalid_op(uint8_t *arena, t_carriage *car)
-{
-	int i;
-
-	i = 0;
-	ft_printf("from: %d ", car->position);
-	car->position += 2;
-	while (i < g_op[car->op - 1].args_num)
-	{
-		car->position += car->args_sizes[i];
-		ft_printf("%d ", car->args_sizes[i]);
-		i++;
-	}
-	car->position %= MEM_SIZE;
-	ft_printf("to: %d\n", car->position);
+	reg = car->regs[get_reg_num(arena, car, 1) - 1];
+	arg2 = get_dir(to_arg(arena, car, 2), car, OP.t_dir_size);
+	arg3 = get_dir(to_arg(arena, car, 3), car, OP.t_dir_size);
+	ft_printf("reg: %d, arg2: %d, arg3: %d\n", reg, arg2, arg3); //
+	res = (arg2 + arg3) % IDX_MOD;
+	arena[(car->position + res) % MEM_SIZE] = reg;
 }
 
 void		execute_op(uint8_t *arena, t_carriage *car)
+{
+	if (arena[car->position] == 0x0b)
+		sti_op(arena, car);
+	else
+		ft_printf("Nea...\n");
+}
+
+void		manage_op(uint8_t *arena, t_carriage *car)
 {
 	if (g_op[car->op - 1].is_args_types)
 	{
 		if (!get_op_data(arena, car))
 		{
-			skip_invalid_op(arena, car);
+			skip_op(arena, car);
 			exit_func("Invalid data, skip command");
 		}
 	}
+	execute_op(arena, car);
 }
 
 void		battle(uint8_t *arena, t_carriage *car)
@@ -145,11 +101,12 @@ void		battle(uint8_t *arena, t_carriage *car)
 			if (tmp->op >= 0x01 && tmp->op <= 0x10)
 			{
 				ft_printf("%s:\n", g_op[tmp->op - 1].name);
-				execute_op(arena, tmp);
+				manage_op(arena, tmp);
 			}
 			else
 				tmp->position = (tmp->position + 1) % MEM_SIZE;
 		}
+		exit(0); // for tests
 		tmp = tmp->next;
 	}
 }
