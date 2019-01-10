@@ -78,6 +78,7 @@ typedef struct					s_op
 	uint8_t		is_args_types;
 	uint8_t		args_types[3];
 	uint8_t		t_dir_size;
+	int			to_wait;
 }								t_op;
 
 extern t_op						g_op[16];
