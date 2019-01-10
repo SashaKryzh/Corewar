@@ -15,13 +15,41 @@
 
 # include <fcntl.h>
 # include <stdint.h>
+# include "errors.h"
 
-enum e_token_type { NAME, COMMENT, MARK, OPP, T_REG, T_DIR, T_IND};
+enum e_token_type { LABEL, INSTRUCTION, REGISTER, DIRECT_VALUE,
+	INDIRECT_VALUE, DIRECT_LABEL, INDIRECT_LABEL};
+
+typedef struct	s_token
+{
+	enum e_token_type	type;
+	char				*value;
+	struct s_token		*next;
+	struct s_token		*prev;
+}				t_token;
+
+/*
+** structure for compiling input and output files information
+*/
+
+typedef struct	s_asm
+{
+	t_token				*tokens;
+	char				*name;
+	char				*comment;
+	int					written_bytes;
+	int					fd;
+}				t_asm;
 
 /*
 ** work_with_file.c
 */
 void		work_with_file(char *filename);
+
+/*
+** get_name_and_comment.c
+*/
+int			get_name_and_comment(char **code, t_asm *champ, int *i);
 
 /*
 ** compile.c
@@ -34,22 +62,9 @@ void		compile(char **code, char *filename);
 int32_t			hex_to_int(char *hex);
 char			*int_to_hex(int32_t nbr);
 
-typedef struct	s_token
-{
-	enum e_token_type	type;
-	char				*value;
-	struct s_token		*next;
-}				t_token;
-
 /*
-** structure for compiling input and output files information
+** tokens.c
 */
-
-typedef struct	s_asm
-{
-	t_token				*tokens;
-	int					written_bytes;
-	int					fd;
-}				t_asm;
+int				get_tokens(char **code, t_asm *champ);
 
 #endif

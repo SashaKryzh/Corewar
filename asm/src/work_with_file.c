@@ -25,8 +25,9 @@ static void	expand_arr(char **arr, char *line)
 	i = -1;
 	while (arr[++i])
 		;
-	arr = (char**)realloc(sizeof(char*) * (i + 1));
+	arr = (char**)realloc(sizeof(char*) * (i + 2));
 	arr[i] = line;
+	arr[i + 1] = NULL;
 }
 
 static char	**read_file(const int fd)
