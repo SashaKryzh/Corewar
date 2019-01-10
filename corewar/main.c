@@ -27,13 +27,6 @@ void		exit_func(char *msg)
 	exit(0);
 }
 
-void		get_op_code(t_carriage *car, uint8_t op)
-{
-	car->op = op;
-	if (op >= 0x01 && op <= 0x10)
-		car->remain_cycles = g_op[op - 1].to_wait;
-}
-
 int			get_dir(uint8_t *arena, t_carriage *car, uint8_t size)
 {
 	char	n[4];
@@ -47,6 +40,11 @@ int			get_dir(uint8_t *arena, t_carriage *car, uint8_t size)
 	ft_memcpy(&res, n, 4);
 	ft_memrev(&res, 4); // BIG ENDIAN
 	return (res);
+}
+
+void		live_op(uint8_t *arena, t_carriage *car)
+{
+	return ;
 }
 
 void		sti_op(uint8_t *arena, t_carriage *car)
@@ -70,6 +68,13 @@ void		execute_op(uint8_t *arena, t_carriage *car)
 		sti_op(arena, car);
 	else
 		ft_printf("Nea...\n");
+}
+
+void		get_op_code(t_carriage *car, uint8_t op)
+{
+	car->op = op;
+	if (op >= 0x01 && op <= 0x10)
+		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
 void		manage_op(uint8_t *arena, t_carriage *car)

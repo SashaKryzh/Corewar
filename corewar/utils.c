@@ -25,11 +25,10 @@ void		skip_op(uint8_t *arena, t_carriage *car)
 	ft_print_bits(arena[car->position + 1]);
 	ft_printf(" - %d %d %d\n", car->args_sizes[0], car->args_sizes[1], car->args_sizes[2]);
 	ft_printf("from: %d ", car->position);
-	car->position += 2;
+	car->position += 1 + OP.is_args_types;
 	while (i < g_op[car->op - 1].args_num)
 	{
 		car->position += car->args_sizes[i];
-		// ft_printf("%d ", car->args_sizes[i]);
 		i++;
 	}
 	car->position %= MEM_SIZE;
