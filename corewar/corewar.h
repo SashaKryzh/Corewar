@@ -34,6 +34,7 @@ typedef struct	s_player
 	char				name[PROG_NAME_LENGTH + 1];
 	char				comment[COMMENT_LENGTH + 1];
 	int					code_size;
+	bool				alive;
 	uint8_t				*code;
 }				t_player;
 
@@ -103,6 +104,7 @@ uint8_t			*init_battlefield(t_player *champs);
 **	Operations
 */
 
+void			sti_op(uint8_t *arena, t_car *car);
 void			fork_op(uint8_t *arena, t_car *car);
 
 /*

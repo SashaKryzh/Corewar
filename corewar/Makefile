@@ -15,12 +15,13 @@ NAME = corewar
 FLAGS = -Wall -Werror -Wextra
 CC = gcc
 
-VPATH = ./parser
+VPATH = ./operations || ./parser
 
 SRCS = main.c \
 check_args_byte.c \
 utils.c \
 init_oper.c \
+sti_op.c \
 fork_op.c \
 init_battle.c \
 parse_players.c \

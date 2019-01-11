@@ -27,7 +27,7 @@ void		skip_op(uint8_t *arena, t_car *car)
 	ft_printf(" - %d %d %d -> ", car->args_sizes[0], car->args_sizes[1], car->args_sizes[2]);
 	ft_printf("from: %d ", car->position);
 	car->position += 1 + (OP.is_args_types ? 1 : OP.t_dir_size);
-	while (i < OP.args_num)
+	while (i < OP.args_num && OP.is_args_types)
 	{
 		car->position += car->args_sizes[i];
 		i++;

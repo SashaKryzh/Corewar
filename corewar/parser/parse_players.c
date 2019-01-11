@@ -65,6 +65,7 @@ int		parse_players(t_player *champs, int ac, char *av[])
 		if (++j == MAX_PLAYERS)
 			exit_func("Too many players");
 		champs[j].id = check_flag(ac, av, &i);
+		champs[j].alive = 0;
 		ret = read_champ(av[i], champ);
 		// putfile_hex(ret, champ);
 		check_magic(champ);
