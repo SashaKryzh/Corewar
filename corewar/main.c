@@ -94,14 +94,17 @@ void		execute_op(uint8_t *arena, t_car *car)
 void		manage_op(uint8_t *arena, t_car *car)
 {
 	if (g_op[car->op - 1].is_args_types)
-	{
-		if (!get_op_data(arena, car))
+	{	
+		if (get_op_data(arena, car))
+			execute_op(arena, car);
+		else
 		{
-			skip_op(arena, car);
-			exit_func("Invalid data, skip command");
+			putfile_hex(MEM_SIZE, arena, 1, 32); //
+			ft_printf("%d\n", g_cnt_cycles);
 		}
 	}
-	execute_op(arena, car);
+	else
+		execute_op(arena, car);
 	skip_op(arena, car);
 	ft_printf("\n");
 }
@@ -134,7 +137,7 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp = tmp->next;
 		}
 		g_cnt_cycles++;
-		if (g_cnt_cycles == 2000)
+		if (g_cnt_cycles == 5000)
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
 			exit(1);
@@ -154,7 +157,7 @@ int			main(int ac, char *av[])
 
 	print_players(champs); //
 	ft_printf("\nCNT: %d\n", g_last_alive); //
-	putfile_hex(MEM_SIZE, arena, 1, 1000); //
+	putfile_hex(MEM_SIZE, arena, 1, 32); //
 	print_cars(carriage); //
 
 	g_carriage = carriage;

@@ -28,7 +28,7 @@ void		skip_op(uint8_t *arena, t_car *car)
 		car->no_jump = 0;
 		return ;
 	}
-	ft_printf("args type byte: ");
+	ft_printf("id: %d, args type byte: ", car->id);
 	ft_print_bits(arena[car->position + 1]);
 	ft_printf(" - %d %d %d -> ", car->args_sizes[0], car->args_sizes[1], car->args_sizes[2]);
 	ft_printf("from: %d ", car->position);
