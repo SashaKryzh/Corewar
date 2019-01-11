@@ -69,3 +69,21 @@ void	print_cars(t_car *carriage)
 		carriage = carriage->next;
 	}
 }
+
+void	print_args_type(t_car *car)
+{
+	int i;
+
+	i = 0;
+	while (i < OP.args_num)
+	{
+		if (car->args_types[i] == (uint8_t)IND_CODE)
+			ft_printf("IND ");
+		if (car->args_types[i] == (uint8_t)DIR_CODE)
+			ft_printf("DIR ");
+		else
+			ft_printf("REG ");
+		i++;
+	}
+	ft_printf("\n");
+}

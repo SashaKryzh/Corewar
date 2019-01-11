@@ -76,21 +76,12 @@ int			get_ind(uint8_t *arena, t_car *car, int start)
 	return (res);
 }
 
-void		live_op(uint8_t *arena, t_car *car)
-{
-	int arg;
-
-	car->last_live = g_cnt_cycles;
-	arg = get_dir(arena, car, (car->position + 1) % MEM_SIZE);
-	ft_printf("%d\n", arg);
-	if (ft_abs(arg) != 0 && ft_abs(arg) <= MAX_PLAYERS)
-		g_players[ft_abs(arg) - 1].alive = 1;
-}
-
 void		execute_op(uint8_t *arena, t_car *car)
 {
 	if (car->op == 0x01)
 		live_op(arena, car);
+	else if (car->op == 0x02)
+		ld_op(arena, car);
 	else if (car->op == 0x0B)
 		sti_op(arena, car);
 	else if (car->op == 0x0C)
@@ -131,7 +122,7 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
 			if (!tmp->remain_cycles)
 			{
-				if (tmp->op == 0x01 || tmp->op == 0x0B || tmp->op == 0x0C)
+				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x0B || tmp->op == 0x0C)
 				{
 					ft_printf("%s:\n", g_op[tmp->op - 1].name);
 					manage_op(arena, tmp);
@@ -142,7 +133,7 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp = tmp->next;
 		}
 		g_cnt_cycles++;
-		if (g_cnt_cycles == 800)
+		if (g_cnt_cycles == 805)
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
 			exit(1);

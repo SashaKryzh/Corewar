@@ -20,6 +20,7 @@ void		sti_op(uint8_t *arena, t_car *car)
 	int	reg;
 	int	args[2];
 
+	print_args_type(car);
 	reg = car->regs[get_reg_num(arena, car, 1) - 1];
 	i = 0;
 	while (i < 2)

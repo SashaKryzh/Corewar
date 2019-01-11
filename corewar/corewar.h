@@ -54,6 +54,7 @@ typedef struct	s_carriage
 	struct s_carriage	*next;
 }				t_car;
 
+extern t_player	*g_players;
 extern t_car	*g_carriage;
 
 /*
@@ -104,6 +105,8 @@ uint8_t			*init_battlefield(t_player *champs);
 **	Operations
 */
 
+void			live_op(uint8_t *arena, t_car *car);
+void			ld_op(uint8_t *arena, t_car *car);
 void			sti_op(uint8_t *arena, t_car *car);
 void			fork_op(uint8_t *arena, t_car *car);
 
@@ -116,5 +119,6 @@ void			print_cars(t_car *carriage);
 void			putfile_hex(int ret, uint8_t *file, int space, int newline);
 void			putbyte_hex(uint8_t n);
 void			putbytes_bit(char *n, int size);
+void			print_args_type(t_car *car);
 
 #endif

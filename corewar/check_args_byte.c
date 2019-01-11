@@ -23,8 +23,8 @@ uint8_t		get_reg_num(uint8_t *arena, t_car *car, int arg_num)
 	int	to_jump;
 
 	i = 0;
-	to_jump = 1;
-	while (i < arg_num)
+	to_jump = 1 + OP.is_args_types;
+	while (i < arg_num - 1)
 	{
 		to_jump += car->args_sizes[i];
 		i++;
@@ -41,7 +41,7 @@ static int	check_reg_num(uint8_t *arena, t_car *car, int arg_num)
 	uint8_t		reg_num;
 
 	reg_num = get_reg_num(arena, car, arg_num);
-	ft_printf("reg[%d]\n", reg_num - 1);
+	ft_printf("reg num: %d\n", reg_num);
 	if (reg_num <= 0 || reg_num > REG_NUMBER)
 	{
 		ft_printf("Invalid REG NUMBER\n");
@@ -70,7 +70,7 @@ int			get_op_data(uint8_t *arena, t_car *car)
 	// arena[(car->position + 1) % MEM_SIZE] -= 32; //
 	byte = arena[(car->position + 1) % MEM_SIZE];
 	ft_bzero(car->args_sizes, sizeof(car->args_sizes));
-	while (++j < g_op[car->op - 1].args_num)
+	while (++j < OP.args_num)
 	{
 		car->args_types[j] = (byte >> i) % 4;
 		if (car->args_types[j] == IND_CODE)

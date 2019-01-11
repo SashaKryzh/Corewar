@@ -40,6 +40,7 @@ void		skip_op(uint8_t *arena, t_car *car)
 
 /*
 **	Sets the pointer on the first byte of needed arg
+**	Use it only when args type byte is there, otherwise do position + 1 
 */
 
 int			to_arg(uint8_t *arena, t_car *car, int arg_num)
