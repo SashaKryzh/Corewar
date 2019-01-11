@@ -33,6 +33,16 @@ void	putfile_hex(int ret, uint8_t *file, int space, int newline)
 	ft_printf("\n");
 }
 
+void	putbytes_bit(char *n, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		ft_print_bits(n[i]);
+		i != size - 1 ? ft_printf(" ") : ft_printf("");
+	}
+	ft_printf("\n");
+}
+
 void	print_players(t_player *champs)
 {
 	int i;

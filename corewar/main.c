@@ -27,17 +27,22 @@ void		exit_func(char *msg)
 	exit(0);
 }
 
-int			get_dir(uint8_t *arena, t_carriage *car, uint8_t size)
+int			get_dir(uint8_t *arena, t_carriage *car, int start)
 {
 	char	n[4];
 	int		res;
+	int		i;
 
 	ft_bzero(n, 4);
-	if (size == 2)
-		ft_memcpy(&n[2], arena, size);
-	else
-		ft_memcpy(n, arena, size);
+	i = 0;
+	while (i < OP.t_dir_size)
+	{
+		n[i + OP.t_dir_size % 4] = arena[(start + i) % MEM_SIZE];
+		i++;
+	}
 	ft_memcpy(&res, n, 4);
+	// ft_printf("%d\n", res);
+	// putbytes_bit(&res, 4);
 	ft_memrev(&res, 4); // BIG ENDIAN
 	return (res);
 }
@@ -47,24 +52,39 @@ void		live_op(uint8_t *arena, t_carriage *car)
 	return ;
 }
 
+void		put_on_arena(uint8_t *arena, int start, uint8_t *val, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		arena[(start + i) % MEM_SIZE] = val[i];
+		i++;
+	}
+}
+
 void		sti_op(uint8_t *arena, t_carriage *car)
 {
-	int res;
+	int addr;
+	int	i;
 	int	reg;
 	int	arg2;
 	int	arg3;
 
 	reg = car->regs[get_reg_num(arena, car, 1) - 1];
-	arg2 = get_dir(to_arg(arena, car, 2), car, OP.t_dir_size);
-	arg3 = get_dir(to_arg(arena, car, 3), car, OP.t_dir_size);
+	arg2 = get_dir(arena, car, to_arg(arena, car, 2));
+	arg3 = get_dir(arena, car, to_arg(arena, car, 3));
 	ft_printf("reg: %d, arg2: %d, arg3: %d\n", reg, arg2, arg3); //
-	res = (arg2 + arg3) % IDX_MOD;
-	arena[(car->position + res) % MEM_SIZE] = reg;
+	putbytes_bit(&reg, sizeof(reg));
+	addr = (arg2 + arg3) % IDX_MOD;
+	ft_memrev(&reg, sizeof(reg));
+	put_on_arena(arena, (car->position + addr) % MEM_SIZE, (uint8_t *)(&reg), REG_SIZE);
 }
 
 void		execute_op(uint8_t *arena, t_carriage *car)
 {
-	if (arena[car->position] == 0x0b)
+	if (car->op == 0x0B)
 		sti_op(arena, car);
 	else
 		ft_printf("Nea...\n");

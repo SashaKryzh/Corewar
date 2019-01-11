@@ -39,7 +39,7 @@ void		skip_op(uint8_t *arena, t_carriage *car)
 **	Sets the pointer on the first byte of needed arg
 */
 
-uint8_t		*to_arg(uint8_t *arena, t_carriage *car, int arg_num)
+int			to_arg(uint8_t *arena, t_carriage *car, int arg_num)
 {
 	int i;
 	int	to_jump;
@@ -53,5 +53,5 @@ uint8_t		*to_arg(uint8_t *arena, t_carriage *car, int arg_num)
 	}
 	to_jump++; // to got on the next byte
 	// putbyte_hex(arena[(car->position + to_jump) % MEM_SIZE]); // points on ...
-	return (&arena[(car->position + to_jump) % MEM_SIZE]);
+	return ((car->position + to_jump) % MEM_SIZE);
 }

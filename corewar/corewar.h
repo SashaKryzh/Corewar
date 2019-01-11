@@ -44,7 +44,7 @@ typedef struct	s_carriage
 	int					remain_cycles;
 	int					position;
 	int					to_jump;
-	uint32_t			regs[REG_NUMBER];
+	int					regs[REG_NUMBER];
 
 	uint8_t				op;
 	uint8_t				args_types[3];
@@ -66,7 +66,7 @@ int				get_op_data(uint8_t *arena, t_carriage *car);
 */
 
 void			skip_op(uint8_t *arena, t_carriage *car);
-uint8_t			*to_arg(uint8_t *arena, t_carriage *car, int arg_num);
+int				to_arg(uint8_t *arena, t_carriage *car, int arg_num);
 
 /*
 **	Parser
@@ -101,5 +101,6 @@ void			print_players(t_player *champs);
 void			print_carriages(t_carriage *carriage);
 void			putfile_hex(int ret, uint8_t *file, int space, int newline);
 void			putbyte_hex(uint8_t n);
+void			putbytes_bit(char *n, int size);
 
 #endif
