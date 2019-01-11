@@ -27,6 +27,23 @@ void		exit_func(char *msg)
 	exit(0);
 }
 
+void		live_op(uint8_t *arena, t_carriage *car)
+{
+	return ;
+}
+
+void		put_on_arena(uint8_t *arena, int start, uint8_t *val, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		arena[(start + i) % MEM_SIZE] = val[i];
+		i++;
+	}
+}
+
 int			get_dir(uint8_t *arena, t_carriage *car, int start)
 {
 	char	n[4];
@@ -47,21 +64,22 @@ int			get_dir(uint8_t *arena, t_carriage *car, int start)
 	return (res);
 }
 
-void		live_op(uint8_t *arena, t_carriage *car)
+int			get_ind(uint8_t *arena, t_carriage *car, int start)
 {
-	return ;
-}
+	char	n[4];
+	int		res;
+	int		i;
 
-void		put_on_arena(uint8_t *arena, int start, uint8_t *val, int size)
-{
-	int i;
-
+	ft_bzero(n, IND_SIZE);
 	i = 0;
-	while (i < size)
+	while (i < IND_SIZE)
 	{
-		arena[(start + i) % MEM_SIZE] = val[i];
+		n[2] = arena[(start + i) % MEM_SIZE];
 		i++;
 	}
+	ft_memcpy(&res, n, sizeof(n));
+	ft_memrev(&res, sizeof(res));
+	return (res);
 }
 
 void		sti_op(uint8_t *arena, t_carriage *car)
@@ -69,15 +87,23 @@ void		sti_op(uint8_t *arena, t_carriage *car)
 	int addr;
 	int	i;
 	int	reg;
-	int	arg2;
-	int	arg3;
+	int	args[2];
 
 	reg = car->regs[get_reg_num(arena, car, 1) - 1];
-	arg2 = get_dir(arena, car, to_arg(arena, car, 2));
-	arg3 = get_dir(arena, car, to_arg(arena, car, 3));
-	ft_printf("reg: %d, arg2: %d, arg3: %d\n", reg, arg2, arg3); //
-	putbytes_bit(&reg, sizeof(reg));
-	addr = (arg2 + arg3) % IDX_MOD;
+	i = 0;
+	while (i < 2)
+	{
+		if (car->args_types[i + 1] == DIR_CODE)
+			args[i] = get_dir(arena, car, to_arg(arena, car, i + 2));
+		else if (car->args_types[i + 1] == IND_CODE)
+			args[i] = get_ind(arena, car, to_arg(arena, car, i + 2));
+		else
+			args[i] = car->regs[get_reg_num(arena, car, i + 2) - 1];
+		i++;
+	}
+	ft_printf("reg: %d, arg2: %d, arg3: %d\n", reg, args[0], args[1]); //
+	putbytes_bit((char *)(&reg), sizeof(reg));
+	addr = (args[0] + args[1]) % IDX_MOD;
 	ft_memrev(&reg, sizeof(reg));
 	put_on_arena(arena, (car->position + addr) % MEM_SIZE, (uint8_t *)(&reg), REG_SIZE);
 }
@@ -114,25 +140,33 @@ void		battle(uint8_t *arena, t_carriage *car)
 {
 	t_carriage	*tmp;
 
-	tmp = car;
-	while (tmp)
+	while (1)
 	{
-		if (!tmp->remain_cycles)
-			get_op_code(tmp, arena[tmp->position]);
-		tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
-		tmp->remain_cycles = 0;
-		if (!tmp->remain_cycles)
+		tmp = car;
+		while (tmp)
 		{
-			if (tmp->op >= 0x01 && tmp->op <= 0x10)
+			if (!tmp->remain_cycles)
+				get_op_code(tmp, arena[tmp->position]);
+			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
+			if (!tmp->remain_cycles)
 			{
-				ft_printf("%s:\n", g_op[tmp->op - 1].name);
-				manage_op(arena, tmp);
+				if (tmp->op >= 0x01 && tmp->op <= 0x10)
+				{
+					ft_printf("%s:\n", g_op[tmp->op - 1].name);
+					manage_op(arena, tmp);
+				}
+				else
+					tmp->position = (tmp->position + 1) % MEM_SIZE;
 			}
-			else
-				tmp->position = (tmp->position + 1) % MEM_SIZE;
+			tmp->remain_cycles--;
+			tmp = tmp->next;
 		}
-		exit(0); // for tests
-		tmp = tmp->next;
+		g_cnt_cycles++;
+		if (g_cnt_cycles == 25)
+		{
+			putfile_hex(MEM_SIZE, arena, 1, 32); //
+			exit(1);
+		}
 	}
 }
 
