@@ -17,7 +17,7 @@
 **	Return id of needed reg, so you must do (num - 1) : 1 -> 0 for array of regs
 */
 
-uint8_t		get_reg_num(uint8_t *arena, t_carriage *car, int arg_num)
+uint8_t		get_reg_num(uint8_t *arena, t_car *car, int arg_num)
 {
 	int i;
 	int	to_jump;
@@ -36,7 +36,7 @@ uint8_t		get_reg_num(uint8_t *arena, t_carriage *car, int arg_num)
 **	Check for valid reg number
 */
 
-static int	check_reg_num(uint8_t *arena, t_carriage *car, int arg_num)
+static int	check_reg_num(uint8_t *arena, t_car *car, int arg_num)
 {
 	uint8_t		reg_num;
 
@@ -56,7 +56,7 @@ static int	check_reg_num(uint8_t *arena, t_carriage *car, int arg_num)
 **	!(OP.args_types[j] >> ((byte >> i) % 4 - 1)) - dont remember how, but it checks if it is valid arg type
 */
 
-int			get_op_data(uint8_t *arena, t_carriage *car)
+int			get_op_data(uint8_t *arena, t_car *car)
 {
 	uint8_t		byte;
 	uint8_t		i;
@@ -93,7 +93,7 @@ int			get_op_data(uint8_t *arena, t_carriage *car)
 	return (ret);
 }
 
-// int		get_op_data(uint8_t *arena, t_carriage *car)
+// int		get_op_data(uint8_t *arena, t_car *car)
 // {
 // 	uint8_t		byte;
 // 	uint8_t		i;

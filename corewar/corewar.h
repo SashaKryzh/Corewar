@@ -49,24 +49,24 @@ typedef struct	s_carriage
 	uint8_t				op;
 	uint8_t				args_types[3];
 	uint8_t				args_sizes[3];
-	int					(*f)[3];
 	struct s_carriage	*next;
-}				t_carriage;
+}				t_car;
 
 /*
 **	Get values
 */
 
-uint8_t			get_reg_num(uint8_t *arena, t_carriage *car, int arg_num);
+uint8_t			get_reg_num(uint8_t *arena, t_car *car, int arg_num);
 
-int				get_op_data(uint8_t *arena, t_carriage *car);
+int				get_op_data(uint8_t *arena, t_car *car);
 
 /*
 **	Utils
 */
 
-void			skip_op(uint8_t *arena, t_carriage *car);
-int				to_arg(uint8_t *arena, t_carriage *car, int arg_num);
+void			skip_op(uint8_t *arena, t_car *car);
+int				to_arg(uint8_t *arena, t_car *car, int arg_num);
+void			put_on_arena(uint8_t *arena, int start, uint8_t *val, int size);
 
 /*
 **	Parser
@@ -90,7 +90,7 @@ int				set_players_id(t_player *champs);
 */
 
 void			exit_func(char *msg);
-t_carriage		*init_carriages(void);
+t_car		*init_cars(void);
 uint8_t			*init_battlefield(t_player *champs);
 
 /*
@@ -98,7 +98,7 @@ uint8_t			*init_battlefield(t_player *champs);
 */
 
 void			print_players(t_player *champs);
-void			print_carriages(t_carriage *carriage);
+void			print_cars(t_car *carriage);
 void			putfile_hex(int ret, uint8_t *file, int space, int newline);
 void			putbyte_hex(uint8_t n);
 void			putbytes_bit(char *n, int size);

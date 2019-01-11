@@ -61,11 +61,11 @@ void	print_players(t_player *champs)
 	}
 }
 
-void	print_carriages(t_carriage *carriage)
+void	print_cars(t_car *carriage)
 {
 	while (carriage)
 	{
-		ft_printf("id: %d, pos: %d, champ: %d\n", carriage->id, carriage->position, carriage->regs[0]);
+		ft_printf("id: %d, pos: %d, champ: %d, next: %p\n", carriage->id, carriage->position, carriage->regs[0], carriage->next);
 		carriage = carriage->next;
 	}
 }

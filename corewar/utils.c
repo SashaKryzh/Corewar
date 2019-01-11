@@ -17,29 +17,32 @@
 **	Skips command with invalid args types or reg number
 */
 
-void		skip_op(uint8_t *arena, t_carriage *car)
+void		skip_op(uint8_t *arena, t_car *car)
 {
 	int i;
 
 	i = 0;
+	ft_printf("args type byte: ");
 	ft_print_bits(arena[car->position + 1]);
-	ft_printf(" - %d %d %d\n", car->args_sizes[0], car->args_sizes[1], car->args_sizes[2]);
+	ft_printf(" - %d %d %d -> ", car->args_sizes[0], car->args_sizes[1], car->args_sizes[2]);
 	ft_printf("from: %d ", car->position);
 	car->position += 1 + OP.is_args_types;
-	while (i < g_op[car->op - 1].args_num)
+	while (i < OP.args_num)
 	{
 		car->position += car->args_sizes[i];
 		i++;
 	}
 	car->position %= MEM_SIZE;
-	ft_printf("to: %d\n", car->position);
+	ft_printf("to: %d -> ", car->position);
+	putbyte_hex(arena[car->position]);
+	ft_printf("\n");
 }
 
 /*
 **	Sets the pointer on the first byte of needed arg
 */
 
-int			to_arg(uint8_t *arena, t_carriage *car, int arg_num)
+int			to_arg(uint8_t *arena, t_car *car, int arg_num)
 {
 	int i;
 	int	to_jump;
@@ -54,4 +57,20 @@ int			to_arg(uint8_t *arena, t_carriage *car, int arg_num)
 	to_jump++; // to got on the next byte
 	// putbyte_hex(arena[(car->position + to_jump) % MEM_SIZE]); // points on ...
 	return ((car->position + to_jump) % MEM_SIZE);
+}
+
+/*
+**	Puts bytes on arena
+*/
+
+void		put_on_arena(uint8_t *arena, int start, uint8_t *val, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		arena[(start + i) % MEM_SIZE] = val[i];
+		i++;
+	}
 }

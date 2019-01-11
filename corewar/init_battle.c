@@ -36,29 +36,28 @@ uint8_t		*init_battlefield(t_player *champs)
 	return (arena);
 }
 
-t_carriage	*new_carriage(int id, int position)
+t_car	*new_carriage(int id, int position)
 {
-	t_carriage	*new;
+	t_car	*new;
 
-	new = (t_carriage *)ft_memalloc(sizeof(t_carriage));
+	new = (t_car *)ft_memalloc(sizeof(t_car));
 	new->id = id;
 	new->position = position;
 	new->regs[0] = id * -1;
 	return (new);
 }
 
-t_carriage	*init_carriages(void)
+t_car	*init_cars(void)
 {
-	t_carriage	*carriage;
-	t_carriage	*tmp;
+	t_car	*carriage;
+	t_car	*tmp;
 	int			i;
 
 	i = 1;
 	carriage = new_carriage(1, 0);
-	carriage->regs[0] = -1;
 	while (i < g_last_alive)
 	{
-		tmp = new_carriage(i + 1, i * MEM_SIZE / g_last_alive);
+		tmp = new_carriage(i + 1, i * (MEM_SIZE / g_last_alive));
 		tmp->next = carriage;
 		carriage = tmp;
 		i++;
