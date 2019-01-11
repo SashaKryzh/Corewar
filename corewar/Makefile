@@ -21,6 +21,7 @@ SRCS = main.c \
 check_args_byte.c \
 utils.c \
 init_oper.c \
+fork_op.c \
 init_battle.c \
 parse_players.c \
 parser.c \

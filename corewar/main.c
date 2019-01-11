@@ -99,24 +99,6 @@ void		sti_op(uint8_t *arena, t_car *car)
 	put_on_arena(arena, (car->position + addr) % MEM_SIZE, (uint8_t *)(&reg), REG_SIZE);
 }
 
-void		fork_op(uint8_t *arena, t_car *car)
-{
-	t_car	*new;
-	int		where;
-
-	where = get_dir(arena, car, 1);
-	where %= IDX_MOD;
-	new = (t_car *)ft_memalloc(sizeof(t_car));
-	new->id = ++g_cnt_cars;
-	new->carry = car->carry;
-	new->last_live = car->last_live;
-	new->position = (car->position + where) % MEM_SIZE;
-	ft_memcpy(new->regs, car->regs, sizeof(car->regs));
-	new->next = g_carriage;
-	g_carriage = new;
-	// print_cars(g_carriage);
-}
-
 void		execute_op(uint8_t *arena, t_car *car)
 {
 	if (car->op == 0x0B)

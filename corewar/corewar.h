@@ -21,6 +21,7 @@
 
 # define OP g_op[car->op - 1]
 
+extern int	g_cnt_cars;
 extern int	g_last_alive;
 extern int	g_cnt_cycles;
 extern int	g_cnt_live;
@@ -52,6 +53,8 @@ typedef struct	s_carriage
 	struct s_carriage	*next;
 }				t_car;
 
+extern t_car	*g_carriage;
+
 /*
 **	Get values
 */
@@ -59,6 +62,9 @@ typedef struct	s_carriage
 uint8_t			get_reg_num(uint8_t *arena, t_car *car, int arg_num);
 
 int				get_op_data(uint8_t *arena, t_car *car);
+
+int				get_dir(uint8_t *arena, t_car *car, int start);
+int				get_ind(uint8_t *arena, t_car *car, int start);
 
 /*
 **	Utils
@@ -86,12 +92,18 @@ void			check_magic(uint8_t *champ);
 int				set_players_id(t_player *champs);
 
 /*
-**	Utils
+**	Utils 2
 */
 
 void			exit_func(char *msg);
-t_car		*init_cars(void);
+t_car			*init_cars(void);
 uint8_t			*init_battlefield(t_player *champs);
+
+/*
+**	Operations
+*/
+
+void			fork_op(uint8_t *arena, t_car *car);
 
 /*
 **	Tests
