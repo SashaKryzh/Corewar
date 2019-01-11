@@ -148,6 +148,7 @@ void		manage_op(uint8_t *arena, t_car *car)
 	}
 	execute_op(arena, car);
 	skip_op(arena, car);
+	ft_printf("\n");
 }
 
 void		battle(uint8_t *arena, t_car *car)
