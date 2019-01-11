@@ -23,6 +23,7 @@ utils.c \
 init_oper.c \
 live_op.c \
 ld_op.c \
+zjmp_op.c \
 sti_op.c \
 fork_op.c \
 init_battle.c \

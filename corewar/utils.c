@@ -22,6 +22,12 @@ void		skip_op(uint8_t *arena, t_car *car)
 	int i;
 
 	i = 0;
+	if (car->no_jump)
+	{
+		ft_printf("no_jump, new position: %d\n", car->position);
+		car->no_jump = 0;
+		return ;
+	}
 	ft_printf("args type byte: ");
 	ft_print_bits(arena[car->position + 1]);
 	ft_printf(" - %d %d %d -> ", car->args_sizes[0], car->args_sizes[1], car->args_sizes[2]);

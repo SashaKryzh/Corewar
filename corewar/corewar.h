@@ -45,7 +45,7 @@ typedef struct	s_carriage
 	int					last_live;
 	int					remain_cycles;
 	int					position;
-	int					to_jump;
+	int					no_jump;
 	int					regs[REG_NUMBER];
 
 	uint8_t				op;
@@ -107,6 +107,7 @@ uint8_t			*init_battlefield(t_player *champs);
 
 void			live_op(uint8_t *arena, t_car *car);
 void			ld_op(uint8_t *arena, t_car *car);
+void			zjmp_op(uint8_t *arena, t_car *car);
 void			sti_op(uint8_t *arena, t_car *car);
 void			fork_op(uint8_t *arena, t_car *car);
 
