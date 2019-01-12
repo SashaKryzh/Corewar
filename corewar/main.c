@@ -137,7 +137,7 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp = tmp->next;
 		}
 		g_cnt_cycles++;
-		if (g_cnt_cycles == 5000)
+		if (g_cnt_cycles == 850)
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
 			exit(1);
