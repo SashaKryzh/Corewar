@@ -117,6 +117,7 @@ void			zjmp_op(uint8_t *arena, t_car *car);
 void			ldi_op(uint8_t *arena, t_car *car);
 void			sti_op(uint8_t *arena, t_car *car);
 void			fork_op(uint8_t *arena, t_car *car);
+void			aff_op(uint8_t *arena, t_car *car);
 
 /*
 **	Tests

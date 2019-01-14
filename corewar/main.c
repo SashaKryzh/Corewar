@@ -52,6 +52,8 @@ void		execute_op(uint8_t *arena, t_car *car)
 		sti_op(arena, car);
 	else if (car->op == 0x0C || car->op == 0x0F)
 		fork_op(arena, car);
+	else if (car->op == 0x10)
+		aff_op(arena, car);
 	else
 		ft_printf("Nea...\n");
 }
@@ -91,14 +93,14 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
 			if (!tmp->remain_cycles)
 			{
-				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x09 || tmp->op == 0x0A || tmp->op == 0x0B || tmp->op == 0x0C || tmp->op == 0x0F)
+				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x09 || tmp->op == 0x0A || tmp->op == 0x0B || tmp->op == 0x0C || tmp->op == 0x0F || tmp->op == 0x10)
 				{
 					ft_printf("%s (cycle: %d, pos : %d):\n", g_op[tmp->op - 1].name, g_cnt_cycles, tmp->position);
 					manage_op(arena, tmp);
 				}
 				else
 				{
-					ft_printf("%s (%d):\n", g_op[tmp->op - 1].name, g_cnt_cycles);
+					ft_printf("not supported %s (%d):\n", g_op[tmp->op - 1].name, g_cnt_cycles);
 					exit(1);
 					tmp->position = (tmp->position + 1) % MEM_SIZE;
 				}

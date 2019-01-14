@@ -28,6 +28,7 @@ zjmp_op.c \
 ldi_op.c \
 sti_op.c \
 fork_op.c \
+aff_op.c \
 init_battle.c \
 parse_players.c \
 parser.c \
