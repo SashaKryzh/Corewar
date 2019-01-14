@@ -83,7 +83,7 @@ int			get_op_data(uint8_t *arena, t_car *car)
 			if (!check_reg_num(arena, car, j + 1))
 				ret = 0;
 		}
-		if (!(OP.args_types[j] >> ((byte >> i) % 4 - 1)))
+		if (!((OP.args_types[j] >> (car->args_types[j] - 1)) & 1))
 		{
 			ft_printf("Error in ARGS TYPES\n");
 			ret = 0;
