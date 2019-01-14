@@ -38,31 +38,6 @@ void		get_op_code(t_car *car, uint8_t op)
 		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
-void	ldi_op(uint8_t *arena, t_car *car)
-{
-	int reg_num;
-	int	args[2];
-	int	i;
-
-	print_args_type(car);
-	ft_printf("\n");
-	reg_num = get_reg_num(arena, car, 3);
-	i = 0;
-	while (i < 2)
-	{
-		if (car->args_types[i] == DIR_CODE)
-			args[i] = get_value(arena, to_arg(arena, car, i + 1), OP.t_dir_size);
-		else if (car->args_types[i] == IND_CODE)
-			args[i] = get_ind(arena, car, to_arg(arena, car, i + 1), 4);
-		else if (car->args_types[i] == REG_CODE)
-			args[i] = car->regs[get_reg_num(arena, car, i + 1) - 1];
-		i++;
-	}
-	ft_printf("%d %d %d\n", args[0], args[1], reg_num);
-	putfile_hex(MEM_SIZE, arena, 1, 32); //
-	exit(1);
-}
-
 void		execute_op(uint8_t *arena, t_car *car)
 {
 	if (car->op == 0x01)

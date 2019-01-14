@@ -18,8 +18,8 @@ int			get_ind(uint8_t *arena, t_car *car, int arg_num, int size)
 	int addr;
 	int	res;
 
-	addr = get_value(arena, to_arg(arena, car, arg_num), IND_SIZE);
-	addr = (MEM_SIZE + car->position + addr % IDX_MOD) % MEM_SIZE;
+	addr = get_value(arena, to_arg(arena, car, arg_num), IND_SIZE) % IDX_MOD;
+	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
 	res = get_value(arena, addr, size);
 	return (res);
 }
