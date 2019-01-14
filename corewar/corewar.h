@@ -57,14 +57,20 @@ typedef struct	s_carriage
 extern t_player	*g_players;
 extern t_car	*g_carriage;
 
+
+/*
+**	Battle
+*/
+
+void			check_battle(t_car *car);
+void			check_cars(t_car *car);
+
 /*
 **	Get values
 */
 
 uint8_t			get_reg_num(uint8_t *arena, t_car *car, int arg_num);
-
 int				get_op_data(uint8_t *arena, t_car *car);
-
 int				get_ind(uint8_t *arena, t_car *car, int arg_num, int size);
 int				get_value(uint8_t *arena, int start, int size);
 
@@ -108,6 +114,7 @@ uint8_t			*init_battlefield(t_player *champs);
 void			live_op(uint8_t *arena, t_car *car);
 void			ld_op(uint8_t *arena, t_car *car);
 void			zjmp_op(uint8_t *arena, t_car *car);
+void			ldi_op(uint8_t *arena, t_car *car);
 void			sti_op(uint8_t *arena, t_car *car);
 void			fork_op(uint8_t *arena, t_car *car);
 

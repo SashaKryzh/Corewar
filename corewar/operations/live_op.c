@@ -22,4 +22,6 @@ void		live_op(uint8_t *arena, t_car *car)
 	ft_printf("%d\n", arg);
 	if (arg != 0 && ft_abs(arg) <= MAX_PLAYERS)
 		g_players[ft_abs(arg) - 1].alive = 1;
+	car->last_live = g_cnt_cycles;
+	g_cnt_live++;
 }

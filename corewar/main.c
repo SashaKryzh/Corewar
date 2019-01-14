@@ -16,14 +16,14 @@
 t_player	*g_players;
 t_car		*g_carriage;
 
-int		g_last_alive;
-int		g_cnt_cars;
+int			g_last_alive;
+int			g_cnt_cars;
 
-int		g_cnt_cycles;
-int		g_cnt_live;
-int		g_cnt_checks;
+int			g_cnt_cycles;
+int			g_cnt_live;
+int			g_cnt_checks;
 
-int		g_cycles_to_die = CYCLE_TO_DIE;
+int			g_cycles_to_die = CYCLE_TO_DIE;
 
 void		exit_func(char *msg)
 {
@@ -105,12 +105,52 @@ void		battle(uint8_t *arena, t_car *car)
 			}
 			tmp = tmp->next;
 		}
-		g_cnt_cycles++;
-		if (g_cnt_cycles == 1000)
+		check_battle(car);
+		// if (g_cnt_cycles == 25)
+		// {
+		// 	putfile_hex(MEM_SIZE, arena, 1, 32); //
+		// 	exit(1);
+		// }
+	}
+}
+
+void		check_battle(t_car *car)
+{
+	static int	prev_cycles_to_die;
+
+	g_cnt_cycles++;
+	if (g_cnt_cycles % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
+	{
+		g_cnt_checks++;
+		check_cars(g_carriage);
+		if (g_cnt_live >= NBR_LIVE)
 		{
-			putfile_hex(MEM_SIZE, arena, 1, 32); //
-			exit(1);
+			g_cycles_to_die -= CYCLE_DELTA;
+			g_cnt_checks = 0;
 		}
+		if (g_cnt_checks == MAX_CHECKS)
+		{
+			if (prev_cycles_to_die == g_cycles_to_die)
+				g_cycles_to_die -= CYCLE_DELTA;
+			g_cnt_checks = 0;
+		}
+		g_cnt_live = 0;
+	}
+}
+
+void		check_cars(t_car *car)
+{
+	t_car *tmp;
+
+	tmp = car;
+	while (tmp)
+	{
+		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
+		{
+			ft_printf("car is dead\n");
+			exit(0);
+		}
+		tmp = tmp->next;
 	}
 }
 
