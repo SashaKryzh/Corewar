@@ -75,7 +75,7 @@ void		execute_op(uint8_t *arena, t_car *car)
 		ldi_op(arena, car);
 	else if (car->op == 0x0B)
 		sti_op(arena, car);
-	else if (car->op == 0x0C)
+	else if (car->op == 0x0C || car->op == 0x0F)
 		fork_op(arena, car);
 	else
 		ft_printf("Nea...\n");
@@ -116,7 +116,7 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
 			if (!tmp->remain_cycles)
 			{
-				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x09 || tmp->op == 0x0A || tmp->op == 0x0B || tmp->op == 0x0C)
+				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x09 || tmp->op == 0x0A || tmp->op == 0x0B || tmp->op == 0x0C || tmp->op == 0x0F)
 				{
 					ft_printf("%s (cycle: %d, pos : %d):\n", g_op[tmp->op - 1].name, g_cnt_cycles, tmp->position);
 					manage_op(arena, tmp);
@@ -131,7 +131,7 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp = tmp->next;
 		}
 		g_cnt_cycles++;
-		if (g_cnt_cycles == 40)
+		if (g_cnt_cycles == 1000)
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
 			exit(1);

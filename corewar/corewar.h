@@ -65,8 +65,6 @@ uint8_t			get_reg_num(uint8_t *arena, t_car *car, int arg_num);
 
 int				get_op_data(uint8_t *arena, t_car *car);
 
-int				get_dir(uint8_t *arena, t_car *car, int start);
-
 int				get_ind(uint8_t *arena, t_car *car, int arg_num, int size);
 int				get_value(uint8_t *arena, int start, int size);
 
