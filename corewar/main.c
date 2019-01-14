@@ -44,6 +44,8 @@ void		execute_op(uint8_t *arena, t_car *car)
 		live_op(arena, car);
 	else if (car->op == 0x02)
 		ld_op(arena, car);
+	else if (car->op == 0x04)
+		add_sub_op(arena, car);
 	else if (car->op == 0x09)
 		zjmp_op(arena, car);
 	else if (car->op == 0x0A)
@@ -56,6 +58,26 @@ void		execute_op(uint8_t *arena, t_car *car)
 		aff_op(arena, car);
 	else
 		ft_printf("Nea...\n");
+}
+
+void		add_sub_op(uint8_t *arena, t_car *car)
+{
+	int reg_nums[3];
+	int	to_put;
+	int i;
+
+	i = 0;
+	while (i < 3)
+	{
+		reg_nums[i] = get_reg_num(arena, car, i + 1);
+		i++;
+	}
+	if (car->op == 0x04)
+		to_put = car->regs[reg_nums[0] - 1] + car->regs[reg_nums[1] - 1];
+	else
+		to_put = car->regs[reg_nums[0] - 1] - car->regs[reg_nums[1] - 1];
+	car->regs[reg_nums[2] - 1] = to_put;
+	car->carry = to_put == 0 ? 1 : 0;
 }
 
 void		manage_op(uint8_t *arena, t_car *car)
@@ -93,7 +115,7 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
 			if (!tmp->remain_cycles)
 			{
-				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x09 || tmp->op == 0x0A || tmp->op == 0x0B || tmp->op == 0x0C || tmp->op == 0x0F || tmp->op == 0x10)
+				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x04 || tmp->op == 0x09 || tmp->op == 0x0A || tmp->op == 0x0B || tmp->op == 0x0C || tmp->op == 0x0F || tmp->op == 0x10)
 				{
 					ft_printf("%s (cycle: %d, pos : %d):\n", g_op[tmp->op - 1].name, g_cnt_cycles, tmp->position);
 					manage_op(arena, tmp);
