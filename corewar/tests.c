@@ -79,11 +79,30 @@ void	print_args_type(t_car *car)
 	{
 		if (car->args_types[i] == (uint8_t)IND_CODE)
 			ft_printf("IND ");
-		if (car->args_types[i] == (uint8_t)DIR_CODE)
+		else if (car->args_types[i] == (uint8_t)DIR_CODE)
 			ft_printf("DIR ");
 		else
 			ft_printf("REG ");
 		i++;
 	}
 	ft_printf("\n");
+}
+
+void	print_oper_data(uint8_t *arena, t_car *car)
+{
+	int i;
+	int s;
+
+	s = 1;
+	i = 0;
+	if (OP.is_args_types)
+	{
+		s += 1;
+		ft_printf(" ");
+		while (i < OP.args_num)
+		{
+			s += car->args_sizes[i];
+			i++;
+		}
+	}
 }

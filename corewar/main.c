@@ -38,41 +38,29 @@ void		get_op_code(t_car *car, uint8_t op)
 		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
-int			get_dir(uint8_t *arena, t_car *car, int start)
+void	ldi_op(uint8_t *arena, t_car *car)
 {
-	char	n[4];
-	int		res;
-	int		i;
+	int reg_num;
+	int	args[2];
+	int	i;
 
-	ft_bzero(n, 4);
+	print_args_type(car);
+	ft_printf("\n");
+	reg_num = get_reg_num(arena, car, 3);
 	i = 0;
-	while (i < OP.t_dir_size)
+	while (i < 2)
 	{
-		n[i + OP.t_dir_size % 4] = arena[(start + i) % MEM_SIZE];
+		if (car->args_types[i] == DIR_CODE)
+			args[i] = get_value(arena, to_arg(arena, car, i + 1), OP.t_dir_size);
+		else if (car->args_types[i] == IND_CODE)
+			args[i] = get_ind(arena, car, to_arg(arena, car, i + 1), 4);
+		else if (car->args_types[i] == REG_CODE)
+			args[i] = car->regs[get_reg_num(arena, car, i + 1) - 1];
 		i++;
 	}
-	ft_memcpy(&res, n, 4);
-	// ft_printf("%d\n", res);
-	// putbytes_bit(&res, 4);
-	ft_memrev(&res, 4); // BIG ENDIAN
-	return (res);
-}
-
-int			get_ind(uint8_t *arena, t_car *car, int start)
-{
-	char	n[2];
-	short	res;
-	int		i;
-
-	i = 0;
-	while (i < IND_SIZE)
-	{
-		n[i] = arena[(start + i) % MEM_SIZE];
-		i++;
-	}
-	ft_memcpy(&res, n, sizeof(n));
-	ft_memrev(&res, sizeof(res));
-	return (res);
+	ft_printf("%d %d %d\n", args[0], args[1], reg_num);
+	putfile_hex(MEM_SIZE, arena, 1, 32); //
+	exit(1);
 }
 
 void		execute_op(uint8_t *arena, t_car *car)
@@ -83,6 +71,8 @@ void		execute_op(uint8_t *arena, t_car *car)
 		ld_op(arena, car);
 	else if (car->op == 0x09)
 		zjmp_op(arena, car);
+	else if (car->op == 0x0A)
+		ldi_op(arena, car);
 	else if (car->op == 0x0B)
 		sti_op(arena, car);
 	else if (car->op == 0x0C)
@@ -126,18 +116,22 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
 			if (!tmp->remain_cycles)
 			{
-				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x09 || tmp->op == 0x0B || tmp->op == 0x0C)
+				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x09 || tmp->op == 0x0A || tmp->op == 0x0B || tmp->op == 0x0C)
 				{
-					ft_printf("%s:\n", g_op[tmp->op - 1].name);
+					ft_printf("%s (cycle: %d, pos : %d):\n", g_op[tmp->op - 1].name, g_cnt_cycles, tmp->position);
 					manage_op(arena, tmp);
 				}
 				else
+				{
+					ft_printf("%s (%d):\n", g_op[tmp->op - 1].name, g_cnt_cycles);
+					exit(1);
 					tmp->position = (tmp->position + 1) % MEM_SIZE;
+				}
 			}
 			tmp = tmp->next;
 		}
 		g_cnt_cycles++;
-		if (g_cnt_cycles == 850)
+		if (g_cnt_cycles == 40)
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
 			exit(1);

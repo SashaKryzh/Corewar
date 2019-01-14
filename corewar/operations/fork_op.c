@@ -18,7 +18,7 @@ void		fork_op(uint8_t *arena, t_car *car)
 	t_car	*new;
 	int		where;
 
-	where = get_dir(arena, car, (car->position + 1) % MEM_SIZE);
+	where = get_value(arena, (car->position + 1) % MEM_SIZE, OP.t_dir_size);
 	if (car->op == 0x0C)
 		where %= IDX_MOD;
 	new = (t_car *)ft_memalloc(sizeof(t_car));

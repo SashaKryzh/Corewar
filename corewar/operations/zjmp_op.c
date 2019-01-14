@@ -19,13 +19,7 @@ void		zjmp_op(uint8_t *arena, t_car *car)
 
 	if (!car->carry)
 		return ;
-	arg = get_ind(arena, car, car->position + 1) % IDX_MOD;
-	int arg2 = get_dir(arena, car, car->position + 1) % IDX_MOD;
-	if (arg != arg2)
-	{
-		ft_printf("cycle: %d --- arg: %d, arg2: %d\n", g_cnt_cycles, arg, arg2);
-		exit(1);
-	}
+	arg = get_value(arena, (car->position + 1) % MEM_SIZE, OP.t_dir_size) % IDX_MOD;
 	ft_printf("%d + %d = ", car->position, arg); //
 	car->position = (MEM_SIZE + car->position + arg) % MEM_SIZE;
 	ft_printf("%d\n", car->position); //

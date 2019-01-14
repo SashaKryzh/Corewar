@@ -66,7 +66,9 @@ uint8_t			get_reg_num(uint8_t *arena, t_car *car, int arg_num);
 int				get_op_data(uint8_t *arena, t_car *car);
 
 int				get_dir(uint8_t *arena, t_car *car, int start);
-int				get_ind(uint8_t *arena, t_car *car, int start);
+
+int				get_ind(uint8_t *arena, t_car *car, int arg_num, int size);
+int				get_value(uint8_t *arena, int start, int size);
 
 /*
 **	Utils
@@ -121,5 +123,6 @@ void			putfile_hex(int ret, uint8_t *file, int space, int newline);
 void			putbyte_hex(uint8_t n);
 void			putbytes_bit(char *n, int size);
 void			print_args_type(t_car *car);
+void			print_oper_data(uint8_t *arena, t_car *car);
 
 #endif
