@@ -24,7 +24,6 @@ void		skip_op(uint8_t *arena, t_car *car)
 	i = 0;
 	if (car->no_jump)
 	{
-		ft_printf("no_jump, new position: %d\n", car->position);
 		car->no_jump = 0;
 		return ;
 	}
