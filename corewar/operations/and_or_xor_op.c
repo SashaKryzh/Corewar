@@ -19,7 +19,7 @@ static int		and_op(uint32_t n1, uint32_t n2)
 	uint32_t	res;
 
 	res = 0;
-	check = UINT32_MAX;
+	check = MOST_LEFT_BIT;
 	while (check != 0)
 	{
 		if (n1 & check && n2 & check)
@@ -35,7 +35,7 @@ static int		or_op(uint32_t n1, uint32_t n2)
 	uint32_t	res;
 
 	res = 0;
-	check = UINT32_MAX;
+	check = MOST_LEFT_BIT;
 	while (check != 0)
 	{
 		if (n1 & check || n2 & check)
@@ -51,7 +51,7 @@ static int		xor_op(uint32_t n1, uint32_t n2)
 	uint32_t	res;
 
 	res = 0;
-	check = UINT32_MAX;
+	check = MOST_LEFT_BIT;
 	while (check != 0)
 	{
 		if ((n1 & check || n2 & check) && ((n1 & check) != (n2 & check)))

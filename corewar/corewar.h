@@ -20,6 +20,7 @@
 # include "op.h"
 
 # define OP g_op[car->op - 1]
+# define MOST_LEFT_BIT 2147483648
 
 extern int	g_cnt_cars;
 extern int	g_last_alive;
