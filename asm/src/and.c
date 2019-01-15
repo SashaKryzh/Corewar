@@ -6,13 +6,13 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 15:07:25 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/13 15:26:54 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/15 15:38:23 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/asm.h"
+#include "../includes/asm.h"
 
-static int	valid(t_asm *champ, t_token **cur)
+static int	valid(t_token **cur)
 {
 	if (!(*cur)->next || (*cur)->next->type == LABEL || (*cur)->next->type
 		== INSTRUCTION || (*cur)->next->type == SEPARATOR)
@@ -74,7 +74,7 @@ static void	add_arg(t_asm *champ, t_token **cur)
 		add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1));
 		return ;
 	}
-	if (!get_label_value((*cur)->value, champ, 2 + ((*cur->type == INDIRECT_LABEL) * 2)))
+	if (!get_label_value((*cur)->value, champ, 2 + ((*cur)->type == INDIRECT_LABEL) * 2))
 	{
 		if ((*cur)->type == DIRECT_LABEL)
 		{
@@ -89,9 +89,7 @@ static void	add_arg(t_asm *champ, t_token **cur)
 
 int			and(t_asm *champ, t_token **cur)
 {
-	char	*temp;
-
-	if (!valid(champ, cur))
+	if (!valid(cur))
 		return (0);
 	add_to_code(champ, ft_strdup("06"));
 	add_codes(champ, cur);

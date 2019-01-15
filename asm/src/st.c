@@ -6,19 +6,19 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 15:07:04 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/13 15:26:55 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/15 15:06:00 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/asm.h"
+#include "../includes/asm.h"
 
-static int	valid(t_asm *champ, t_token **cur)
+static int	valid(t_token **cur)
 {
 	if (!(*cur)->next || (*cur)->next->type != REGISTER)
 		return (err_mesg(NEXT_TOKEN_MUST_BE_REGISTER, (*cur)->line));
 	if (!(*cur)->next->next || (*cur)->next->next->type != SEPARATOR)
 		return (err_mesg(SEPARATOR_IS_MISSING, (*cur)->line));
-	if (!(*cur)->next->next->next || !((*cur)->next->next->type->next
+	if (!(*cur)->next->next->next || !((*cur)->next->next->next->type
 		== DIRECT_VALUE || (*cur)->next->next->next->type == DIRECT_LABEL ||
 		(*cur)->next->next->next->type == INDIRECT_VALUE ||
 		(*cur)->next->next->next->type == INDIRECT_LABEL))
@@ -63,9 +63,7 @@ static void	add_second(t_asm *champ, t_token **cur)
 
 int			st(t_asm *champ, t_token **cur)
 {
-	char	*temp;
-
-	if (!valid(champ, cur))
+	if (!valid(cur))
 		return (0);
 	add_to_code(champ, ft_strdup("03"));
 	add_codes(champ, cur);

@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 13:42:45 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/09 13:42:47 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/15 16:06:35 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	expand_arr(char **arr, char *line)
 	i = -1;
 	while (arr[++i])
 		;
-	arr = (char**)realloc(sizeof(char*) * (i + 2));
+	arr = (char**)realloc((void*)arr, sizeof(char*) * (i + 2));
 	arr[i] = line;
 	arr[i + 1] = NULL;
 }
@@ -34,7 +34,6 @@ static char	**read_file(const int fd)
 {
 	char	*line;
 	char	**content;
-	int		i;
 
 	lseek(fd, -1, SEEK_END);
 	line = (char*)malloc(sizeof(char));
@@ -48,7 +47,7 @@ static char	**read_file(const int fd)
 		free(line);
 		return (NULL);
 	}
-	lseek(fd, 0, SEEK_START);
+	lseek(fd, 0, SEEK_SET);
 	free(line);
 	content = (char**)malloc(sizeof(char*));
 	content[0] = NULL;
@@ -78,5 +77,5 @@ void		work_with_file(char *filename)
 	new_name[i - 1] = 'c';
 	new_name[i] = 'o';
 	new_name[i + 1] = 'r';
-	compile(content, filename)
+	compile(content, filename);
 }
