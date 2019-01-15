@@ -129,6 +129,8 @@ void			sti_op(t_cell *arena, t_car *car);
 void			fork_op(t_cell *arena, t_car *car);
 void			aff_op(t_cell *arena, t_car *car);
 
+void			(*f_opers[17])() = {NULL, &live_op, &ld_op, &st_op, &add_sub_op, &add_sub_op, &and_or_xor_op, &and_or_xor_op, &and_or_xor_op, &zjmp_op, &ldi_op, &sti_op, &fork_op, &ld_op, &ldi_op, &fork_op, &aff_op};
+
 /*
 **	Tests
 */

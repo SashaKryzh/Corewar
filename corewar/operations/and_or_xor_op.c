@@ -30,7 +30,7 @@ static int		and_op(uint32_t n1, uint32_t n2)
 }
 
 static int		or_op(uint32_t n1, uint32_t n2)
-{	
+{
 	uint32_t	check;
 	uint32_t	res;
 
@@ -61,7 +61,7 @@ static int		xor_op(uint32_t n1, uint32_t n2)
 	return (res);
 }
 
-void		and_or_xor_op(t_cell *arena, t_car *car)
+void			and_or_xor_op(t_cell *arena, t_car *car)
 {
 	int reg_num;
 	int	args[2];
@@ -72,7 +72,8 @@ void		and_or_xor_op(t_cell *arena, t_car *car)
 	while (i < 2)
 	{
 		if (car->args_types[i] == DIR_CODE)
-			args[i] = get_value(arena, to_arg(arena, car, i + 1), OP.t_dir_size);
+			args[i] = get_value(arena, to_arg(arena, car, i + 1),
+				OP.t_dir_size);
 		else if (car->args_types[i] == IND_CODE)
 			args[i] = get_ind(arena, car, i + 1, 4);
 		else if (car->args_types[i] == REG_CODE)

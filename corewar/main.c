@@ -38,36 +38,12 @@ void		get_op_code(t_car *car, uint8_t op)
 		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
-void		execute_op(t_cell *arena, t_car *car)
-{
-	if (car->op == 0x01)
-		live_op(arena, car);
-	else if (car->op == 0x02 || car->op == 0x0D)
-		ld_op(arena, car);
-	else if (car->op == 0x03)
-		st_op(arena, car);
-	else if (car->op == 0x04 || car->op == 0x05)
-		add_sub_op(arena, car);
-	else if (car->op >= 0x06 && car->op <= 0x08)
-		and_or_xor_op(arena, car);
-	else if (car->op == 0x09)
-		zjmp_op(arena, car);
-	else if (car->op == 0x0A || car->op == 0x0E)
-		ldi_op(arena, car);
-	else if (car->op == 0x0B)
-		sti_op(arena, car);
-	else if (car->op == 0x0C || car->op == 0x0F)
-		fork_op(arena, car);
-	else if (car->op == 0x10)
-		aff_op(arena, car);
-}
-
 void		manage_op(t_cell *arena, t_car *car)
 {
 	if (g_op[car->op - 1].is_args_types)
 	{	
 		if (get_op_data(arena, car))
-			execute_op(arena, car);
+			(*f_opers[car->op])(arena, car);
 		else
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
@@ -75,7 +51,7 @@ void		manage_op(t_cell *arena, t_car *car)
 		}
 	}
 	else
-		execute_op(arena, car);
+		(*f_opers[car->op])(arena, car);
 	skip_op(arena, car);
 	ft_printf("\n");
 }
