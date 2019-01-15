@@ -13,12 +13,19 @@
 #include "libft.h"
 #include "corewar.h"
 
+/*
+**  0x0d - lld
+**	0x0f - lfork, but fork dont use it now (for future)
+*/
+
 int			get_ind(uint8_t *arena, t_car *car, int arg_num, int size)
 {
 	int addr;
 	int	res;
 
-	addr = get_value(arena, to_arg(arena, car, arg_num), IND_SIZE) % IDX_MOD;
+	addr = get_value(arena, to_arg(arena, car, arg_num), IND_SIZE);
+	if (car->op != 0x0d && car->op != 0x0f)
+		addr %= IDX_MOD;
 	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
 	res = get_value(arena, addr, size);
 	return (res);

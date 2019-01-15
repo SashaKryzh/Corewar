@@ -18,8 +18,6 @@ void		ld_op(uint8_t *arena, t_car *car)
 	int reg_num;
 	int	arg;
 
-	// putfile_hex(MEM_SIZE, arena, 1, 32); //
-	// print_args_type(car);
 	print_args_type(car);
 	reg_num = get_reg_num(arena, car, 2);
 	if (car->args_types[0] == DIR_CODE)
