@@ -24,6 +24,8 @@ get_value.c \
 init_oper.c \
 live_op.c \
 ld_op.c \
+st_op.c \
+add_sub_op.c \
 zjmp_op.c \
 ldi_op.c \
 sti_op.c \
