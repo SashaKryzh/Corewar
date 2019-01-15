@@ -34,9 +34,11 @@ void	ldi_op(uint8_t *arena, t_car *car)
 			args[i] = car->regs[get_reg_num(arena, car, i + 1) - 1];
 		i++;
 	}
-	addr = (MEM_SIZE + car->position + ((args[0] + args[1]) % IDX_MOD)) % MEM_SIZE;
+	addr = args[0] + args[1];
+	addr = car->op == 0x0A ? addr % IDX_MOD : addr;
+	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
 	car->regs[reg_num - 1] = get_value(arena, addr, 4);
-	ft_printf("%d %d %d, %d\n", args[0], args[1], reg_num, car->regs[reg_num - 1]); //
-	putfile_hex(MEM_SIZE, arena, 1, 32); //
-	exit(1);
+	ft_printf("addr: %d + %d, reg_num: %d, put in reg: %d\n", args[0], args[1], reg_num, car->regs[reg_num - 1]); //
+	// putfile_hex(MEM_SIZE, arena, 1, 32); //
+	// exit(1); //
 }

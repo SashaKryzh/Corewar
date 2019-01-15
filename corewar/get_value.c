@@ -14,8 +14,8 @@
 #include "corewar.h"
 
 /*
-**  0x0d - lld
-**	0x0f - lfork, but fork dont use it now (for future)
+**	Use this function to get data from IND address
+**	0x0D - lld
 */
 
 int			get_ind(uint8_t *arena, t_car *car, int arg_num, int size)
@@ -24,7 +24,7 @@ int			get_ind(uint8_t *arena, t_car *car, int arg_num, int size)
 	int	res;
 
 	addr = get_value(arena, to_arg(arena, car, arg_num), IND_SIZE);
-	if (car->op != 0x0d && car->op != 0x0f)
+	if (car->op != 0x0D)
 		addr %= IDX_MOD;
 	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
 	res = get_value(arena, addr, size);
@@ -32,6 +32,7 @@ int			get_ind(uint8_t *arena, t_car *car, int arg_num, int size)
 }
 
 /*
+**	Use this function to get data from the operation
 **  n[3] >> 7... for negative values when size == 2
 */
 

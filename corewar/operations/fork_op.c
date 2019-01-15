@@ -25,7 +25,7 @@ void		fork_op(uint8_t *arena, t_car *car)
 	new->id = ++g_cnt_cars;
 	new->carry = car->carry;
 	new->last_live = car->last_live;
-	new->position = (car->position + where) % MEM_SIZE;
+	new->position = (MEM_SIZE + car->position + where) % MEM_SIZE;
 	ft_memcpy(new->regs, car->regs, sizeof(car->regs));
 	new->next = g_carriage;
 	g_carriage = new;
