@@ -48,6 +48,8 @@ void		execute_op(uint8_t *arena, t_car *car)
 		st_op(arena, car);
 	else if (car->op == 0x04 || car->op == 0x05)
 		add_sub_op(arena, car);
+	else if (car->op >= 0x06 && car->op <= 0x08)
+		and_or_xor_op(arena, car);
 	else if (car->op == 0x09)
 		zjmp_op(arena, car);
 	else if (car->op == 0x0A || car->op == 0x0E)
@@ -97,7 +99,7 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
 			if (!tmp->remain_cycles)
 			{
-				if (tmp->op == 0x01 || tmp->op == 0x02 || tmp->op == 0x03 || tmp->op == 0x04 || tmp->op == 0x05 || tmp->op == 0x09 || tmp->op == 0x0A || tmp->op == 0x0B || tmp->op == 0x0C || tmp->op == 0x0D || tmp->op == 0x0E || tmp->op == 0x0F || tmp->op == 0x10)
+				if (tmp->op >= 0x01 && tmp->op <= 0x10)
 				{
 					ft_printf("%s (cycle: %d, pos : %d):\n", g_op[tmp->op - 1].name, g_cnt_cycles, tmp->position);
 					manage_op(arena, tmp);

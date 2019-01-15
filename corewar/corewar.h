@@ -115,6 +115,7 @@ void			live_op(uint8_t *arena, t_car *car);
 void			ld_op(uint8_t *arena, t_car *car);
 void			st_op(uint8_t *arena, t_car *car);
 void			add_sub_op(uint8_t *arena, t_car *car);
+void			and_or_xor_op(uint8_t *arena, t_car *car);
 void			zjmp_op(uint8_t *arena, t_car *car);
 void			ldi_op(uint8_t *arena, t_car *car);
 void			sti_op(uint8_t *arena, t_car *car);
