@@ -17,7 +17,7 @@
 **	Skips command with invalid args types or reg number
 */
 
-void		skip_op(uint8_t *arena, t_car *car)
+void		skip_op(t_cell *arena, t_car *car)
 {
 	int i;
 
@@ -28,7 +28,7 @@ void		skip_op(uint8_t *arena, t_car *car)
 		return ;
 	}
 	ft_printf("id: %d, args type byte: ", car->id);
-	ft_print_bits(arena[car->position + 1]);
+	ft_print_bits(arena[car->position + 1].v);
 	ft_printf(" - %d %d %d -> ", car->args_sizes[0], car->args_sizes[1], car->args_sizes[2]);
 	ft_printf("from: %d ", car->position);
 	car->position += 1 + (OP.is_args_types ? 1 : OP.t_dir_size);
@@ -39,7 +39,7 @@ void		skip_op(uint8_t *arena, t_car *car)
 	}
 	car->position %= MEM_SIZE;
 	ft_printf("to: %d -> ", car->position);
-	putbyte_hex(arena[car->position]);
+	putbyte_hex(arena[car->position].v);
 	ft_printf("\n");
 }
 
@@ -48,7 +48,7 @@ void		skip_op(uint8_t *arena, t_car *car)
 **	Use it only when args type byte is there, otherwise do position + 1 
 */
 
-int			to_arg(uint8_t *arena, t_car *car, int arg_num)
+int			to_arg(t_cell *arena, t_car *car, int arg_num)
 {
 	int i;
 	int	to_jump;
@@ -69,14 +69,14 @@ int			to_arg(uint8_t *arena, t_car *car, int arg_num)
 **	Puts bytes on arena
 */
 
-void		put_on_arena(uint8_t *arena, int start, uint8_t *val, int size)
+void		put_on_arena(t_cell *arena, int start, uint8_t *val, int size)
 {
 	int i;
 
 	i = 0;
 	while (i < size)
 	{
-		arena[(start + i) % MEM_SIZE] = val[i];
+		arena[(start + i) % MEM_SIZE].v = val[i];
 		i++;
 	}
 }

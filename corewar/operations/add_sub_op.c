@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-void		add_sub_op(uint8_t *arena, t_car *car)
+void		add_sub_op(t_cell *arena, t_car *car)
 {
 	int reg_nums[3];
 	int	to_put;

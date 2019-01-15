@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-void		ld_op(uint8_t *arena, t_car *car)
+void		ld_op(t_cell *arena, t_car *car)
 {
 	int reg_num;
 	int	arg;

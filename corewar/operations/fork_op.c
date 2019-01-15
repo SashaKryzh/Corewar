@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-void		fork_op(uint8_t *arena, t_car *car)
+void		fork_op(t_cell *arena, t_car *car)
 {
 	t_car	*new;
 	int		where;

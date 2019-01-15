@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-void		sti_op(uint8_t *arena, t_car *car)
+void		sti_op(t_cell *arena, t_car *car)
 {
 	int	args[2];
 	int	reg_val;

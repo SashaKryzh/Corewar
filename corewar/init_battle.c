@@ -13,14 +13,14 @@
 #include "libft.h"
 #include "corewar.h"
 
-uint8_t		*init_battlefield(t_player *champs)
+t_cell		*init_battlefield(t_player *champs)
 {
-	uint8_t		*arena;
+	t_cell		*arena;
 	int			i;
 	int			j;
 	int			block;
 
-	arena = (uint8_t *)ft_memalloc(sizeof(uint8_t) * MEM_SIZE);
+	arena = (t_cell *)ft_memalloc(sizeof(t_cell) * MEM_SIZE);
 	i = 0;
 	block = MEM_SIZE / g_last_alive;
 	while (i < g_last_alive)
@@ -28,7 +28,7 @@ uint8_t		*init_battlefield(t_player *champs)
 		j = 0;
 		while (j < champs[i].code_size)
 		{
-			arena[i * block + j] = champs[i].code[j];
+			arena[i * block + j].v = champs[i].code[j];
 			j++;
 		}
 		i++;
@@ -49,8 +49,8 @@ t_car	*new_carriage(int id, int position)
 
 t_car	*init_cars(void)
 {
-	t_car	*carriage;
-	t_car	*tmp;
+	t_car		*carriage;
+	t_car		*tmp;
 	int			i;
 
 	i = 1;

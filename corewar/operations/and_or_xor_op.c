@@ -61,7 +61,7 @@ static int		xor_op(uint32_t n1, uint32_t n2)
 	return (res);
 }
 
-void		and_or_xor_op(uint8_t *arena, t_car *car)
+void		and_or_xor_op(t_cell *arena, t_car *car)
 {
 	int reg_num;
 	int	args[2];

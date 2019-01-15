@@ -18,7 +18,7 @@
 **	0x0D - lld
 */
 
-int			get_ind(uint8_t *arena, t_car *car, int arg_num, int size)
+int			get_ind(t_cell *arena, t_car *car, int arg_num, int size)
 {
 	int addr;
 	int	res;
@@ -36,7 +36,7 @@ int			get_ind(uint8_t *arena, t_car *car, int arg_num, int size)
 **  n[3] >> 7... for negative values when size == 2
 */
 
-int		get_value(uint8_t *arena, int start, int size)
+int		get_value(t_cell *arena, int start, int size)
 {
 	char	n[4];
 	int		res;
@@ -46,7 +46,7 @@ int		get_value(uint8_t *arena, int start, int size)
 	ft_bzero(n, 4);
 	while (i < size)
 	{
-		n[i + size % 4] = arena[(start + i) % MEM_SIZE];
+		n[i + size % 4] = arena[(start + i) % MEM_SIZE].v;
 		i++;
 	}
     if (n[3] >> 7 && size == 2)

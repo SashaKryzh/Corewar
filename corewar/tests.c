@@ -18,13 +18,13 @@ void	putbyte_hex(uint8_t n)
 	write(1, buff, 2);
 }
 
-void	putfile_hex(int ret, uint8_t *file, int space, int newline)
+void	putfile_hex(int ret, t_cell *file, int space, int newline)
 {
 	for (int j = 0; j < ret; j++)
 	{
 		if (j != 0 && j % newline == 0)
 			ft_printf("\n");
-		putbyte_hex(file[j]);
+		putbyte_hex(file[j].v);
 		if (space == 1)
 			ft_printf(" ");
 		else if (j % space == 1)
@@ -54,7 +54,7 @@ void	print_players(t_player *champs)
 		ft_printf("%s\n", champs[i].name);
 		ft_printf("%s\n", champs[i].comment);
 		ft_printf("%d\n", champs[i].code_size);
-		putfile_hex(champs[i].code_size, champs[i].code, 2, 16);
+		// putfile_hex(champs[i].code_size, champs[i].code, 2, 16);
 		i++;
 		if (champs[i].id != -1)
 			ft_printf("\n");
@@ -88,7 +88,7 @@ void	print_args_type(t_car *car)
 	ft_printf("\n");
 }
 
-void	print_oper_data(uint8_t *arena, t_car *car)
+void	print_oper_data(t_cell *arena, t_car *car)
 {
 	int i;
 	int s;

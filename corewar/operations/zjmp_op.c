@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-void		zjmp_op(uint8_t *arena, t_car *car)
+void		zjmp_op(t_cell *arena, t_car *car)
 {
 	int arg;
 

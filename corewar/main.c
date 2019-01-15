@@ -38,7 +38,7 @@ void		get_op_code(t_car *car, uint8_t op)
 		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
-void		execute_op(uint8_t *arena, t_car *car)
+void		execute_op(t_cell *arena, t_car *car)
 {
 	if (car->op == 0x01)
 		live_op(arena, car);
@@ -60,11 +60,9 @@ void		execute_op(uint8_t *arena, t_car *car)
 		fork_op(arena, car);
 	else if (car->op == 0x10)
 		aff_op(arena, car);
-	else
-		ft_printf("Nea...\n");
 }
 
-void		manage_op(uint8_t *arena, t_car *car)
+void		manage_op(t_cell *arena, t_car *car)
 {
 	if (g_op[car->op - 1].is_args_types)
 	{	
@@ -82,7 +80,7 @@ void		manage_op(uint8_t *arena, t_car *car)
 	ft_printf("\n");
 }
 
-void		battle(uint8_t *arena, t_car *car)
+void		battle(t_cell *arena, t_car *car)
 {
 	t_car	*tmp;
 
@@ -93,7 +91,7 @@ void		battle(uint8_t *arena, t_car *car)
 		{
 			if (!tmp->remain_cycles)
 			{
-				get_op_code(tmp, arena[tmp->position]);
+				get_op_code(tmp, arena[tmp->position].v);
 				// putbyte_hex(tmp->op);
 			}
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
@@ -114,11 +112,11 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp = tmp->next;
 		}
 		check_battle(car);
-		// if (g_cnt_cycles == 25)
-		// {
-		// 	putfile_hex(MEM_SIZE, arena, 1, 32); //
-		// 	exit(1);
-		// }
+		if (g_cnt_cycles == 800)
+		{
+			putfile_hex(MEM_SIZE, arena, 1, 32); //
+			exit(1);
+		}
 	}
 }
 
@@ -166,7 +164,7 @@ int			main(int ac, char *av[])
 {
 	t_player		champs[MAX_PLAYERS + 1];
 	t_car			*carriage;
-	uint8_t			*arena;
+	t_cell			*arena;
 
 	g_last_alive = parse_players(champs, ac, av);
 	arena = init_battlefield(champs);
