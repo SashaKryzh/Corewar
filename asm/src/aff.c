@@ -6,13 +6,13 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 15:08:42 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/13 15:26:54 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/15 15:06:00 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/asm.h"
+#include "../includes/asm.h"
 
-static int	valid(t_asm *champ, t_token **cur)
+static int	valid(t_token **cur)
 {
 	if (!(*cur)->next || (*cur)->next->type != REGISTER)
 		return (err_mesg(NEXT_TOKEN_MUST_BE_REGISTER, (*cur)->line));
@@ -23,9 +23,7 @@ static int	valid(t_asm *champ, t_token **cur)
 
 int			aff(t_asm *champ, t_token **cur)
 {
-	char	*temp;
-
-	if (!valid(champ, cur))
+	if (!valid(cur))
 		return (0);
 	add_to_code(champ, ft_strdup("1040"));
 	*cur = (*cur)->next;

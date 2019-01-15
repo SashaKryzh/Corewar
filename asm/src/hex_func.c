@@ -6,13 +6,13 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 16:20:30 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/09 16:50:52 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/13 11:45:14 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-int32_t			hex_to_int(char *hex)
+int32_t		hex_to_int(char *hex)
 {
 	int32_t	res;
 	int		i;
@@ -31,17 +31,7 @@ int32_t			hex_to_int(char *hex)
 	return (res);
 }
 
-static int 	get_size(int32_t nbr)
-{
-	int		size;
-
-	size = 0;
-	while (nbr && ++size)
-		nbr /= 16;
-	return (size);
-}
-
-char		*int_to_hex(int32_t nbr)
+char		*int_to_hex(int32_t nbr, int size)
 {
 	int		temp;
 	int		i;
@@ -51,7 +41,7 @@ char		*int_to_hex(int32_t nbr)
 		temp = 4294967296 + nbr;
 	else
 		temp = nbr;
-	i = get_size(nbr);
+	i = size * 2;
 	res = ft_strnew(i);
 	while (--i >= 0)
 	{

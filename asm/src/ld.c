@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lld.c                                              :+:      :+:    :+:   */
+/*   ld.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/13 15:08:18 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/13 15:26:54 by amoroziu         ###   ########.fr       */
+/*   Created: 2019/01/13 15:06:59 by amoroziu          #+#    #+#             */
+/*   Updated: 2019/01/15 15:06:00 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/asm.h"
+#include "../includes/asm.h"
 
-static int	valid(t_asm *champ, t_token **cur)
+static int	valid(t_token **cur)
 {
 	if (!(*cur)->next || !((*cur)->next->type == DIRECT_VALUE ||
 		(*cur)->next->type == DIRECT_LABEL ||
@@ -64,13 +64,11 @@ static void	add_first(t_asm *champ, t_token **cur)
 	}
 }
 
-int			lld(t_asm *champ, t_token **cur)
+int			ld(t_asm *champ, t_token **cur)
 {
-	char	*temp;
-
-	if (!valid(champ, cur))
+	if (!valid(cur))
 		return (0);
-	add_to_code(champ, ft_strdup("0d"));
+	add_to_code(champ, ft_strdup("02"));
 	add_codes(champ, cur);
 	*cur = (*cur)->next;
 	add_first(champ, cur);
