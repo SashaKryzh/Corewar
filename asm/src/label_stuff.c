@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 14:32:18 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 15:55:43 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:58:42 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ void		add_new_missed(t_asm *champ, int size, char *name)
 	new->label_name = name;
 	new->size = size;
 	pos = champ->code;
-	while (*pos)
-		pos++;
+	if (pos)
+	{
+		while (*pos)
+			pos++;
+	}
 	new->code_pos = pos;
 }
 
@@ -86,9 +89,14 @@ void		add_label(t_asm *champ, t_token *label)
 
 	new = (t_label*)malloc(sizeof(t_label));
 	new->label_name = label->value;
-	pos = champ->code;
-	while (*pos)
-		pos++;
+	if (!champ->code)
+		pos = NULL;
+	else
+	{
+		pos = champ->code;
+		while (*pos)
+			pos++;
+	}
 	new->code_pos = pos;
 	new->next = champ->labels;
 	champ->labels = new;

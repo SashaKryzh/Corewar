@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 15:06:59 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 15:06:00 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/15 16:18:23 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	add_codes(t_asm *champ, t_token **cur)
 	int32_t	arg_code;
 
 	arg_code = 16;
-	if ((*cur)->next->type == DIRECT_LABEL || (*cur)->next->type == DIRECT_VALUE)
+	if ((*cur)->next->type == DIRECT_LABEL ||
+			(*cur)->next->type == DIRECT_VALUE)
 		arg_code += 128;
 	else
 		arg_code += 192;
@@ -49,7 +50,8 @@ static void	add_first(t_asm *champ, t_token **cur)
 			2 + ((*cur)->type == DIRECT_VALUE) * 2));
 		return ;
 	}
-	if (!get_label_value((*cur)->value, champ, 2 + ((*cur)->type == DIRECT_LABEL) * 2))
+	if (!get_label_value((*cur)->value, champ, 2 +
+				((*cur)->type == DIRECT_LABEL) * 2))
 	{
 		if ((*cur)->type == INDIRECT_LABEL)
 		{

@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 12:43:04 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 15:54:36 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 12:31:07 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ static int	get_multiline_string(char **str, char **code, int *i)
 	}
 }
 
-static int	get_string(char **code, char **str, int *i)
+static int	get_name(char **code, t_asm *champ, int *i)
 {
 	int		j;
 	int		len;
+	char	*str;
 
 	j = 4;
 	while (ft_isspace(code[*i][++j]))
@@ -61,13 +62,43 @@ static int	get_string(char **code, char **str, int *i)
 		;
 	if (!code[j + len])
 	{
-		*str = ft_strsub(code[*i], j, len - 1);
+		str = ft_strsub(code[*i], j, len - 1);
+		champ->name = str;
 		(*i)++;
-		return (get_multiline_string(str, code, i));
+		return (get_multiline_string(&champ->name, code, i));
 	}
 	else
-		*str = ft_strsub(code[*i], j, len);
+		str = ft_strsub(code[*i], j, len);
 	(*i)++;
+	champ->name = str;
+	return (1);
+}
+
+static int	get_comment(char **code, t_asm *champ, int *i)
+{
+	int		j;
+	int		len;
+	char	*str;
+
+	j = 7;
+	while (ft_isspace(code[*i][++j]))
+		;
+	if (!code[*i][j] || code[*i][j] != '"')
+		return (err_mesg(NO_COMMENT, *i));
+	len = 0;
+	while (code[*i][j + ++len] && code[*i][j + len] != '"')
+		;
+	if (!code[j + len])
+	{
+		str = ft_strsub(code[*i], j, len - 1);
+		champ->comment = str;
+		(*i)++;
+		return (get_multiline_string(&champ->comment, code, i));
+	}
+	else
+		str = ft_strsub(code[*i], j, len);
+	(*i)++;
+	champ->comment = str;
 	return (1);
 }
 
@@ -80,11 +111,11 @@ int			get_name_and_comment(char **code, t_asm *champ, int *i)
 	if (code[*i][0] != '.')
 		return (err_mesg(INCORRECT_FIRST_LINE, *i));
 	if (ft_strnequ(".name", code[*i], 5) && ft_isspace(code[*i][5]))
-		return (get_string(code, &champ->name, i) &&
-				get_string(code, &champ->comment, i));
+		return (get_name(code, champ, i) &&
+				get_comment(code, champ, i));
 	else if (ft_strnequ(".comment", code[*i], 8) && ft_isspace(code[*i][8]))
-		return (get_string(code, &champ->comment, i) &&
-				get_string(code, &champ->name, i));
+		return (get_comment(code, champ, i) &&
+				get_name(code, champ, i));
 	else
 		return (err_mesg(INCORRECT_FIRST_LINE, *i));
 }

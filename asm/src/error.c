@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 11:58:58 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 15:41:34 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:08:49 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	error(char *mesg, int line)
 {
 	ft_putstr_fd("Error in line ", 2);
-	ft_putnbr_fd(line, 2);
+	ft_putnbr_fd(line + 1, 2);
 	ft_putendl_fd(mesg, 2);
 }
 
@@ -30,7 +30,6 @@ static int	another_variants2(int err_code, int line)
 	else if (err_code == NEXT_TOKEN_MUST_BE_DIR_OR_REG)
 		error(": Next argument for function must be register or direct value!"
 			, line);
-	
 	return (0);
 }
 

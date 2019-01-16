@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 13:28:29 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 15:47:26 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:47:32 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ int			get_code(t_asm *champ)
 	while (cur)
 	{
 		if (cur->type == INSTRUCTION)
+		{
 			if (!get_instruction(champ, &cur))
 				return (0);
-		if (cur->type == LABEL)
+		}
+		else if (cur->type == LABEL)
 		{
 			add_label(champ, cur);
 			cur = cur->next;
