@@ -19,11 +19,11 @@ t_car		*g_carriage;
 int			g_last_alive;
 int			g_cnt_cars;
 
-int			g_cnt_cycles;
-int			g_cnt_live;
-int			g_cnt_checks;
-
 int			g_cycles_to_die = CYCLE_TO_DIE;
+
+int			g_cnt_live;
+int			g_cnt_cycles;
+int			g_cnt_checks;
 
 void		exit_func(char *msg)
 {
@@ -85,7 +85,7 @@ void		battle(t_cell *arena, t_car *car)
 			tmp = tmp->next;
 		}
 		check_battle(car);
-		if (g_cnt_cycles == 800)
+		if (g_cnt_cycles == g_dump)
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
 			exit(1);
@@ -98,6 +98,8 @@ void		check_battle(t_car *car)
 	static int	prev_cycles_to_die;
 
 	g_cnt_cycles++;
+	if (!prev_cycles_to_die)
+		prev_cycles_to_die = g_cycles_to_die;
 	if (g_cnt_cycles % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
 	{
 		g_cnt_checks++;
@@ -109,8 +111,11 @@ void		check_battle(t_car *car)
 		}
 		if (g_cnt_checks == MAX_CHECKS)
 		{
-			if (prev_cycles_to_die == g_cycles_to_die)
+			if (prev_cycles_to_die == g_cycles_to_die && g_cycles_to_die > 0)
+			{
 				g_cycles_to_die -= CYCLE_DELTA;
+				prev_cycles_to_die = g_cycles_to_die;
+			}
 			g_cnt_checks = 0;
 		}
 		g_cnt_live = 0;
@@ -127,9 +132,14 @@ void		check_cars(t_car *car)
 		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
 		{
 			ft_printf("car is dead\n");
+			// тут удалить каретку из списка и обновить переменную g_carriage
 			exit(0);
 		}
 		tmp = tmp->next;
+	}
+	if (!g_carriage)
+	{
+		ft_printf("The winer is %s", g_players[g_last_alive - 1].name);
 	}
 }
 
@@ -139,8 +149,7 @@ int			main(int ac, char *av[])
 
 	g_last_alive = parse_players(g_players, ac, av);
 	g_cnt_cars = g_last_alive;
-	ft_printf("last alive: %d, visu: %d, dump: %d\n", g_last_alive, g_visual, g_dump);
-	exit(1);
+	// ft_printf("last alive: %d, visu: %d, dump: %d\n", g_last_alive, g_visual, g_dump); //
 	arena = init_battlefield(g_players);
 	g_carriage = init_cars();
 

@@ -46,12 +46,12 @@ typedef struct	s_carriage
 	int					id;
 	bool				carry;
 	int					last_live;
-	int					remain_cycles;
 	int					position;
 	int					no_jump;
 	int					regs[REG_NUMBER];
 
 	uint8_t				op;
+	int					remain_cycles;
 	uint8_t				args_types[3];
 	uint8_t				args_sizes[3];
 	struct s_carriage	*next;
