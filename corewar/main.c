@@ -96,21 +96,27 @@ void		battle(t_cell *arena, t_car *car)
 void		check_battle(t_car *car)
 {
 	static int	prev_cycles_to_die;
+	static int	cnt_c;
 
 	g_cnt_cycles++;
+	cnt_c++;
+	// ft_printf("%d %d %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
 	if (!prev_cycles_to_die)
 		prev_cycles_to_die = g_cycles_to_die;
-	if (g_cnt_cycles % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
+	if (cnt_c % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
 	{
 		g_cnt_checks++;
 		check_cars(g_carriage);
+		// ft_printf("cnt live: %d, cnt checks %d\n", g_cnt_live, g_cnt_checks);
 		if (g_cnt_live >= NBR_LIVE)
 		{
 			g_cycles_to_die -= CYCLE_DELTA;
+			prev_cycles_to_die = g_cycles_to_die;
 			g_cnt_checks = 0;
 		}
 		if (g_cnt_checks == MAX_CHECKS)
 		{
+			// ft_printf("prev cycles %d\n", prev_cycles_to_die);
 			if (prev_cycles_to_die == g_cycles_to_die && g_cycles_to_die > 0)
 			{
 				g_cycles_to_die -= CYCLE_DELTA;
@@ -119,7 +125,10 @@ void		check_battle(t_car *car)
 			g_cnt_checks = 0;
 		}
 		g_cnt_live = 0;
+		cnt_c = 0;
 	}
+	// if (g_cnt_cycles == 21563)
+	// 	exit(0);
 }
 
 void		check_cars(t_car *car)
@@ -130,15 +139,13 @@ void		check_cars(t_car *car)
 	while (tmp)
 	{
 		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
-		{
-			ft_printf("car is dead\n");
 			delete_t_car(tmp);
-		}
 		tmp = tmp->next;
 	}
 	if (!g_carriage)
 	{
-		ft_printf("The winer is %s", g_players[g_last_alive - 1].name);
+		ft_printf("The winer is %s, %d\n", g_players[g_last_alive - 1].name, g_cnt_cycles);
+		exit(1);
 	}
 }
 
