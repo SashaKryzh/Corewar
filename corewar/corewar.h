@@ -72,6 +72,7 @@ extern t_car	*g_carriage;
 
 void			check_battle(t_car *car);
 void			check_cars(t_car *car);
+void		 	delete_t_car(t_car *tmp);
 
 /*
 **	Get values

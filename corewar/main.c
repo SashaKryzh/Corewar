@@ -132,8 +132,7 @@ void		check_cars(t_car *car)
 		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
 		{
 			ft_printf("car is dead\n");
-			delete_t_car(&g_carriage, tmp);
-			exit(0);
+			delete_t_car(tmp);
 		}
 		tmp = tmp->next;
 	}

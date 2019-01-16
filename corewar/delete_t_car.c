@@ -10,23 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "corewar.h"
-#include "stdlib.h"
 
-void 	delete_t_car(t_car **head, t_car *tmp)
+void 	delete_t_car(t_car *tmp)
 {
 	t_car *s;
 
-	if (*head == tmp)
+	if (g_carriage == tmp)
 	{
-		*head = (*head)->next;
+		g_carriage = tmp->next;
 		free(tmp);
+		return ;
 	}
-	s = *head;
+	s = g_carriage;
 	while (s->next && s->next != tmp)
 		s = s->next;
-	if (!(s->next))
-		return ;
+	if (!s->next)
+	{
+		ft_printf("Shoto ne tak!\n");
+		exit(1);
+	}
 	s->next = tmp->next;
 	free(tmp);
 }
