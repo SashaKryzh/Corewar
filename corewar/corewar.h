@@ -73,6 +73,7 @@ extern t_car	*g_carriage;
 **	Battle
 */
 
+void			battle(t_cell *arena, t_car *car);
 void			check_battle(t_car *car);
 void			check_cars(t_car *car);
 void		 	delete_t_car(t_car *tmp);
@@ -81,10 +82,11 @@ void		 	delete_t_car(t_car *tmp);
 **	Get values
 */
 
-uint8_t			get_reg_num(t_cell *arena, t_car *car, int arg_num);
+void			get_op_code(t_car *car, uint8_t op);
 int				get_op_data(t_cell *arena, t_car *car);
-int				get_ind(t_cell *arena, t_car *car, int arg_num, int size);
+uint8_t			get_reg_num(t_cell *arena, t_car *car, int arg_num);
 int				get_value(t_cell *arena, int start, int size);
+int				get_ind(t_cell *arena, t_car *car, int arg_num, int size);
 
 /*
 **	Utils

@@ -58,3 +58,10 @@ int		get_value(t_cell *arena, int start, int size)
 	ft_memrev(&res, 4);
 	return (res);
 }
+
+void		get_op_code(t_car *car, uint8_t op)
+{
+	car->op = op;
+	if (op >= 0x01 && op <= 0x10)
+		car->remain_cycles = g_op[op - 1].to_wait;
+}

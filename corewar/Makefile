@@ -20,6 +20,7 @@ VPATH = ./operations || ./parser
 SRCS = main.c \
 check_args_byte.c \
 utils.c \
+battle.c \
 get_value.c \
 init_oper.c \
 live_op.c \
