@@ -139,7 +139,7 @@ int			main(int ac, char *av[])
 
 	g_last_alive = parse_players(g_players, ac, av);
 	g_cnt_cars = g_last_alive;
-	ft_printf("%d\n", g_last_alive);
+	ft_printf("last alive: %d, visu: %d, dump: %d\n", g_last_alive, g_visual, g_dump);
 	exit(1);
 	arena = init_battlefield(g_players);
 	g_carriage = init_cars();

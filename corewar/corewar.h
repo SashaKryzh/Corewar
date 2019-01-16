@@ -28,6 +28,8 @@ extern int	g_cnt_cycles;
 extern int	g_cnt_live;
 extern int	g_cycles_to_die;
 extern int	g_cnt_checks;
+extern int	g_visual;
+extern int	g_dump;
 
 typedef struct	s_player
 {
