@@ -20,7 +20,7 @@ void		sti_op(t_cell *arena, t_car *car)
 	int addr;
 	int	i;
 
-	print_args_type(car);
+	// print_args_type(car);
 	reg_val = car->regs[get_reg_num(arena, car, 1) - 1];
 	i = 0;
 	while (i < 2)
@@ -33,7 +33,7 @@ void		sti_op(t_cell *arena, t_car *car)
 			args[i] = car->regs[get_reg_num(arena, car, i + 2) - 1];
 		i++;
 	}
-	ft_printf("reg: %d, arg2: %d, arg3: %d\n", reg_val, args[0], args[1]); //
+	// ft_printf("reg: %d, arg2: %d, arg3: %d\n", reg_val, args[0], args[1]); //
 	addr = (args[0] + args[1]) % IDX_MOD;
 	ft_memrev(&reg_val, 4); // BIG ENDIAN
 	put_on_arena(arena, (MEM_SIZE + car->position + addr) % MEM_SIZE,

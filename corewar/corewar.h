@@ -22,14 +22,17 @@
 # define OP g_op[car->op - 1]
 # define MOST_LEFT_BIT 2147483648
 
+# define MIN_READ (4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4)
+# define MAX_READ (MIN_READ + CHAMP_MAX_SIZE)
+
+extern int	g_visual;
+extern int	g_dump;
 extern int	g_cnt_cars;
 extern int	g_last_alive;
 extern int	g_cnt_cycles;
 extern int	g_cnt_live;
 extern int	g_cycles_to_die;
 extern int	g_cnt_checks;
-extern int	g_visual;
-extern int	g_dump;
 
 typedef struct	s_player
 {
@@ -134,6 +137,14 @@ void			aff_op(t_cell *arena, t_car *car);
 static void		(*g_opers[17])() = {0, &live_op, &ld_op, &st_op, &add_sub_op,
 	&add_sub_op, &and_or_xor_op, &and_or_xor_op, &and_or_xor_op, &zjmp_op,
 	&ldi_op, &sti_op, &fork_op, &ld_op, &ldi_op, &fork_op, &aff_op};
+
+/*
+**	Visual
+*/
+
+void	print_into_arena(t_cell *cells, t_car *carrs);
+void	disinit(void);
+void	init(void);
 
 /*
 **	Tests

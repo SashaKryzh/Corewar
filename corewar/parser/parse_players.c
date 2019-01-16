@@ -13,9 +13,6 @@
 #include "libft.h"
 #include "corewar.h"
 
-int	g_visual;
-int	g_dump;
-
 int		check_n_flag(int ac, char *av[], int *i)
 {
 	int	id;
@@ -42,7 +39,7 @@ int		check_flag(int ac, char *av[], int *i)
 		if ((g_dump = ft_atoi(av[*i - 1])) <= 0)
 			exit_func("-dump error");
 		if (*i >= ac)
-			return (1);
+			return (0);
 		return (check_flag(ac, av, i));
 	}
 	else if (ft_strequ(av[*i], "-v"))
@@ -50,26 +47,23 @@ int		check_flag(int ac, char *av[], int *i)
 		g_visual = 1;
 		*i += 1;
 		if (*i >= ac)
-			return (1);
+			return (0);
 		return (check_flag(ac, av, i));
 	}
-	return (0);
+	return (1);
 }
 
-int		read_champ(char *file, unsigned char *champ)
+int		read_champ(char *file, uint8_t *champ)
 {
 	int		fd;
 	int		ret;
-	int		max_read;
-	int		min_read;
 
-	min_read = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4;
-	max_read = min_read + CHAMP_MAX_SIZE;
 	if ((fd = open(file, O_RDONLY)) < 0)
-		exit_func("Invalid file");
-	ret = read(fd, champ, max_read + 1);
-	if (ret < min_read || ret > max_read)
-		ft_printf("SIZE ERROR\n");
+		exit_func("File error");
+	if ((ret = read(fd, champ, MAX_READ + 1)) < 0)
+		exit_func("File read error");
+	if (ret < MIN_READ || ret > MAX_READ)
+		exit_func("Champ file error");
 	close(fd);
 	return (ret);
 }
@@ -89,14 +83,13 @@ int		parse_players(t_player *champs, int ac, char *av[])
 	j = -1;
 	while (i < ac)
 	{
-		if (check_flag(ac, av, &i))
+		if (!check_flag(ac, av, &i))
 			break ;
 		if (++j == MAX_PLAYERS)
 			exit_func("Too many players");
 		champs[j].id = check_n_flag(ac, av, &i);
 		champs[j].alive = 0;
 		ret = read_champ(av[i], champ);
-		// putfile_hex(ret, champ);
 		check_magic(champ);
 		get_name(&champs[j], &champ[4]);
 		get_size(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4]);

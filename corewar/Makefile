@@ -13,7 +13,7 @@
 NAME = corewar
 
 FLAGS = -Wall -Werror -Wextra
-CC = gcc
+CC = gcc -lncurses
 
 VPATH = ./operations || ./parser
 
@@ -38,7 +38,8 @@ parser.c \
 parser_checks.c \
 players_id.c \
 tests.c\
-delete_t_car.c
+delete_t_car.c \
+vis.c
 
 OBJS_DIR = ./objs
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))

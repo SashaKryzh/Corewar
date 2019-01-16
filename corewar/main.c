@@ -13,6 +13,9 @@
 #include "libft.h"
 #include "corewar.h"
 
+int			g_visual;
+int			g_dump;
+
 t_player	g_players[MAX_PLAYERS + 1];
 t_car		*g_carriage;
 
@@ -27,7 +30,7 @@ int			g_cnt_checks;
 
 void		exit_func(char *msg)
 {
-	ft_printf("[Error]: %s\n", msg);
+	perror(msg);
 	exit(0);
 }
 
@@ -46,14 +49,14 @@ void		manage_op(t_cell *arena, t_car *car)
 			(*g_opers[car->op])(arena, car);
 		else
 		{
-			putfile_hex(MEM_SIZE, arena, 1, 32); //
-			ft_printf("%d\n", g_cnt_cycles);
+			// putfile_hex(MEM_SIZE, arena, 1, 32); //
+			// ft_printf("%d\n", g_cnt_cycles);
 		}
 	}
 	else
 		(*g_opers[car->op])(arena, car);
 	skip_op(arena, car);
-	ft_printf("\n");
+	// ft_printf("\n");
 }
 
 void		battle(t_cell *arena, t_car *car)
@@ -72,12 +75,12 @@ void		battle(t_cell *arena, t_car *car)
 			{
 				if (tmp->op >= 0x01 && tmp->op <= 0x10)
 				{
-					ft_printf("%s (cycle: %d, pos : %d):\n", g_op[tmp->op - 1].name, g_cnt_cycles, tmp->position);
+					// ft_printf("%s (cycle: %d, pos : %d):\n", g_op[tmp->op - 1].name, g_cnt_cycles, tmp->position);
 					manage_op(arena, tmp);
 				}
 				else
 				{
-					ft_printf("not supported %s (%d):\n", g_op[tmp->op - 1].name, g_cnt_cycles);
+					// ft_printf("not supported %s (%d):\n", g_op[tmp->op - 1].name, g_cnt_cycles);
 					exit(1);
 					tmp->position = (tmp->position + 1) % MEM_SIZE;
 				}
@@ -85,9 +88,11 @@ void		battle(t_cell *arena, t_car *car)
 			tmp = tmp->next;
 		}
 		check_battle(car);
+		if (g_visual)
+			print_into_arena(arena, g_carriage);
 		if (g_cnt_cycles == g_dump)
 		{
-			putfile_hex(MEM_SIZE, arena, 1, 32); //
+			// putfile_hex(MEM_SIZE, arena, 1, 32); //
 			exit(1);
 		}
 	}
@@ -144,7 +149,7 @@ void		check_cars(t_car *car)
 	}
 	if (!g_carriage)
 	{
-		ft_printf("The winer is %s, %d\n", g_players[g_last_alive - 1].name, g_cnt_cycles);
+		ft_printf("Contestant %d, \"Batman\", has won !\n", g_last_alive, g_players[g_last_alive - 1]);
 		exit(1);
 	}
 }
@@ -159,13 +164,17 @@ int			main(int ac, char *av[])
 	arena = init_battlefield(g_players);
 	g_carriage = init_cars();
 
-	print_players(g_players); //
-	ft_printf("\nCNT: %d\n", g_last_alive); //
-	putfile_hex(MEM_SIZE, arena, 1, 32); //
-	print_cars(g_carriage); //
+	// print_players(g_players); //
+	// ft_printf("\nCNT: %d\n", g_last_alive); //
+	// putfile_hex(MEM_SIZE, arena, 1, 32); //
+	// print_cars(g_carriage); //
+	// ft_printf("cnt cars: %d\n", g_cnt_cars);
+	// ft_printf("\n");
 
-	ft_printf("cnt cars: %d\n", g_cnt_cars);
-	ft_printf("\n");
+	if (g_visual)
+		init();
 	battle(arena, g_carriage);
+	if (g_visual)
+		disinit();
 	return (0);
 }

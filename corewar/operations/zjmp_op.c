@@ -19,12 +19,12 @@ void		zjmp_op(t_cell *arena, t_car *car)
 
 	if (!car->carry)
 	{
-		ft_printf("zjmp: carry == 0\n");
+		// ft_printf("zjmp: carry == 0\n");
 		return ;
 	}
 	arg = get_value(arena, (car->position + 1) % MEM_SIZE, OP.t_dir_size);
-	ft_printf("%d + %d = ", car->position, arg); //
+	// ft_printf("%d + %d = ", car->position, arg); //
 	car->position = (MEM_SIZE + car->position + arg) % MEM_SIZE;
-	ft_printf("%d\n", car->position); //
+	// ft_printf("%d\n", car->position); //
 	car->no_jump = 1;
 }
