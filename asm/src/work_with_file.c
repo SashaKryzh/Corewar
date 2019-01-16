@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 13:42:45 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 16:06:35 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:10:30 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ static int	incorrect_file(char *filename)
 			filename[ft_strlen(filename) - 1] == '.');
 }
 
-static void	expand_arr(char **arr, char *line)
+static void	expand_arr(char ***arr, char *line)
 {
 	int		i;
 
 	i = -1;
-	while (arr[++i])
+	while ((*arr)[++i])
 		;
-	arr = (char**)realloc((void*)arr, sizeof(char*) * (i + 2));
-	arr[i] = line;
-	arr[i + 1] = NULL;
+	*arr = (char**)realloc((void*)(*arr), sizeof(char*) * (i + 2));
+	(*arr)[i] = line;
+	(*arr)[i + 1] = NULL;
 }
 
 static char	**read_file(const int fd)
@@ -52,7 +52,7 @@ static char	**read_file(const int fd)
 	content = (char**)malloc(sizeof(char*));
 	content[0] = NULL;
 	while (get_next_line(fd, &line))
-		expand_arr(content, line);
+		expand_arr(&content, line);
 	return (content);
 }
 

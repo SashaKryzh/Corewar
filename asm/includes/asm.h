@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 13:30:52 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 16:02:00 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:36:17 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include "op.h"
 # include "../../libft/includes/libft.h"
 
-enum e_token_type { LABEL, INSTRUCTION, REGISTER, DIRECT_VALUE,
-	INDIRECT_VALUE, DIRECT_LABEL, INDIRECT_LABEL, SEPARATOR};
+enum						e_token_type { LABEL, INSTRUCTION, REGISTER,
+	DIRECT_VALUE, INDIRECT_VALUE, DIRECT_LABEL, INDIRECT_LABEL, SEPARATOR};
 
 typedef struct	s_token
 {
@@ -28,7 +28,6 @@ typedef struct	s_token
 	char					*value;
 	int						line;
 	struct s_token			*next;
-	struct s_token			*prev;
 }				t_token;
 
 typedef struct	s_label
@@ -58,7 +57,7 @@ typedef struct	s_asm
 	char					*name;
 	char					*comment;
 	char					*code;
-	int 					cur_pos;
+	int						cur_pos;
 	int						written_bytes;
 	int						fd;
 }				t_asm;
@@ -100,17 +99,18 @@ char			*int_to_hex(int32_t nbr, int size);
 ** tokens.c
 */
 int				get_tokens(char **code, t_asm *champ);
-int 			unknown_character(char c);
+int				unknown_character(char c);
 
 /*
 ** token_with_value.c
 */
-int				token_with_value(t_asm *champ, t_token *token, char *value, int line_idx);
+int				token_with_value(t_asm *champ, t_token *token, char *value,
+		int line_idx);
 
 /*
 ** get_indirect_value.c
 */
-int				get_indirect_value(t_asm *champ, t_token *token, char *value, int line_idx);
+int				get_indirect_value(t_token *token, char *value,	int line_idx);
 
 /*
 ** check.c
@@ -120,7 +120,7 @@ int				get_indirect_value(t_asm *champ, t_token *token, char *value, int line_id
 ** function to check that there is only one instruction per line
 */
 int				check_rest(char *str, int start);
-int 			label_exists(char *label, t_asm *champ);
+int				label_exists(char *label, t_asm *champ);
 
 /*
 ** label_stuff.c
@@ -154,6 +154,5 @@ int				sti(t_asm *champ, t_token **cur);
 int				sub(t_asm *champ, t_token **cur);
 int				xor(t_asm *champ, t_token **cur);
 int				zjmp(t_asm *champ, t_token **cur);
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 15:07:25 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 15:38:23 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:39:22 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	valid(t_token **cur)
 		|| (*cur)->next->next->next->next->type != SEPARATOR)
 		return (err_mesg(SEPARATOR_IS_MISSING, (*cur)->line));
 	if (!(*cur)->next->next->next->next->next
-		|| (*cur)->next->next->next->next->next->type == REGISTER)
+		|| (*cur)->next->next->next->next->next->type != REGISTER)
 		return (err_mesg(NEXT_TOKEN_MUST_BE_REGISTER, (*cur)->line));
 	if ((*cur)->next->next->next->next->next->next &&
 		(*cur)->next->next->next->next->next->next->line == (*cur)->line)
@@ -74,7 +74,8 @@ static void	add_arg(t_asm *champ, t_token **cur)
 		add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1));
 		return ;
 	}
-	if (!get_label_value((*cur)->value, champ, 2 + ((*cur)->type == INDIRECT_LABEL) * 2))
+	if (!get_label_value((*cur)->value, champ, 2 +
+				((*cur)->type == INDIRECT_LABEL) * 2))
 	{
 		if ((*cur)->type == DIRECT_LABEL)
 		{

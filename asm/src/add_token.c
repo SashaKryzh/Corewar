@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 12:05:25 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 16:01:40 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:28:38 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ static int	clasify_token(t_asm *champ, t_token *new, char *line, int *j)
 	if (line[*j] == SEPARATOR_CHAR)
 	{
 		new->type = SEPARATOR;
+		new->value = ft_strdup(",");
 		return (1);
 	}
 	i = *j;
-	while (line[*j] && !ft_isspace(line[*j]) && line[*j] != COMMENT_CHAR)
+	while (line[*j] && !ft_isspace(line[*j]) && line[*j] != COMMENT_CHAR
+			&& line[*j] != SEPARATOR_CHAR)
 	{
 		if (unknown_character(line[*j]))
 			return (err_mesg(UNKNOWN_CHARACTER, new->line));
@@ -35,23 +37,23 @@ static int	clasify_token(t_asm *champ, t_token *new, char *line, int *j)
 
 int			add_token(char *line, int i, int *j, t_asm *champ)
 {
-	t_token	new;
+	t_token	*new;
 	t_token	*cur;
 
-	new.prev = champ->tokens;
-	new.next = NULL;
-	new.line = i;
-	new.value = NULL;
-	if (!clasify_token(champ, &new, line, j))
+	new = (t_token*)malloc(sizeof(t_token));
+	new->next = NULL;
+	new->line = i;
+	new->value = NULL;
+	if (!clasify_token(champ, new, line, j))
 		return (0);
 	if (!champ->tokens)
-		champ->tokens = &new;
+		champ->tokens = new;
 	else
 	{
 		cur = champ->tokens;
 		while (cur->next)
 			cur = cur->next;
-		cur->next = &new;
+		cur->next = new;
 	}
 	return (1);
 }

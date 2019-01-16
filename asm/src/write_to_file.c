@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 12:50:29 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 16:08:06 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 11:33:14 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static char	*insert_spaces(t_asm *champ, char *line)
 	j = 0;
 	while (line[j])
 	{
+		if (((j + champ->written_bytes % 39) % 39) == 0)
+			new[++i] = '\n';
 		if (((j + champ->written_bytes % 4) % 4) == 0)
 			new[++i] = ' ';
 		else

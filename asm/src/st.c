@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 15:07:04 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 15:06:00 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/16 16:38:53 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static int	valid(t_token **cur)
 	if (!(*cur)->next->next || (*cur)->next->next->type != SEPARATOR)
 		return (err_mesg(SEPARATOR_IS_MISSING, (*cur)->line));
 	if (!(*cur)->next->next->next || !((*cur)->next->next->next->type
-		== DIRECT_VALUE || (*cur)->next->next->next->type == DIRECT_LABEL ||
-		(*cur)->next->next->next->type == INDIRECT_VALUE ||
+		== REGISTER || (*cur)->next->next->next->type == INDIRECT_VALUE ||
 		(*cur)->next->next->next->type == INDIRECT_LABEL))
 		return (err_mesg(NEXT_TOKEN_MUST_BE_DIR_OR_IN, (*cur)->line));
 	if ((*cur)->next->next->next->next &&
