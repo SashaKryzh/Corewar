@@ -132,7 +132,7 @@ void		check_cars(t_car *car)
 		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
 		{
 			ft_printf("car is dead\n");
-			// тут удалить каретку из списка и обновить переменную g_carriage
+			delete_t_car(&g_carriage, tmp);
 			exit(0);
 		}
 		tmp = tmp->next;
