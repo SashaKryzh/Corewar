@@ -143,6 +143,9 @@ int			main(int ac, char *av[])
 	t_cell			*arena;
 
 	g_last_alive = parse_players(champs, ac, av);
+	ft_printf("%d\n", g_visual);
+	ft_printf("%d\n", g_dump);
+	exit(0);
 	arena = init_battlefield(champs);
 	carriage = init_cars();
 

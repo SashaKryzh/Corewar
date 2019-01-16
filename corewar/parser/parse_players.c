@@ -13,7 +13,10 @@
 #include "libft.h"
 #include "corewar.h"
 
-int		check_flag(int ac, char *av[], int *i)
+int	g_visual;
+int	g_dump;
+
+int		check_n_flag(int ac, char *av[], int *i)
 {
 	int	id;
 
@@ -27,6 +30,30 @@ int		check_flag(int ac, char *av[], int *i)
 		return (id);
 	}
 	return (MAX_PLAYERS + 1);
+}
+
+int	check_flag (int ac, char *av[], int *i)
+{
+	if (ft_strequ(av[*i], "-dump"))
+	{
+		if (*i + 1 >= ac)
+			exit_func("-dump error");
+		*i += 2;
+		if ((g_dump = ft_atoi(av[*i - 1])) <= 0)
+			exit_func("-dump error");
+		if (*i >= ac)
+			return (1);
+		return (check_flag(ac, av, i));
+	}
+	else if (ft_strequ(av[*i], "-v"))
+	{
+		g_visual = 1;
+		*i += 1;
+		if (*i >= ac)
+			return (1);
+		return (check_flag(ac, av, i));
+	}
+	return (0);
 }
 
 int		read_champ(char *file, unsigned char *champ)
@@ -62,9 +89,11 @@ int		parse_players(t_player *champs, int ac, char *av[])
 	j = -1;
 	while (i < ac)
 	{
+		if (check_flag(ac, av, &i))
+			break ;
 		if (++j == MAX_PLAYERS)
 			exit_func("Too many players");
-		champs[j].id = check_flag(ac, av, &i);
+		champs[j].id = check_n_flag(ac, av, &i);
 		champs[j].alive = 0;
 		ret = read_champ(av[i], champ);
 		// putfile_hex(ret, champ);
