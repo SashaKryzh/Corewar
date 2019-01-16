@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-t_player	*g_players;
+t_player	g_players[MAX_PLAYERS + 1];
 t_car		*g_carriage;
 
 int			g_last_alive;
@@ -43,7 +43,7 @@ void		manage_op(t_cell *arena, t_car *car)
 	if (g_op[car->op - 1].is_args_types)
 	{	
 		if (get_op_data(arena, car))
-			(*f_opers[car->op])(arena, car);
+			(*g_opers[car->op])(arena, car);
 		else
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
@@ -51,7 +51,7 @@ void		manage_op(t_cell *arena, t_car *car)
 		}
 	}
 	else
-		(*f_opers[car->op])(arena, car);
+		(*g_opers[car->op])(arena, car);
 	skip_op(arena, car);
 	ft_printf("\n");
 }
@@ -66,10 +66,7 @@ void		battle(t_cell *arena, t_car *car)
 		while (tmp)
 		{
 			if (!tmp->remain_cycles)
-			{
 				get_op_code(tmp, arena[tmp->position].v);
-				// putbyte_hex(tmp->op);
-			}
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
 			if (!tmp->remain_cycles)
 			{
@@ -138,24 +135,22 @@ void		check_cars(t_car *car)
 
 int			main(int ac, char *av[])
 {
-	t_player		champs[MAX_PLAYERS + 1];
-	t_car			*carriage;
 	t_cell			*arena;
 
-	g_last_alive = parse_players(champs, ac, av);
-	arena = init_battlefield(champs);
-	carriage = init_cars();
+	g_last_alive = parse_players(g_players, ac, av);
+	g_cnt_cars = g_last_alive;
+	ft_printf("%d\n", g_last_alive);
+	exit(1);
+	arena = init_battlefield(g_players);
+	g_carriage = init_cars();
 
-	print_players(champs); //
+	print_players(g_players); //
 	ft_printf("\nCNT: %d\n", g_last_alive); //
 	putfile_hex(MEM_SIZE, arena, 1, 32); //
-	print_cars(carriage); //
+	print_cars(g_carriage); //
 
-	g_carriage = carriage;
-	g_cnt_cars = g_last_alive;
-	g_players = champs;
 	ft_printf("cnt cars: %d\n", g_cnt_cars);
 	ft_printf("\n");
-	battle(arena, carriage);
+	battle(arena, g_carriage);
 	return (0);
 }

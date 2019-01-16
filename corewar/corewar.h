@@ -61,9 +61,8 @@ typedef struct	s_cell
 	int			id;
 }				t_cell;
 
-extern t_player	*g_players;
+extern t_player	g_players[MAX_PLAYERS + 1];
 extern t_car	*g_carriage;
-
 
 /*
 **	Battle
@@ -129,7 +128,9 @@ void			sti_op(t_cell *arena, t_car *car);
 void			fork_op(t_cell *arena, t_car *car);
 void			aff_op(t_cell *arena, t_car *car);
 
-static void		(*f_opers[17])() = {0, &live_op, &ld_op, &st_op, &add_sub_op, &add_sub_op, &and_or_xor_op, &and_or_xor_op, &and_or_xor_op, &zjmp_op, &ldi_op, &sti_op, &fork_op, &ld_op, &ldi_op, &fork_op, &aff_op};
+static void		(*g_opers[17])() = {0, &live_op, &ld_op, &st_op, &add_sub_op,
+	&add_sub_op, &and_or_xor_op, &and_or_xor_op, &and_or_xor_op, &zjmp_op,
+	&ldi_op, &sti_op, &fork_op, &ld_op, &ldi_op, &fork_op, &aff_op};
 
 /*
 **	Tests
