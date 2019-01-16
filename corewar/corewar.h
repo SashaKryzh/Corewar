@@ -20,6 +20,7 @@
 # include "op.h"
 
 # define OP g_op[car->op - 1]
+# define MOST_LEFT_BIT 2147483648
 
 extern int	g_cnt_cars;
 extern int	g_last_alive;
@@ -27,6 +28,8 @@ extern int	g_cnt_cycles;
 extern int	g_cnt_live;
 extern int	g_cycles_to_die;
 extern int	g_cnt_checks;
+extern int	g_visual;
+extern int	g_dump;
 
 typedef struct	s_player
 {
@@ -43,20 +46,25 @@ typedef struct	s_carriage
 	int					id;
 	bool				carry;
 	int					last_live;
-	int					remain_cycles;
 	int					position;
 	int					no_jump;
 	int					regs[REG_NUMBER];
 
 	uint8_t				op;
+	int					remain_cycles;
 	uint8_t				args_types[3];
 	uint8_t				args_sizes[3];
 	struct s_carriage	*next;
 }				t_car;
 
-extern t_player	*g_players;
-extern t_car	*g_carriage;
+typedef struct	s_cell
+{
+	uint8_t		v;
+	int			id;
+}				t_cell;
 
+extern t_player	g_players[MAX_PLAYERS + 1];
+extern t_car	*g_carriage;
 
 /*
 **	Battle
@@ -64,23 +72,24 @@ extern t_car	*g_carriage;
 
 void			check_battle(t_car *car);
 void			check_cars(t_car *car);
+void		 	delete_t_car(t_car *tmp);
 
 /*
 **	Get values
 */
 
-uint8_t			get_reg_num(uint8_t *arena, t_car *car, int arg_num);
-int				get_op_data(uint8_t *arena, t_car *car);
-int				get_ind(uint8_t *arena, t_car *car, int arg_num, int size);
-int				get_value(uint8_t *arena, int start, int size);
+uint8_t			get_reg_num(t_cell *arena, t_car *car, int arg_num);
+int				get_op_data(t_cell *arena, t_car *car);
+int				get_ind(t_cell *arena, t_car *car, int arg_num, int size);
+int				get_value(t_cell *arena, int start, int size);
 
 /*
 **	Utils
 */
 
-void			skip_op(uint8_t *arena, t_car *car);
-int				to_arg(uint8_t *arena, t_car *car, int arg_num);
-void			put_on_arena(uint8_t *arena, int start, uint8_t *val, int size);
+void			skip_op(t_cell *arena, t_car *car);
+int				to_arg(t_cell *arena, t_car *car, int arg_num);
+void			put_on_arena(t_cell *arena, int start, uint8_t *val, int size);
 
 /*
 **	Parser
@@ -105,22 +114,26 @@ int				set_players_id(t_player *champs);
 
 void			exit_func(char *msg);
 t_car			*init_cars(void);
-uint8_t			*init_battlefield(t_player *champs);
+t_cell			*init_battlefield(t_player *champs);
 
 /*
 **	Operations
 */
 
-void			live_op(uint8_t *arena, t_car *car);
-void			ld_op(uint8_t *arena, t_car *car);
-void			st_op(uint8_t *arena, t_car *car);
-void			add_sub_op(uint8_t *arena, t_car *car);
-void			and_or_xor_op(uint8_t *arena, t_car *car);
-void			zjmp_op(uint8_t *arena, t_car *car);
-void			ldi_op(uint8_t *arena, t_car *car);
-void			sti_op(uint8_t *arena, t_car *car);
-void			fork_op(uint8_t *arena, t_car *car);
-void			aff_op(uint8_t *arena, t_car *car);
+void			live_op(t_cell *arena, t_car *car);
+void			ld_op(t_cell *arena, t_car *car);
+void			st_op(t_cell *arena, t_car *car);
+void			add_sub_op(t_cell *arena, t_car *car);
+void			and_or_xor_op(t_cell *arena, t_car *car);
+void			zjmp_op(t_cell *arena, t_car *car);
+void			ldi_op(t_cell *arena, t_car *car);
+void			sti_op(t_cell *arena, t_car *car);
+void			fork_op(t_cell *arena, t_car *car);
+void			aff_op(t_cell *arena, t_car *car);
+
+static void		(*g_opers[17])() = {0, &live_op, &ld_op, &st_op, &add_sub_op,
+	&add_sub_op, &and_or_xor_op, &and_or_xor_op, &and_or_xor_op, &zjmp_op,
+	&ldi_op, &sti_op, &fork_op, &ld_op, &ldi_op, &fork_op, &aff_op};
 
 /*
 **	Tests
@@ -128,10 +141,10 @@ void			aff_op(uint8_t *arena, t_car *car);
 
 void			print_players(t_player *champs);
 void			print_cars(t_car *carriage);
-void			putfile_hex(int ret, uint8_t *file, int space, int newline);
+void			putfile_hex(int ret, t_cell *file, int space, int newline);
 void			putbyte_hex(uint8_t n);
 void			putbytes_bit(char *n, int size);
 void			print_args_type(t_car *car);
-void			print_oper_data(uint8_t *arena, t_car *car);
+void			print_oper_data(t_cell *arena, t_car *car);
 
 #endif

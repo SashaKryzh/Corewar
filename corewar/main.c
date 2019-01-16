@@ -13,17 +13,17 @@
 #include "libft.h"
 #include "corewar.h"
 
-t_player	*g_players;
+t_player	g_players[MAX_PLAYERS + 1];
 t_car		*g_carriage;
 
 int			g_last_alive;
 int			g_cnt_cars;
 
-int			g_cnt_cycles;
-int			g_cnt_live;
-int			g_cnt_checks;
-
 int			g_cycles_to_die = CYCLE_TO_DIE;
+
+int			g_cnt_live;
+int			g_cnt_cycles;
+int			g_cnt_checks;
 
 void		exit_func(char *msg)
 {
@@ -38,38 +38,12 @@ void		get_op_code(t_car *car, uint8_t op)
 		car->remain_cycles = g_op[op - 1].to_wait;
 }
 
-void		execute_op(uint8_t *arena, t_car *car)
-{
-	if (car->op == 0x01)
-		live_op(arena, car);
-	else if (car->op == 0x02 || car->op == 0x0D)
-		ld_op(arena, car);
-	else if (car->op == 0x03)
-		st_op(arena, car);
-	else if (car->op == 0x04 || car->op == 0x05)
-		add_sub_op(arena, car);
-	else if (car->op >= 0x06 && car->op <= 0x08)
-		and_or_xor_op(arena, car);
-	else if (car->op == 0x09)
-		zjmp_op(arena, car);
-	else if (car->op == 0x0A || car->op == 0x0E)
-		ldi_op(arena, car);
-	else if (car->op == 0x0B)
-		sti_op(arena, car);
-	else if (car->op == 0x0C || car->op == 0x0F)
-		fork_op(arena, car);
-	else if (car->op == 0x10)
-		aff_op(arena, car);
-	else
-		ft_printf("Nea...\n");
-}
-
-void		manage_op(uint8_t *arena, t_car *car)
+void		manage_op(t_cell *arena, t_car *car)
 {
 	if (g_op[car->op - 1].is_args_types)
 	{	
 		if (get_op_data(arena, car))
-			execute_op(arena, car);
+			(*g_opers[car->op])(arena, car);
 		else
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 32); //
@@ -77,12 +51,12 @@ void		manage_op(uint8_t *arena, t_car *car)
 		}
 	}
 	else
-		execute_op(arena, car);
+		(*g_opers[car->op])(arena, car);
 	skip_op(arena, car);
 	ft_printf("\n");
 }
 
-void		battle(uint8_t *arena, t_car *car)
+void		battle(t_cell *arena, t_car *car)
 {
 	t_car	*tmp;
 
@@ -92,10 +66,7 @@ void		battle(uint8_t *arena, t_car *car)
 		while (tmp)
 		{
 			if (!tmp->remain_cycles)
-			{
-				get_op_code(tmp, arena[tmp->position]);
-				// putbyte_hex(tmp->op);
-			}
+				get_op_code(tmp, arena[tmp->position].v);
 			tmp->remain_cycles = tmp->remain_cycles > 0 ? tmp->remain_cycles - 1 : tmp->remain_cycles;
 			if (!tmp->remain_cycles)
 			{
@@ -114,36 +85,50 @@ void		battle(uint8_t *arena, t_car *car)
 			tmp = tmp->next;
 		}
 		check_battle(car);
-		// if (g_cnt_cycles == 25)
-		// {
-		// 	putfile_hex(MEM_SIZE, arena, 1, 32); //
-		// 	exit(1);
-		// }
+		if (g_cnt_cycles == g_dump)
+		{
+			putfile_hex(MEM_SIZE, arena, 1, 32); //
+			exit(1);
+		}
 	}
 }
 
 void		check_battle(t_car *car)
 {
 	static int	prev_cycles_to_die;
+	static int	cnt_c;
 
 	g_cnt_cycles++;
-	if (g_cnt_cycles % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
+	cnt_c++;
+	// ft_printf("%d %d %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
+	if (!prev_cycles_to_die)
+		prev_cycles_to_die = g_cycles_to_die;
+	if (cnt_c % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
 	{
 		g_cnt_checks++;
 		check_cars(g_carriage);
+		// ft_printf("cnt live: %d, cnt checks %d\n", g_cnt_live, g_cnt_checks);
 		if (g_cnt_live >= NBR_LIVE)
 		{
 			g_cycles_to_die -= CYCLE_DELTA;
+			prev_cycles_to_die = g_cycles_to_die;
 			g_cnt_checks = 0;
 		}
 		if (g_cnt_checks == MAX_CHECKS)
 		{
-			if (prev_cycles_to_die == g_cycles_to_die)
+			// ft_printf("prev cycles %d\n", prev_cycles_to_die);
+			if (prev_cycles_to_die == g_cycles_to_die && g_cycles_to_die > 0)
+			{
 				g_cycles_to_die -= CYCLE_DELTA;
+				prev_cycles_to_die = g_cycles_to_die;
+			}
 			g_cnt_checks = 0;
 		}
 		g_cnt_live = 0;
+		cnt_c = 0;
 	}
+	// if (g_cnt_cycles == 21563)
+	// 	exit(0);
 }
 
 void		check_cars(t_car *car)
@@ -154,34 +139,33 @@ void		check_cars(t_car *car)
 	while (tmp)
 	{
 		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
-		{
-			ft_printf("car is dead\n");
-			exit(0);
-		}
+			delete_t_car(tmp);
 		tmp = tmp->next;
+	}
+	if (!g_carriage)
+	{
+		ft_printf("The winer is %s, %d\n", g_players[g_last_alive - 1].name, g_cnt_cycles);
+		exit(1);
 	}
 }
 
 int			main(int ac, char *av[])
 {
-	t_player		champs[MAX_PLAYERS + 1];
-	t_car			*carriage;
-	uint8_t			*arena;
+	t_cell			*arena;
 
-	g_last_alive = parse_players(champs, ac, av);
-	arena = init_battlefield(champs);
-	carriage = init_cars();
+	g_last_alive = parse_players(g_players, ac, av);
+	g_cnt_cars = g_last_alive;
+	// ft_printf("last alive: %d, visu: %d, dump: %d\n", g_last_alive, g_visual, g_dump); //
+	arena = init_battlefield(g_players);
+	g_carriage = init_cars();
 
-	print_players(champs); //
+	print_players(g_players); //
 	ft_printf("\nCNT: %d\n", g_last_alive); //
 	putfile_hex(MEM_SIZE, arena, 1, 32); //
-	print_cars(carriage); //
+	print_cars(g_carriage); //
 
-	g_carriage = carriage;
-	g_cnt_cars = g_last_alive;
-	g_players = champs;
 	ft_printf("cnt cars: %d\n", g_cnt_cars);
 	ft_printf("\n");
-	battle(arena, carriage);
+	battle(arena, g_carriage);
 	return (0);
 }

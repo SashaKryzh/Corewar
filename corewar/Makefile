@@ -37,7 +37,8 @@ parse_players.c \
 parser.c \
 parser_checks.c \
 players_id.c \
-tests.c
+tests.c\
+delete_t_car.c
 
 OBJS_DIR = ./objs
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))

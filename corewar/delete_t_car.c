@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   live_op.c                                          :+:      :+:    :+:   */
+/*   delete_t_car.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: pzakala <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/11 14:40:20 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/11 14:40:20 by okryzhan         ###   ########.fr       */
+/*   Created: 2019/01/16 15:34:02 by pzakala           #+#    #+#             */
+/*   Updated: 2019/01/16 15:34:07 by pzakala          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "corewar.h"
 
-void		live_op(t_cell *arena, t_car *car)
+void 	delete_t_car(t_car *tmp)
 {
-	int arg;
+	t_car *s;
 
-	arg = get_value(arena, (car->position + 1) % MEM_SIZE, OP.t_dir_size);
-	ft_printf("%d\n", arg);
-	if (arg > 0 && ft_abs(arg) <= MAX_PLAYERS)
-		g_last_alive = ft_abs(arg);
-	car->last_live = g_cnt_cycles;
-	g_cnt_live++;
+	if (g_carriage == tmp)
+	{
+		g_carriage = tmp->next;
+		free(tmp);
+		return ;
+	}
+	s = g_carriage;
+	while (s->next && s->next != tmp)
+		s = s->next;
+	if (!s->next)
+	{
+		ft_printf("Shoto ne tak!\n");
+		exit(1);
+	}
+	s->next = tmp->next;
+	free(tmp);
 }
