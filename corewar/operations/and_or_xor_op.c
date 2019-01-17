@@ -13,6 +13,15 @@
 #include "libft.h"
 #include "corewar.h"
 
+void			and_or_xor_debug(t_car *car, int reg_num, int *args)
+{
+	if (SHOW_OPERS)
+	{
+		ft_printf(OPER_INFO);
+		ft_printf("%d %d r%d\n", args[0], args[1], reg_num);
+	}
+}
+
 static int		and_op(uint32_t n1, uint32_t n2)
 {
 	uint32_t	check;
@@ -61,15 +70,6 @@ static int		xor_op(uint32_t n1, uint32_t n2)
 	return (res);
 }
 
-void			and_or_xor_debug(t_car *car, int reg_num, int *args)
-{
-	if (SHOW_OPERS)
-	{
-		ft_printf(OPER_INFO);
-		ft_printf("%d %d r%d\n", args[0], args[1], reg_num);
-	}
-}
-
 void			and_or_xor_op(t_cell *arena, t_car *car)
 {
 	int reg_num;
@@ -95,13 +95,6 @@ void			and_or_xor_op(t_cell *arena, t_car *car)
 		car->regs[reg_num - 1] = or_op(args[0], args[1]);
 	else
 		car->regs[reg_num - 1] = xor_op(args[0], args[1]);
-	// if (g_cnt_cycles == g_dump - 1)
-	// {
-	// 	print_args_type(car);
-	// 	ft_printf("pos: %d, %02x %02x\n", car->position, arena[car->position + 1].v, arena[car->position + 2].v);
-	// 	ft_printf("num: %d, arg1 %d, arg2 %d\n", reg_num, args[0], args[1]);
-	// 	ft_printf("id: %d, val: %d\n", car->id, car->regs[reg_num - 1]);
-	// }
 	car->carry = car->regs[reg_num - 1] == 0 ? 1 : 0;
 	and_or_xor_debug(car, reg_num, args);
 }

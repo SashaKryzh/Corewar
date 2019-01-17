@@ -16,23 +16,11 @@
 void		sti_debug(t_cell *arena, t_car *car, int reg_val, int *args)
 {
 	int	sum;
-	int i;
 
 	if (!SHOW_OPERS)
 		return ;
 	ft_printf(OPER_INFO);
-	ft_printf("r%d ", get_reg_num(arena, car, 1));
-	i = 0;
-	while (i < 2)
-	{
-		if (car->args_types[i + 1] == DIR_CODE)
-			ft_printf("%d ", args[i]);
-		else if (car->args_types[i + 1] == IND_CODE)
-			ft_printf("%d", args[i]);
-		else
-			ft_printf("r%d", args[i]);
-		i++;
-	}
+	ft_printf("r%d %d %d ", get_reg_num(arena, car, 1), args[0], args[1]);
 	ft_printf("\n");
 	sum = args[0] + args[1];
 	ft_printf("       | -> store to %d + %d = %d ", args[0], args[1], sum);

@@ -24,7 +24,7 @@
 
 # define SHOW_CYCLES (g_debug & 2)
 # define SHOW_OPERS (g_debug & 4)
-# define OPER_INFO "P    %d | %s ", car->id, OP.name
+# define OPER_INFO "P %4d | %s ", car->id, OP.name
 
 # define ON_CODE 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4
 # define MIN_READ (4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4)

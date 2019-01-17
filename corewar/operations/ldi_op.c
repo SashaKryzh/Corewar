@@ -13,6 +13,18 @@
 #include "libft.h"
 #include "corewar.h"
 
+void	ldi_debug(t_car *car, int reg_num, int *args)
+{
+	if (!SHOW_OPERS)
+		return ;
+	ft_printf(OPER_INFO);
+	ft_printf("%d %d r%d\n", args[0], args[1], reg_num);
+	ft_printf("       | -> load from ");
+	ft_printf("%d + %d = %d ", args[0], args[1], args[0] + args[1]);
+	ft_printf("(with pc and mod %d)\n", car->position +
+		(args[0] + args[1]) % IDX_MOD);
+}
+
 void	ldi_op(t_cell *arena, t_car *car)
 {
 	int reg_num;
@@ -20,8 +32,6 @@ void	ldi_op(t_cell *arena, t_car *car)
 	int	addr;
 	int	i;
 
-	// print_args_type(car);
-	// ft_printf("\n");
 	reg_num = get_reg_num(arena, car, 3);
 	i = 0;
 	while (i < 2)
@@ -41,8 +51,5 @@ void	ldi_op(t_cell *arena, t_car *car)
 	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
 	car->regs[reg_num - 1] = get_value(arena, addr, 4);
 	car->carry = car->op == 0x0E && car->regs[reg_num - 1] == 0 ? 1 : 0;
-	// ft_printf("%d\n", g_cnt_cycles);
-	// ft_printf("addr: %d + %d, reg_num: %d, put in reg: %d\n", args[0], args[1], reg_num, car->regs[reg_num - 1]); //
-	// putfile_hex(MEM_SIZE, arena, 1, 32); //
-	// exit(1); //
+	ldi_debug(car, reg_num, args);
 }

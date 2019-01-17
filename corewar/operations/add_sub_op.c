@@ -13,6 +13,15 @@
 #include "libft.h"
 #include "corewar.h"
 
+void		add_sub_debug(t_car *car, int *reg_nums)
+{
+	if (SHOW_OPERS)
+	{
+		ft_printf(OPER_INFO);
+		ft_printf("r%d r%d r%d\n", reg_nums[0], reg_nums[1], reg_nums[2]);
+	}
+}
+
 void		add_sub_op(t_cell *arena, t_car *car)
 {
 	int reg_nums[3];
@@ -31,4 +40,5 @@ void		add_sub_op(t_cell *arena, t_car *car)
 		to_put = car->regs[reg_nums[0] - 1] - car->regs[reg_nums[1] - 1];
 	car->regs[reg_nums[2] - 1] = to_put;
 	car->carry = to_put == 0 ? 1 : 0;
+	add_sub_debug(car, reg_nums);
 }
