@@ -30,7 +30,8 @@ void	ldi_op(t_cell *arena, t_car *car)
 			args[i] = get_value(arena, to_arg(arena, car, i + 1),
 				OP.t_dir_size);
 		else if (car->args_types[i] == IND_CODE)
-			args[i] = get_ind(arena, car, to_arg(arena, car, i + 1), 4);
+			args[i] = get_ind(arena, car, to_arg(arena, car, i + 1),
+				OP.t_dir_size);
 		else if (car->args_types[i] == REG_CODE)
 			args[i] = car->regs[get_reg_num(arena, car, i + 1) - 1];
 		i++;
