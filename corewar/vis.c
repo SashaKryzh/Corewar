@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:49:57 by vlytvyne          #+#    #+#             */
-/*   Updated: 2019/01/14 16:42:20 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/17 17:08:01 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,17 @@
 WINDOW *g_arena;
 WINDOW *g_statusbar;
 
+void	refr(void)
+{
+	refresh();
+	wrefresh(g_arena);
+	wrefresh(g_statusbar);
+}
+
 void	init(void)
 {
 	initscr();
-	g_arena = newwin(66, 194, 0, 0);
+	g_arena = newwin(66, 195, 0, 0);
 	g_statusbar = newwin(66, 50, 0, 195);
 
 	start_color();
@@ -76,9 +83,42 @@ void	init(void)
 	MOVE_SHIFT(wprintw(g_statusbar, "NBR_LIVE: %i", NBR_LIVE))
 	MOVE_SHIFT(wprintw(g_statusbar, "MAX_CHECKS: %i", MAX_CHECKS))
 
-	refresh();
-	wrefresh(g_arena);
-	wrefresh(g_statusbar);
+	refr();
+}
+
+void	print_carrs(t_cell *cells, t_car *carrs)
+{
+	int x;
+	int y;
+
+	while (carrs)
+	{
+		wattron(g_arena, COLOR_PAIR(11));
+		x = (carrs->position * 3) % 64 + 2;
+		y = (carrs->position) / 64 + 1;
+		mvwprintw(g_arena, y, x, "%02x", cells[carrs->position].v);
+		wattroff(g_arena, COLOR_PAIR(11));
+		carrs = carrs->next;
+	}
+}
+
+void	print_bold(t_cell *cells, int position, int size)
+{
+	int x;
+	int y;
+	int end;
+
+	end = position + size;
+	wattron(g_arena, A_BOLD);
+	wattron(g_arena, COLOR_PAIR(ft_abs(cells[position].id)));
+	while (position < end)
+	{
+		x = (position * 3) % 64 + 2;
+		y = position / 64 + 1;
+		mvwprintw(g_arena, y, x, "%02x", cells[position].v);
+		position++;
+	}
+	wattroff(g_arena, COLOR_PAIR(ft_abs(cells[--position].id)));
 }
 
 void	print_into_arena(t_cell *cells, t_car *carrs)
@@ -88,36 +128,29 @@ void	print_into_arena(t_cell *cells, t_car *carrs)
 	int i;
 
 	i = 0;
-	x = 1;
+	x = 2;
 	y = 0;
 	while (i < 4096)
 	{
 		if (i % 64 == 0)
 		{
 			y++;
-			x = 1;
+			x = 2;
 		}
-		wattron(g_arena, COLOR_PAIR(ft_abs(cells[i].id)));
+		if (cells[i].id != 0)
+		{
+			wattroff(g_arena, A_BOLD);
+			wattron(g_arena, COLOR_PAIR(ft_abs(cells[i].id)));
+		}
 		mvwprintw(g_arena, y, x, "%02x", cells[i].v);
 		wattroff(g_arena, COLOR_PAIR(ft_abs(cells[i].id)));
+		wattron(g_arena, A_BOLD);
 		x += 3;
 		i++;
 	}
-	while (carrs)
-	{
-		int x_car;
-		int y_car;
-		
-		wattron(g_arena, COLOR_PAIR(11));
-		x_car = (carrs->position * 3) % 64 + 1;
-		y_car = (carrs->position) / 64 + 1;
-		mvwprintw(g_arena, y_car, x_car, "%02x", cells[carrs->position].v);
-		wattroff(g_arena, COLOR_PAIR(11));
-		carrs = carrs->next;
-	}
-	refresh();
-	wrefresh(g_arena);
-	wrefresh(g_statusbar);
+	print_bold(cells, 10, 10);
+	print_carrs(cells, carrs);
+	refr();
 	usleep(10000);
 }
 
