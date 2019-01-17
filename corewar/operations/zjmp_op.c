@@ -13,18 +13,28 @@
 #include "libft.h"
 #include "corewar.h"
 
+void		zjmp_debug(t_car *car, int arg)
+{
+	if (SHOW_OPERS)
+	{
+		ft_printf(OPER_INFO);
+		ft_printf("%d ", arg);
+		if (car->carry)
+			ft_printf("OK\n");
+		else
+			ft_printf("FAILED\n");
+	}
+}
+
 void		zjmp_op(t_cell *arena, t_car *car)
 {
 	int arg;
 
-	if (!car->carry)
-	{
-		// ft_printf("zjmp: carry == 0\n");
-		return ;
-	}
 	arg = get_value(arena, (car->position + 1) % MEM_SIZE, OP.t_dir_size);
-	// ft_printf("%d + %d = ", car->position, arg); //
-	car->position = (MEM_SIZE + car->position + arg) % MEM_SIZE;
-	// ft_printf("%d\n", car->position); //
-	car->no_jump = 1;
+	if (car->carry)
+	{
+		car->position = (MEM_SIZE + car->position + arg) % MEM_SIZE;
+		car->no_jump = 1;
+	}
+	zjmp_debug(car, arg);
 }

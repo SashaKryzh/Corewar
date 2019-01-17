@@ -16,21 +16,15 @@
 void		manage_op(t_cell *arena, t_car *car)
 {
 	// if (g_cnt_cycles == g_dump - 1)
-	// 	ft_printf("%02x\n", car->op);
+	// 	ft_printf("%d %02x\n", car->position, arena[car->position].v);
 	if (g_op[car->op - 1].is_args_types)
-	{	
+	{
 		if (get_op_data(arena, car))
 			(*g_opers[car->op])(arena, car);
-		else
-		{
-			// putfile_hex(MEM_SIZE, arena, 1, 32); //
-			// ft_printf("%d\n", g_cnt_cycles);
-		}
 	}
 	else
 		(*g_opers[car->op])(arena, car);
 	skip_op(arena, car);
-	// ft_printf("\n");
 }
 
 void		battle(t_cell *arena, t_car *car)
@@ -70,46 +64,44 @@ void		battle(t_cell *arena, t_car *car)
 
 void		check_battle(t_car *car)
 {
-	static int	prev_cycles_to_die;
+	static int	prev_to_die;
 	static int	cnt_c;
-
+	int			changed;
 
 	g_cnt_cycles++;
 	cnt_c++;
-
-	// if (g_cnt_cycles == g_dump)
-	// {
-	// 	ft_printf("cnt_c: %d, to_die: %d, cycle: %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
-	// }
 	// ft_printf("cnt_c: %d, to_die: %d, cycle: %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
-	if (!prev_cycles_to_die)
-		prev_cycles_to_die = g_cycles_to_die;
+	prev_to_die = !prev_to_die ? g_cycles_to_die : prev_to_die;
 	if (cnt_c % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
 	{
 		g_cnt_checks++;
 		check_cars(g_carriage);
-		// ft_printf("cnt live: %d, cnt checks %d\n", g_cnt_live, g_cnt_checks);
 		if (g_cnt_live >= NBR_LIVE)
 		{
 			g_cycles_to_die -= CYCLE_DELTA;
-			prev_cycles_to_die = g_cycles_to_die;
+			prev_to_die = g_cycles_to_die;
 			g_cnt_checks = 0;
+			changed = 1;
 		}
 		if (g_cnt_checks == MAX_CHECKS)
 		{
-			// ft_printf("prev cycles %d\n", prev_cycles_to_die);
-			if (prev_cycles_to_die == g_cycles_to_die && g_cycles_to_die > 0)
+			if (prev_to_die == g_cycles_to_die && g_cycles_to_die > 0)
 			{
 				g_cycles_to_die -= CYCLE_DELTA;
-				prev_cycles_to_die = g_cycles_to_die;
+				prev_to_die = g_cycles_to_die;
 			}
 			g_cnt_checks = 0;
+			changed = 1;
 		}
 		g_cnt_live = 0;
 		cnt_c = 0;
 	}
-	// if (g_cnt_cycles == 21563)
-	// 	exit(0);
+	if (SHOW_CYCLES)
+	{
+		ft_printf("It is now cycle %d\n", g_cnt_cycles);
+	}
+	if (SHOW_CYCLES && --changed == 0)
+		ft_printf("Cycle to die is now %d\n", g_cycles_to_die);
 }
 
 void		check_cars(t_car *car)
@@ -121,7 +113,7 @@ void		check_cars(t_car *car)
 	{
 		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
 			delete_t_car(tmp);
-		tmp = tmp->next;
+		tmp = tmp ? tmp->next : NULL;
 	}
 	if (!g_carriage)
 	{

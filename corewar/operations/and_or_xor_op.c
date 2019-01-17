@@ -61,6 +61,15 @@ static int		xor_op(uint32_t n1, uint32_t n2)
 	return (res);
 }
 
+void			and_or_xor_debug(t_car *car, int reg_num, int *args)
+{
+	if (SHOW_OPERS)
+	{
+		ft_printf(OPER_INFO);
+		ft_printf("%d %d r%d\n", args[0], args[1], reg_num);
+	}
+}
+
 void			and_or_xor_op(t_cell *arena, t_car *car)
 {
 	int reg_num;
@@ -94,4 +103,5 @@ void			and_or_xor_op(t_cell *arena, t_car *car)
 	// 	ft_printf("id: %d, val: %d\n", car->id, car->regs[reg_num - 1]);
 	// }
 	car->carry = car->regs[reg_num - 1] == 0 ? 1 : 0;
+	and_or_xor_debug(car, reg_num, args);
 }

@@ -48,8 +48,11 @@ int		check_flag(int ac, char *av[], int *i)
 	}
 	else if (ft_strequ(av[*i], "-d"))
 	{
-		g_debug = 1;
-		*i += 1;
+		if (*i + 1 >= ac)
+			exit_func("-d error");
+		*i += 2;
+		if ((g_debug += ft_atoi(av[*i - 1])) <= 0)
+			exit_func("-d error");
 		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
 	return (1);

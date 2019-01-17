@@ -18,9 +18,9 @@ void		sti_debug(t_cell *arena, t_car *car, int reg_val, int *args)
 	int	sum;
 	int i;
 
-	if (!(g_debug & SHOW_OPERS))
+	if (!SHOW_OPERS)
 		return ;
-	ft_printf("P    1 | %s ", g_op[car->op - 1].name);
+	ft_printf(OPER_INFO);
 	ft_printf("r%d ", get_reg_num(arena, car, 1));
 	i = 0;
 	while (i < 2)
@@ -36,8 +36,7 @@ void		sti_debug(t_cell *arena, t_car *car, int reg_val, int *args)
 	ft_printf("\n");
 	sum = args[0] + args[1];
 	ft_printf("       | -> store to %d + %d = %d ", args[0], args[1], sum);
-	ft_printf("(with pc and mod %d)\n", (MEM_SIZE + car->position
-		+ sum % IDX_MOD) % MEM_SIZE);
+	ft_printf("(with pc and mod %d)\n", car->position + sum % IDX_MOD);
 }
 
 void		sti_op(t_cell *arena, t_car *car)

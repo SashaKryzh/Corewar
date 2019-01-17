@@ -13,6 +13,14 @@
 #include "libft.h"
 #include "corewar.h"
 
+void		ld_debug(t_car *car, int reg_num, int arg)
+{
+	if (!SHOW_OPERS)
+		return ;
+	ft_printf(OPER_INFO);
+	ft_printf("%d r%d\n", arg, reg_num);
+}
+
 /*
 **	If lld called it: get_ind wont do % IDX_MOD
 */
@@ -31,4 +39,5 @@ void		ld_op(t_cell *arena, t_car *car)
 	// ft_printf("arg: %d, reg num: %d\n", arg, reg_num);
 	car->regs[reg_num - 1] = arg;
 	car->carry = arg == 0 ? 1 : 0;
+	ld_debug(car, reg_num, arg);
 }

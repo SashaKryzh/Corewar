@@ -22,11 +22,18 @@
 # define OP g_op[car->op - 1]
 # define MOST_LEFT_BIT 2147483648
 
+# define SHOW_CYCLES (g_debug & 2)
+# define SHOW_OPERS (g_debug & 4)
+# define OPER_INFO "P    %d | %s ", car->id, OP.name
+
+# define ON_CODE 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4
 # define MIN_READ (4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4)
 # define MAX_READ (MIN_READ + CHAMP_MAX_SIZE)
 
 extern int	g_visual;
+extern int	g_debug;
 extern int	g_dump;
+
 extern int	g_cnt_cars;
 extern int	g_last_alive;
 extern int	g_cnt_cycles;

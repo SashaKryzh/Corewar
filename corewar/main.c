@@ -14,6 +14,7 @@
 #include "corewar.h"
 
 int			g_visual;
+int			g_debug;
 int			g_dump = -1;
 
 t_player	g_players[MAX_PLAYERS + 1];

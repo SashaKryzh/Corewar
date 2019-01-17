@@ -13,6 +13,15 @@
 #include "libft.h"
 #include "corewar.h"
 
+void		live_debug(t_car *car, int arg)
+{
+	if (SHOW_OPERS)
+	{
+		ft_printf(OPER_INFO);
+		ft_printf("%d\n", arg);
+	}
+}
+
 void		live_op(t_cell *arena, t_car *car)
 {
 	int arg;
@@ -23,4 +32,5 @@ void		live_op(t_cell *arena, t_car *car)
 		g_last_alive = ft_abs(arg);
 	car->last_live = g_cnt_cycles;
 	g_cnt_live++;
+	live_debug(car, arg);
 }
