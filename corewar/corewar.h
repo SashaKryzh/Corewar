@@ -154,6 +154,8 @@ static void		(*g_opers[17])() = {0, &live_op, &ld_op, &st_op, &add_sub_op,
 void	print_into_arena(t_cell *cells, t_car *carrs);
 void	print_bold(t_cell *cells, int position, int size);
 void	print_carrs(t_cell *cells, t_car *carrs);
+void	show_on_arena(t_cell *arena, int where, int size);
+void 	update_view(t_cell *arena);
 void	refr(void);
 void	disinit(void);
 void	init(void);

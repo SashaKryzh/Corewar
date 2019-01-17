@@ -26,7 +26,7 @@ int			g_cnt_cars;
 int			g_cycles_to_die = CYCLE_TO_DIE;
 
 int			g_cnt_live;
-int			g_cnt_cycles;
+int			g_cnt_cycles = 1;
 int			g_cnt_checks;
 
 void		exit_func(char *msg)
@@ -64,6 +64,11 @@ int			main(int ac, char *av[])
 	// ft_printf("\nCNT: %d\n", g_last_alive); //
 	// print_cars(g_carriage); //
 
+	if (!g_dump)
+	{
+		putfile_hex(MEM_SIZE, arena, 1, 64);
+		exit(1);
+	}
 	if (g_visual)
 		init();
 	battle(arena, g_carriage);

@@ -36,7 +36,7 @@ int		check_flag(int ac, char *av[], int *i)
 		if (*i + 1 >= ac || g_dump >= 0)
 			exit_func("-dump error");
 		*i += 2;
-		if ((g_dump = ft_atoi(av[*i - 1])) <= 0)
+		if ((g_dump = ft_atoi(av[*i - 1])) < 0)
 			exit_func("-dump error");
 		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
