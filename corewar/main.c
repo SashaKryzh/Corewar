@@ -14,7 +14,7 @@
 #include "corewar.h"
 
 int			g_visual;
-int			g_dump;
+int			g_dump = -1;
 
 t_player	g_players[MAX_PLAYERS + 1];
 t_car		*g_carriage;
@@ -34,6 +34,20 @@ void		exit_func(char *msg)
 	exit(0);
 }
 
+void		introduce_champs(t_player *champs)
+{
+	int i;
+
+	ft_printf("Introducing contestants...\n");
+	i = 0;
+	while (champs[i].id != -1)
+	{
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" ", champs[i].id, champs[i].code_size, champs[i].name); 
+		ft_printf("(\"%s\") !\n", champs[i].comment);
+		i++;
+	}
+}
+
 int			main(int ac, char *av[])
 {
 	t_cell			*arena;
@@ -43,13 +57,11 @@ int			main(int ac, char *av[])
 	// ft_printf("last alive: %d, visu: %d, dump: %d\n", g_last_alive, g_visual, g_dump); //
 	arena = init_battlefield(g_players);
 	g_carriage = init_cars();
+	introduce_champs(g_players);
 
 	// print_players(g_players); //
 	// ft_printf("\nCNT: %d\n", g_last_alive); //
-	// putfile_hex(MEM_SIZE, arena, 1, 32); //
 	// print_cars(g_carriage); //
-	// ft_printf("cnt cars: %d\n", g_cnt_cars);
-	// ft_printf("\n");
 
 	if (g_visual)
 		init();

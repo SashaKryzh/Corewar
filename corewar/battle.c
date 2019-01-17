@@ -15,6 +15,8 @@
 
 void		manage_op(t_cell *arena, t_car *car)
 {
+	// if (g_cnt_cycles == g_dump - 1)
+	// 	ft_printf("%02x\n", car->op);
 	if (g_op[car->op - 1].is_args_types)
 	{	
 		if (get_op_data(arena, car))
@@ -51,22 +53,18 @@ void		battle(t_cell *arena, t_car *car)
 					manage_op(arena, tmp);
 				}
 				else
-				{
-					// ft_printf("not supported %s (%d):\n", g_op[tmp->op - 1].name, g_cnt_cycles);
-					exit(1);
 					tmp->position = (tmp->position + 1) % MEM_SIZE;
-				}
 			}
 			tmp = tmp->next;
 		}
 		check_battle(car);
-		if (g_visual)
-			print_into_arena(arena, g_carriage);
-		if (g_cnt_cycles == g_dump)
+		if (!g_dump || g_cnt_cycles == g_dump)
 		{
-			// putfile_hex(MEM_SIZE, arena, 1, 32); //
+			putfile_hex(MEM_SIZE, arena, 1, 64); //
 			exit(1);
 		}
+		if (g_visual)
+			print_into_arena(arena, g_carriage);
 	}
 }
 
@@ -75,9 +73,15 @@ void		check_battle(t_car *car)
 	static int	prev_cycles_to_die;
 	static int	cnt_c;
 
+
 	g_cnt_cycles++;
 	cnt_c++;
-	// ft_printf("%d %d %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
+
+	// if (g_cnt_cycles == g_dump)
+	// {
+	// 	ft_printf("cnt_c: %d, to_die: %d, cycle: %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
+	// }
+	// ft_printf("cnt_c: %d, to_die: %d, cycle: %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
 	if (!prev_cycles_to_die)
 		prev_cycles_to_die = g_cycles_to_die;
 	if (cnt_c % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
@@ -121,7 +125,7 @@ void		check_cars(t_car *car)
 	}
 	if (!g_carriage)
 	{
-		ft_printf("Contestant %d, \"Batman\", has won !\n", g_last_alive, g_players[g_last_alive - 1]);
+		ft_printf("Contestant %d, \"%s\", has won ! (%d)\n", g_last_alive, g_players[g_last_alive - 1].name, g_cnt_cycles);
 		exit(1);
 	}
 }

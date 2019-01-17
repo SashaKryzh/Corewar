@@ -20,10 +20,11 @@ void	putbyte_hex(uint8_t n)
 
 void	putfile_hex(int ret, t_cell *file, int space, int newline)
 {
+	ft_printf("0x0000 : ");
 	for (int j = 0; j < ret; j++)
 	{
 		if (j != 0 && j % newline == 0)
-			ft_printf("\n");
+			ft_printf("\n%#06x : ", j);
 		putbyte_hex(file[j].v);
 		if (space == 1)
 			ft_printf(" ");

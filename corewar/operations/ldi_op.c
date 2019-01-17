@@ -20,8 +20,8 @@ void	ldi_op(t_cell *arena, t_car *car)
 	int	addr;
 	int	i;
 
-	print_args_type(car);
-	ft_printf("\n");
+	// print_args_type(car);
+	// ft_printf("\n");
 	reg_num = get_reg_num(arena, car, 3);
 	i = 0;
 	while (i < 2)
@@ -38,7 +38,8 @@ void	ldi_op(t_cell *arena, t_car *car)
 	addr = car->op == 0x0A ? addr % IDX_MOD : addr;
 	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
 	car->regs[reg_num - 1] = get_value(arena, addr, 4);
-	ft_printf("addr: %d + %d, reg_num: %d, put in reg: %d\n", args[0], args[1], reg_num, car->regs[reg_num - 1]); //
+	// ft_printf("%d\n", g_cnt_cycles);
+	// ft_printf("addr: %d + %d, reg_num: %d, put in reg: %d\n", args[0], args[1], reg_num, car->regs[reg_num - 1]); //
 	// putfile_hex(MEM_SIZE, arena, 1, 32); //
 	// exit(1); //
 }

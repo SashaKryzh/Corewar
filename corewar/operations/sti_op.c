@@ -38,4 +38,9 @@ void		sti_op(t_cell *arena, t_car *car)
 	ft_memrev(&reg_val, 4); // BIG ENDIAN
 	put_on_arena(arena, (MEM_SIZE + car->position + addr) % MEM_SIZE,
 		(uint8_t *)(&reg_val), REG_SIZE);
+	// if (g_cnt_cycles == 164)
+	// {
+	// 	print_args_type(car);
+	// 	ft_printf("reg_val: %d, arg1: %d, arg2: %d\n", reg_val, args[0], args[1]);
+	// }
 }

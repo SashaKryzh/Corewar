@@ -14,25 +14,6 @@
 #include "corewar.h"
 
 /*
-**	Return id of needed reg, so you must do (num - 1) : 1 -> 0 for array of regs
-*/
-
-uint8_t		get_reg_num(t_cell *arena, t_car *car, int arg_num)
-{
-	int i;
-	int	to_jump;
-
-	i = 0;
-	to_jump = 1 + OP.is_args_types;
-	while (i < arg_num - 1)
-	{
-		to_jump += car->args_sizes[i];
-		i++;
-	}
-	return (arena[(car->position + to_jump) % MEM_SIZE].v);
-}
-
-/*
 **	Check for valid reg number
 */
 
@@ -85,7 +66,7 @@ int			get_op_data(t_cell *arena, t_car *car)
 		}
 		if (!((OP.args_types[j] >> (car->args_types[j] - 1)) & 1))
 		{
-			ft_printf("Error in ARGS TYPES\n");
+			// ft_printf("Error in ARGS TYPES\n");
 			ret = 0;
 		}
 		i -= 2;
