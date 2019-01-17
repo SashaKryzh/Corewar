@@ -13,7 +13,7 @@
 NAME = corewar
 
 FLAGS = -Wall -Werror -Wextra
-CC = gcc -lncurses
+CC = gcc
 
 VPATH = ./operations || ./parser
 
@@ -58,7 +58,7 @@ INCLFORPARSER = .
 all: $(NAME)
 
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT)
-	$(CC) -o $(NAME) $(OBJS) $(LIB) -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
+	$(CC) -lncurses -o $(NAME) $(OBJS) $(LIB) -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
 
 $(OBJS_DIR)/%.o: %.c
 	$(CC) -o $@ -c $< -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
