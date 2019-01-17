@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:49:57 by vlytvyne          #+#    #+#             */
-/*   Updated: 2019/01/17 17:08:01 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/17 17:22:48 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	refr(void)
 	refresh();
 	wrefresh(g_arena);
 	wrefresh(g_statusbar);
+	usleep(10000);
 }
 
 void	init(void)
@@ -148,10 +149,6 @@ void	print_into_arena(t_cell *cells, t_car *carrs)
 		x += 3;
 		i++;
 	}
-	print_bold(cells, 10, 10);
-	print_carrs(cells, carrs);
-	refr();
-	usleep(10000);
 }
 
 // t_cell	*create_cells()

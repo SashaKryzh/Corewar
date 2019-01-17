@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 08:32:17 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/08 08:32:17 by okryzhan         ###   ########.fr       */
+/*   Updated: 2019/01/17 17:21:58 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,9 @@ static void		(*g_opers[17])() = {0, &live_op, &ld_op, &st_op, &add_sub_op,
 */
 
 void	print_into_arena(t_cell *cells, t_car *carrs);
+void	print_bold(t_cell *cells, int position, int size);
+void	print_carrs(t_cell *cells, t_car *carrs);
+void	refr(void);
 void	disinit(void);
 void	init(void);
 

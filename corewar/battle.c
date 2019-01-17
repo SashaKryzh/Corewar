@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   battle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 19:02:58 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/16 19:02:58 by okryzhan         ###   ########.fr       */
+/*   Updated: 2019/01/17 17:23:54 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ void		battle(t_cell *arena, t_car *car)
 			exit(1);
 		}
 		if (g_visual)
+		{
 			print_into_arena(arena, g_carriage);
+			print_bold(arena, 5, 2);
+			print_carrs(arena, car);
+			refr();
+		}
 	}
 }
 
