@@ -19,7 +19,7 @@ void 	delete_t_car(t_car *tmp)
 
 	if (g_carriage == tmp)
 	{
-		g_carriage = NULL;
+		g_carriage = tmp->next;
 		free(tmp);
 		return ;
 	}
