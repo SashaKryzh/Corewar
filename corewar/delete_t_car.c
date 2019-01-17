@@ -19,7 +19,7 @@ void 	delete_t_car(t_car *tmp)
 
 	if (g_carriage == tmp)
 	{
-		g_carriage = tmp->next;
+		g_carriage = NULL;
 		free(tmp);
 		return ;
 	}
@@ -31,6 +31,6 @@ void 	delete_t_car(t_car *tmp)
 		ft_printf("Shoto ne tak!\n");
 		exit(1);
 	}
-	s->next = tmp->next;
+	s->next = s->next->next;
 	free(tmp);
 }
