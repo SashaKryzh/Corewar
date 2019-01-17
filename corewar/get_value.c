@@ -14,6 +14,25 @@
 #include "corewar.h"
 
 /*
+**	Return id of needed reg, so you must do (num - 1) : 1 -> 0 for array of regs
+*/
+
+uint8_t		get_reg_num(t_cell *arena, t_car *car, int arg_num)
+{
+	int i;
+	int	to_jump;
+
+	i = 0;
+	to_jump = 1 + OP.is_args_types;
+	while (i < arg_num - 1)
+	{
+		to_jump += car->args_sizes[i];
+		i++;
+	}
+	return (arena[(car->position + to_jump) % MEM_SIZE].v);
+}
+
+/*
 **	Use this function to get data from IND address
 **	0x0D - lld
 */
@@ -49,7 +68,7 @@ int		get_value(t_cell *arena, int start, int size)
 		n[i + size % 4] = arena[(start + i) % MEM_SIZE].v;
 		i++;
 	}
-    if (n[3] >> 7 && size == 2)
+    if (n[2] >> 7 && size == 2)
     {
         n[0] = -1;
         n[1] = -1;
