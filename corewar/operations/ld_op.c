@@ -13,6 +13,10 @@
 #include "libft.h"
 #include "corewar.h"
 
+/*
+**	If lld called it: get_ind wont do % IDX_MOD
+*/
+
 void		ld_op(t_cell *arena, t_car *car)
 {
 	int reg_num;
@@ -25,6 +29,6 @@ void		ld_op(t_cell *arena, t_car *car)
 	else
 		arg = get_ind(arena, car, 1, OP.t_dir_size);
 	// ft_printf("arg: %d, reg num: %d\n", arg, reg_num);
-	car->carry = arg == 0 ? 1 : 0;
 	car->regs[reg_num - 1] = arg;
+	car->carry = arg == 0 ? 1 : 0;
 }

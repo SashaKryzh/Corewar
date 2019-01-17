@@ -27,7 +27,8 @@ void	ldi_op(t_cell *arena, t_car *car)
 	while (i < 2)
 	{
 		if (car->args_types[i] == DIR_CODE)
-			args[i] = get_value(arena, to_arg(arena, car, i + 1), OP.t_dir_size);
+			args[i] = get_value(arena, to_arg(arena, car, i + 1),
+				OP.t_dir_size);
 		else if (car->args_types[i] == IND_CODE)
 			args[i] = get_ind(arena, car, to_arg(arena, car, i + 1), 4);
 		else if (car->args_types[i] == REG_CODE)
@@ -38,6 +39,7 @@ void	ldi_op(t_cell *arena, t_car *car)
 	addr = car->op == 0x0A ? addr % IDX_MOD : addr;
 	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
 	car->regs[reg_num - 1] = get_value(arena, addr, 4);
+	car->carry = car->op == 0x0E && car->regs[reg_num - 1] == 0 ? 1 : 0;
 	// ft_printf("%d\n", g_cnt_cycles);
 	// ft_printf("addr: %d + %d, reg_num: %d, put in reg: %d\n", args[0], args[1], reg_num, car->regs[reg_num - 1]); //
 	// putfile_hex(MEM_SIZE, arena, 1, 32); //
