@@ -38,17 +38,19 @@ int		check_flag(int ac, char *av[], int *i)
 		*i += 2;
 		if ((g_dump = ft_atoi(av[*i - 1])) <= 0)
 			exit_func("-dump error");
-		if (*i >= ac)
-			return (0);
-		return (check_flag(ac, av, i));
+		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
 	else if (ft_strequ(av[*i], "-v"))
 	{
 		g_visual = 1;
 		*i += 1;
-		if (*i >= ac)
-			return (0);
-		return (check_flag(ac, av, i));
+		return (*i >= ac ? 0 : check_flag(ac, av, i));
+	}
+	else if (ft_strequ(av[*i], "-d"))
+	{
+		g_debug = 1;
+		*i += 1;
+		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
 	return (1);
 }
@@ -94,7 +96,7 @@ int		parse_players(t_player *champs, int ac, char *av[])
 		get_name(&champs[j], &champ[4]);
 		get_size(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4]);
 		get_comment(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4 + 4]);
-		get_code(&champs[j], &champ[4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4], ret, champ);
+		get_code(&champs[j], &champ[ON_CODE], ret, champ);
 		i++;
 	}
 	champs[j + 1].id = -1;
