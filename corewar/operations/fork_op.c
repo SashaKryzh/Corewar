@@ -22,11 +22,8 @@ void		fork_op(t_cell *arena, t_car *car)
 	if (car->op == 0x0C)
 		where %= IDX_MOD;
 	new = (t_car *)ft_memalloc(sizeof(t_car));
-	new->id = ++g_cnt_cars;
-	new->carry = car->carry;
-	new->last_live = car->last_live;
+	ft_memcpy(new, car, sizeof(t_car));
 	new->position = (MEM_SIZE + car->position + where) % MEM_SIZE;
-	ft_memcpy(new->regs, car->regs, sizeof(car->regs));
 	new->next = g_carriage;
 	g_carriage = new;
 	// print_cars(g_carriage);
