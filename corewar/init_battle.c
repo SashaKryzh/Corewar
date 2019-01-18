@@ -28,7 +28,7 @@ t_cell		*init_battlefield(t_player *champs)
 		j = 0;
 		while (j < champs[i].code_size)
 		{
-			arena[i * block + j].id = champs[i].id * -1;
+			arena[i * block + j].id = champs[i].id;
 			arena[i * block + j].v = champs[i].code[j];
 			j++;
 		}

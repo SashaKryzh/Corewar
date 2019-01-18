@@ -27,7 +27,7 @@ void		live_op(t_cell *arena, t_car *car)
 	int arg;
 
 	arg = get_value(arena, (car->position + 1) % MEM_SIZE, OP.t_dir_size);
-	if (arg > 0 && ft_abs(arg) <= MAX_PLAYERS)
+	if (ft_abs(arg) > 0 && ft_abs(arg) <= MAX_PLAYERS)
 		g_last_alive = ft_abs(arg);
 	car->last_live = g_cnt_cycles;
 	g_cnt_live++;
