@@ -20,14 +20,10 @@ static void	transform_name(t_asm *champ)
 
 	name = ft_strnew(PROG_NAME_LENGTH);
 	i = -1;
-	while (++i < PROG_NAME_LENGTH)
-		name[i] = '0';
-	i = -1;
 	j = -1;
 	while (champ->name[++j])
 	{
-		name[++i] = champ->name[j] / 16 + '0';
-		name[++i] = champ->name[j] % 16 + '0';
+		name[++i] = champ->name[j];
 	}
 	ft_strdel(&champ->name);
 	champ->name = name;
@@ -41,26 +37,13 @@ static void	transform_comment(t_asm *champ)
 
 	comment = ft_strnew(COMMENT_LENGTH);
 	i = -1;
-	while (++i < COMMENT_LENGTH)
-		comment[i] = '0';
-	i = -1;
 	j = -1;
 	while (champ->comment[++j])
 	{
-		comment[++i] = champ->comment[j] / 16 + '0';
-		comment[++i] = champ->comment[j] % 16 + '0';
+		comment[++i] = champ->comment[j];
 	}
 	ft_strdel(&champ->comment);
 	champ->comment = comment;
-}
-
-static int	write_size(t_asm *champ)
-{
-	int		size;
-
-	size = ft_strlen(champ->code);
-	write_to_file(champ, int_to_hex(size, 4));
-	return (1);
 }
 
 void		compile(char **code, char *filename)
@@ -70,20 +53,21 @@ void		compile(char **code, char *filename)
 	champ.tokens = NULL;
 	champ.code = NULL;
 	champ.labels = NULL;
-	champ.missed_labels = NULL;
 	if (!get_tokens(code, &champ))
 		return ;
-	if ((champ.fd = open(filename, O_WRONLY | O_CREAT)) < 0)
+	if ((champ.fd = open(filename, O_RDWR | O_TRUNC |
+		O_CREAT, 0666)) < 0)
 		return (perror("Error: "));
 	transform_name(&champ);
 	transform_comment(&champ);
+	get_size(&champ);
 	if (!get_code(&champ) ||
 		!write_magic(&champ) ||
-		!write_to_file(&champ, champ.name) ||
-		!write_to_file(&champ, ft_strdup("00000000")) ||
+		!write_to_file(&champ, champ.name, PROG_NAME_LENGTH) ||
+		!write_to_file(&champ, ft_strnew(3), 4) ||
 		!write_size(&champ) ||
-		!write_to_file(&champ, champ.comment) ||
-		!write_to_file(&champ, ft_strdup("00000000")) ||
-		!write_to_file(&champ, champ.code))
+		!write_to_file(&champ, champ.comment, COMMENT_LENGTH) ||
+		!write_to_file(&champ, ft_strnew(3), 4) ||
+		!write_to_file(&champ, champ.code, champ.size))
 		return ;
 }

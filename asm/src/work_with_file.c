@@ -14,8 +14,8 @@
 
 static int	incorrect_file(char *filename)
 {
-	return (filename[ft_strlen(filename)] == 's' &&
-			filename[ft_strlen(filename) - 1] == '.');
+	return (ft_strlen(filename) < 2 || !(filename[ft_strlen(filename) - 1]
+		== 's' && filename[ft_strlen(filename) - 2] == '.'));
 }
 
 static void	expand_arr(char ***arr, char *line)
@@ -53,6 +53,7 @@ static char	**read_file(const int fd)
 	content[0] = NULL;
 	while (get_next_line(fd, &line))
 		expand_arr(&content, line);
+	close(fd);
 	return (content);
 }
 
@@ -77,5 +78,5 @@ void		work_with_file(char *filename)
 	new_name[i - 1] = 'c';
 	new_name[i] = 'o';
 	new_name[i + 1] = 'r';
-	compile(content, filename);
+	compile(content, new_name);
 }

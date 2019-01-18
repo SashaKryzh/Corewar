@@ -121,7 +121,7 @@ void	print_bold(t_cell *cells, int position, int size)
 		mvwprintw(g_arena, y, x, "%02x", cells[position].v);
 		position++;
 	}
-	wattroff(g_arena, COLOR_PAIR(ft_abs(cells[--position].id)));
+	wattroff(g_arena, COLOR_PAIR(ft_abs(cells[position].id)));
 }
 
 void	print_into_arena(t_cell *cells, t_car *carrs)
@@ -151,6 +151,22 @@ void	print_into_arena(t_cell *cells, t_car *carrs)
 		x += 3;
 		i++;
 	}
+}
+
+void 		update_view(t_cell *arena)
+{
+	print_into_arena(arena, g_carriage);
+	print_carrs(arena, g_carriage);
+	refr();
+}
+
+void		show_on_arena(t_cell *arena, int where, int size)
+{
+	print_into_arena(arena, g_carriage);
+	print_bold(arena, where, size);
+	print_carrs(arena, g_carriage);
+	refr();
+	usleep(1000);
 }
 
 // t_cell	*create_cells()

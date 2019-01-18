@@ -54,42 +54,46 @@ static void	add_codes(t_asm *champ, t_token **cur)
 		arg_code += 8;
 	else
 		arg_code += 4;
-	add_to_code(champ, int_to_hex(arg_code, 1));
+	add_to_code(champ, int_to_hex(arg_code, 1), 1);
 }
 
-static void	add_arg(t_asm *champ, t_token **cur)
+static int	add_arg(t_asm *champ, t_token **cur, int start)
 {
 	if ((*cur)->type == INDIRECT_VALUE || (*cur)->type == DIRECT_VALUE)
 	{
-		add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 2));
-		return ;
+		add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 2), 2);
+		return (1);
 	}
 	if ((*cur)->type == REGISTER)
 	{
-		add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1));
-		return ;
+		add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1), 1);
+		return (1);
 	}
-	if (!get_label_value((*cur)->value, champ, 2))
-	{
-		add_new_missed(champ, 2, (*cur)->value);
-		add_to_code(champ, ft_strdup("0000"));
-	}
+	return (get_label_value(cur, champ, 2, start));
 }
 
 int			sti(t_asm *champ, t_token **cur)
 {
+	char	*temp;
+	int		start;
+
 	if (!valid(cur))
 		return (0);
-	add_to_code(champ, ft_strdup("0b"));
+	start = champ->cur_pos;
+	temp = ft_strnew(1);
+	temp[0] = 11;
+	add_to_code(champ, temp, 1);
 	add_codes(champ, cur);
 	*cur = (*cur)->next;
-	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1));
+	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1), 1);
 	*cur = (*cur)->next;
 	*cur = (*cur)->next;
-	add_arg(champ, cur);
+	if (!add_arg(champ, cur, start))
+		return (0);
 	*cur = (*cur)->next;
 	*cur = (*cur)->next;
-	add_arg(champ, cur);
+	if (!add_arg(champ, cur, start))
+		return (0);
 	*cur = (*cur)->next;
 	return (1);
 }

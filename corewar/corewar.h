@@ -60,10 +60,13 @@ typedef struct	s_carriage
 	int					no_jump;
 	int					regs[REG_NUMBER];
 
+	int					color;
+
 	uint8_t				op;
 	int					remain_cycles;
 	uint8_t				args_types[3];
 	uint8_t				args_sizes[3];
+
 	struct s_carriage	*next;
 }				t_car;
 
@@ -82,7 +85,7 @@ extern t_car	*g_carriage;
 
 void			battle(t_cell *arena, t_car *car);
 void			check_battle(t_car *car);
-void			check_cars(t_car *car);
+void			check_cars(t_car *car, int to_do);
 void		 	delete_t_car(t_car *tmp);
 
 /*
@@ -101,7 +104,7 @@ int				get_ind(t_cell *arena, t_car *car, int arg_num, int size);
 
 void			skip_op(t_cell *arena, t_car *car);
 int				to_arg(t_cell *arena, t_car *car, int arg_num);
-void			put_on_arena(t_cell *arena, int start, uint8_t *val, int size);
+void			put_on_arena(t_cell *arena, int start, uint8_t *val, int s_c[2]);
 
 /*
 **	Parser
@@ -154,6 +157,8 @@ static void		(*g_opers[17])() = {0, &live_op, &ld_op, &st_op, &add_sub_op,
 void	print_into_arena(t_cell *cells, t_car *carrs);
 void	print_bold(t_cell *cells, int position, int size);
 void	print_carrs(t_cell *cells, t_car *carrs);
+void	show_on_arena(t_cell *arena, int where, int size);
+void 	update_view(t_cell *arena);
 void	refr(void);
 void	disinit(void);
 void	init(void);

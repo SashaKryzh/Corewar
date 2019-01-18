@@ -34,6 +34,8 @@ void		battle(t_cell *arena, t_car *car)
 	while (1)
 	{
 		tmp = g_carriage;
+		if (SHOW_CYCLES)
+			ft_printf("It is now cycle %d\n", g_cnt_cycles);
 		while (tmp)
 		{
 			if (!tmp->remain_cycles)
@@ -51,19 +53,14 @@ void		battle(t_cell *arena, t_car *car)
 			}
 			tmp = tmp->next;
 		}
-		check_battle(car);
 		if (!g_dump || g_cnt_cycles == g_dump)
 		{
 			putfile_hex(MEM_SIZE, arena, 1, 64); //
 			exit(1);
 		}
+		check_battle(car);
 		if (g_visual)
-		{
-			print_into_arena(arena, g_carriage);
-			print_bold(arena, 5, 2);
-			print_carrs(arena, car);
-			refr();
-		}
+			update_view(arena);
 	}
 }
 
@@ -73,14 +70,13 @@ void		check_battle(t_car *car)
 	static int	cnt_c;
 	int			changed;
 
-	g_cnt_cycles++;
 	cnt_c++;
 	// ft_printf("cnt_c: %d, to_die: %d, cycle: %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
 	prev_to_die = !prev_to_die ? g_cycles_to_die : prev_to_die;
 	if (cnt_c % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
 	{
 		g_cnt_checks++;
-		check_cars(g_carriage);
+		check_cars(g_carriage, 1);
 		if (g_cnt_live >= NBR_LIVE)
 		{
 			g_cycles_to_die -= CYCLE_DELTA;
@@ -100,27 +96,25 @@ void		check_battle(t_car *car)
 		}
 		g_cnt_live = 0;
 		cnt_c = 0;
+		if (SHOW_CYCLES && --changed == 0)
+			ft_printf("Cycle to die is now %d\n", g_cycles_to_die);
+		check_cars(g_carriage, 2);
 	}
-	if (SHOW_CYCLES)
-	{
-		ft_printf("It is now cycle %d\n", g_cnt_cycles);
-	}
-	if (SHOW_CYCLES && --changed == 0)
-		ft_printf("Cycle to die is now %d\n", g_cycles_to_die);
+	g_cnt_cycles++;
 }
 
-void		check_cars(t_car *car)
+void		check_cars(t_car *car, int to_do)
 {
 	t_car *tmp;
 
 	tmp = car;
-	while (tmp)
+	while (to_do == 1 && tmp)
 	{
 		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
 			delete_t_car(tmp);
 		tmp = tmp ? tmp->next : NULL;
 	}
-	if (!g_carriage)
+	if (to_do == 2 && !g_carriage)
 	{
 		ft_printf("Contestant %d, \"%s\", has won ! (%d)\n", g_last_alive, g_players[g_last_alive - 1].name, g_cnt_cycles);
 		exit(1);

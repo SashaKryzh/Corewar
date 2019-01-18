@@ -47,9 +47,11 @@ void		sti_op(t_cell *arena, t_car *car)
 			args[i] = car->regs[get_reg_num(arena, car, i + 2) - 1];
 		i++;
 	}
-	addr = (args[0] + args[1]) % IDX_MOD;
+	addr = car->position + (args[0] + args[1]) % IDX_MOD;
 	ft_memrev(&reg_val, 4);
-	put_on_arena(arena, (MEM_SIZE + car->position + addr) % MEM_SIZE,
-		(uint8_t *)(&reg_val), REG_SIZE);
+	put_on_arena(arena, (MEM_SIZE + addr) % MEM_SIZE,
+		(uint8_t *)(&reg_val), (int []){ REG_SIZE, car->color });
+	if (g_visual)
+		show_on_arena(arena, (MEM_SIZE + addr) % MEM_SIZE, REG_SIZE);
 	sti_debug(arena, car, reg_val, args);
 }

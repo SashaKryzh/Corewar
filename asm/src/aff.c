@@ -23,11 +23,18 @@ static int	valid(t_token **cur)
 
 int			aff(t_asm *champ, t_token **cur)
 {
+	char	*temp;
+
 	if (!valid(cur))
 		return (0);
-	add_to_code(champ, ft_strdup("1040"));
+	temp = ft_strnew(1);
+	temp[0] = 16;
+	add_to_code(champ, temp, 1);
+	temp = ft_strnew(1);
+	temp[0] = 64;
+	add_to_code(champ, temp, 1);
 	*cur = (*cur)->next;
-	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1));
+	add_to_code(champ, (*cur)->value, 1);
 	*cur = (*cur)->next;
 	return (1);
 }

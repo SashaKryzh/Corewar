@@ -35,17 +35,22 @@ static int	valid(t_token **cur)
 
 int			add(t_asm *champ, t_token **cur)
 {
+	char	*temp;
+
 	if (!valid(cur))
 		return (0);
-	add_to_code(champ, ft_strdup("04a4"));
+	temp = ft_strnew(2);
+	temp[0] = 4;
+	temp[1] = 84;
+	add_to_code(champ, temp, 2);
 	*cur = (*cur)->next;
-	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1));
+	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1), 1);
 	*cur = (*cur)->next;
 	*cur = (*cur)->next;
-	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1));
+	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1), 1);
 	*cur = (*cur)->next;
 	*cur = (*cur)->next;
-	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1));
+	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1), 1);
 	*cur = (*cur)->next;
 	return (1);
 }
