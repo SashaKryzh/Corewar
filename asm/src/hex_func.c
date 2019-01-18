@@ -14,9 +14,9 @@
 
 int32_t		hex_to_int(char *hex)
 {
-	int32_t	res;
-	int		i;
-	int		k;
+	int32_t			res;
+	int				i;
+	int				k;
 
 	res = 0;
 	i = -1;
@@ -33,23 +33,27 @@ int32_t		hex_to_int(char *hex)
 
 char		*int_to_hex(int32_t nbr, int size)
 {
-	int		temp;
-	int		i;
-	char	*res;
+	unsigned int	temp;
+	int				i;
+	unsigned int	max;
+	char			*res;
 
+	if (size == 1)
+		max = 255;
+	if (size == 2)
+		max = 65535;
+	if (size == 4)
+		max = 4294967295;
 	if (nbr < 0)
-		temp = 4294967296 + nbr;
+		temp = max + nbr + 1;
 	else
 		temp = nbr;
-	i = size * 2;
-	res = ft_strnew(i);
+	res = ft_strnew(size);
+	i = size;
 	while (--i >= 0)
 	{
-		if (temp % 16 >= 10)
-			res[i] = temp % 16 - 10 + 'A';
-		else
-			res[i] = '0' + temp % 16;
-		temp /= 16;
+		res[i] = temp % 256;
+		temp /= 256;
 	}
 	return (res);
 }

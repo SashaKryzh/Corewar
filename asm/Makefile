@@ -37,6 +37,7 @@ SRC_N			=	add_token.c \
 					get_code.c \
 					get_indirect_value.c \
 					get_name_and_comment.c \
+					get_size.c \
 					hex_func.c \
 					label_stuff.c \
 					main.c \

@@ -22,27 +22,30 @@ static int	valid(t_token **cur)
 	return (1);
 }
 
-static void	add_first(t_asm *champ, t_token **cur)
+static int	add_first(t_asm *champ, t_token **cur, int start)
 {
 	if ((*cur)->type == DIRECT_VALUE)
 	{
-		add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 2));
-		return ;
+		add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 2), 2);
+		return (1);
 	}
-	if (!get_label_value((*cur)->value, champ, 2))
-	{
-		add_new_missed(champ, 2, (*cur)->value);
-		add_to_code(champ, ft_strdup("00000000"));
-	}
+	return (get_label_value(cur, champ, 2, start));
 }
 
 int			zjmp(t_asm *champ, t_token **cur)
 {
+	char	*temp;
+	int		start;
+
 	if (!valid(cur))
 		return (0);
-	add_to_code(champ, ft_strdup("09"));
+	start = champ->cur_pos;
+	temp = ft_strnew(1);
+	temp[0] = 9;
+	add_to_code(champ, temp, 1);
 	*cur = (*cur)->next;
-	add_first(champ, cur);
+	if (!add_first(champ, cur, start))
+		return (0);
 	*cur = (*cur)->next;
 	return (1);
 }

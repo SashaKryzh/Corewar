@@ -60,15 +60,15 @@ static int	get_name(char **code, t_asm *champ, int *i)
 	len = 0;
 	while (code[*i][j + ++len] && code[*i][j + len] != '"')
 		;
-	if (!code[j + len])
+	if (!code[*i][j + len])
 	{
-		str = ft_strsub(code[*i], j, len - 1);
+		str = ft_strsub(code[*i], j + 1, len - 2);
 		champ->name = str;
 		(*i)++;
 		return (get_multiline_string(&champ->name, code, i));
 	}
 	else
-		str = ft_strsub(code[*i], j, len);
+		str = ft_strsub(code[*i], j + 1, len - 1);
 	(*i)++;
 	champ->name = str;
 	return (1);
@@ -88,15 +88,15 @@ static int	get_comment(char **code, t_asm *champ, int *i)
 	len = 0;
 	while (code[*i][j + ++len] && code[*i][j + len] != '"')
 		;
-	if (!code[j + len])
+	if (!code[*i][j + len])
 	{
-		str = ft_strsub(code[*i], j, len - 1);
+		str = ft_strsub(code[*i], j + 1, len - 2);
 		champ->comment = str;
 		(*i)++;
 		return (get_multiline_string(&champ->comment, code, i));
 	}
 	else
-		str = ft_strsub(code[*i], j, len);
+		str = ft_strsub(code[*i], j + 1, len - 1);
 	(*i)++;
 	champ->comment = str;
 	return (1);
