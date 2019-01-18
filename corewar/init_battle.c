@@ -43,6 +43,7 @@ t_car	*new_carriage(int id, int position)
 
 	new = (t_car *)ft_memalloc(sizeof(t_car));
 	new->id = id;
+	new->color = id;
 	new->position = position;
 	new->regs[0] = id * -1;
 	return (new);

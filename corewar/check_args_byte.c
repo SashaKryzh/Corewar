@@ -43,7 +43,7 @@ static int	check_reg_num(t_cell *arena, t_car *car, int arg_num, int ret)
 **	(byte >> i) % 4 - take needed 2 bits in args byte
 */
 
-static void	init(int *i, int *j, int *ret)
+static void	init_local(int *i, int *j, int *ret)
 {
 	*i = 6;
 	*j = -1;
@@ -53,11 +53,11 @@ static void	init(int *i, int *j, int *ret)
 int			get_op_data(t_cell *arena, t_car *car)
 {
 	uint8_t		byte;
-	uint8_t		i;
-	uint8_t		j;
-	uint8_t		ret;
+	int			i;
+	int			j;
+	int			ret;
 
-	init(&i, &j, &ret);
+	init_local(&i, &j, &ret);
 	byte = arena[(car->position + 1) % MEM_SIZE].v;
 	ft_bzero(car->args_sizes, sizeof(car->args_sizes));
 	while (++j < OP.args_num)
