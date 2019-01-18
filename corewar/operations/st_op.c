@@ -46,7 +46,7 @@ void		st_op(t_cell *arena, t_car *car)
 		tmp = where;
 		where = (MEM_SIZE + car->position + where % IDX_MOD) % MEM_SIZE;
 		ft_memrev(&reg_val, 4);
-		put_on_arena(arena, where, (uint8_t *)(&reg_val), REG_SIZE);
+		put_on_arena(arena, where, (uint8_t *)(&reg_val), (int []){ REG_SIZE, car->color });
 		if (g_visual)
 			show_on_arena(arena, where, REG_SIZE);
 	}

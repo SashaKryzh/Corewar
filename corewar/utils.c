@@ -69,14 +69,15 @@ int			to_arg(t_cell *arena, t_car *car, int arg_num)
 **	Puts bytes on arena
 */
 
-void		put_on_arena(t_cell *arena, int start, uint8_t *val, int size)
+void		put_on_arena(t_cell *arena, int start, uint8_t *val, int s_c[2])
 {
 	int i;
 
 	i = 0;
-	while (i < size)
+	while (i < s_c[0])
 	{
 		arena[(start + i) % MEM_SIZE].v = val[i];
+		arena[(start + i) % MEM_SIZE].id = s_c[1];
 		i++;
 	}
 }
