@@ -76,7 +76,6 @@ void		check_battle(t_car *car)
 	if (cnt_c % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
 	{
 		g_cnt_checks++;
-		check_cars(g_carriage);
 		if (g_cnt_live >= NBR_LIVE)
 		{
 			g_cycles_to_die -= CYCLE_DELTA;
@@ -96,9 +95,10 @@ void		check_battle(t_car *car)
 		}
 		g_cnt_live = 0;
 		cnt_c = 0;
+		if (SHOW_CYCLES && --changed == 0)
+			ft_printf("Cycle to die is now %d\n", g_cycles_to_die);
+		check_cars(g_carriage);
 	}
-	if (SHOW_CYCLES && --changed == 0)
-		ft_printf("Cycle to die is now %d\n", g_cycles_to_die);
 	g_cnt_cycles++;
 }
 

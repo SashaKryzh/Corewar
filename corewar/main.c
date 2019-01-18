@@ -39,6 +39,8 @@ void		introduce_champs(t_player *champs)
 {
 	int i;
 
+	if (g_visual)
+		return ;
 	ft_printf("Introducing contestants...\n");
 	i = 0;
 	while (champs[i].id != -1)

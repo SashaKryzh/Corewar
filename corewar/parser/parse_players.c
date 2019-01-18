@@ -40,19 +40,19 @@ int		check_flag(int ac, char *av[], int *i)
 			exit_func("-dump error");
 		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
-	else if (ft_strequ(av[*i], "-v"))
+	else if (ft_strequ(av[*i], "-n"))
 	{
 		g_visual = 1;
 		*i += 1;
 		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
-	else if (ft_strequ(av[*i], "-d"))
+	else if (ft_strequ(av[*i], "-v"))
 	{
 		if (*i + 1 >= ac)
-			exit_func("-d error");
+			exit_func("-v error");
 		*i += 2;
 		if ((g_debug += ft_atoi(av[*i - 1])) <= 0)
-			exit_func("-d error");
+			exit_func("-v error");
 		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
 	return (1);
