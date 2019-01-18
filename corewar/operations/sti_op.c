@@ -13,14 +13,14 @@
 #include "libft.h"
 #include "corewar.h"
 
-void		sti_debug(t_cell *arena, t_car *car, int reg_val, int *args)
+void		sti_debug(t_cell *arena, t_car *car, int reg_num, int *args)
 {
 	int	sum;
 
 	if (!SHOW_OPERS)
 		return ;
 	ft_printf(OPER_INFO);
-	ft_printf("r%d %d %d ", get_reg_num(arena, car, 1), args[0], args[1]);
+	ft_printf("r%d %d %d ", reg_num, args[0], args[1]);
 	ft_printf("\n");
 	sum = args[0] + args[1];
 	ft_printf("       | -> store to %d + %d = %d ", args[0], args[1], sum);
@@ -30,11 +30,13 @@ void		sti_debug(t_cell *arena, t_car *car, int reg_val, int *args)
 void		sti_op(t_cell *arena, t_car *car)
 {
 	int	args[2];
+	int	reg_num;
 	int	reg_val;
 	int addr;
 	int	i;
 
-	reg_val = car->regs[get_reg_num(arena, car, 1) - 1];
+	reg_num = get_reg_num(arena, car, 1);
+	reg_val = car->regs[reg_num - 1];
 	i = 0;
 	while (i < 2)
 	{
@@ -53,5 +55,5 @@ void		sti_op(t_cell *arena, t_car *car)
 		(uint8_t *)(&reg_val), (int []){ REG_SIZE, car->color });
 	if (g_visual)
 		show_on_arena(arena, (MEM_SIZE + addr) % MEM_SIZE, REG_SIZE);
-	sti_debug(arena, car, reg_val, args);
+	sti_debug(arena, car, reg_num, args);
 }

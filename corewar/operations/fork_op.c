@@ -18,7 +18,7 @@ void		fork_debug(t_car *car, int where)
 	if (SHOW_OPERS)
 	{
 		ft_printf(OPER_INFO);
-		ft_printf("%d (%d)\n", where, (car->position + where) % MEM_SIZE);
+		ft_printf("%d (%d)\n", where, car->position + where);
 	}
 }
 

@@ -50,6 +50,7 @@ void	ldi_op(t_cell *arena, t_car *car)
 	addr = car->op == 0x0A ? addr % IDX_MOD : addr;
 	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
 	car->regs[reg_num - 1] = get_value(arena, addr, 4);
-	car->carry = car->op == 0x0E && car->regs[reg_num - 1] == 0 ? 1 : 0;
+	if (car->op == 0x0E)
+		car->carry = car->regs[reg_num - 1] == 0 ? 1 : 0;
 	ldi_debug(car, reg_num, args);
 }
