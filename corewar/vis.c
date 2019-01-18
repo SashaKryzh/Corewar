@@ -97,7 +97,7 @@ void	print_carrs(t_cell *cells, t_car *carrs)
 	while (carrs)
 	{
 		wattron(g_arena, COLOR_PAIR(11));
-		x = (carrs->position * 3) % 64 + 2;
+		x = carrs->position % 64 * 3 + 2;
 		y = (carrs->position) / 64 + 1;
 		mvwprintw(g_arena, y, x, "%02x", cells[carrs->position].v);
 		wattroff(g_arena, COLOR_PAIR(11));
@@ -116,7 +116,7 @@ void	print_bold(t_cell *cells, int position, int size)
 	wattron(g_arena, COLOR_PAIR(ft_abs(cells[position].id)));
 	while (position < end)
 	{
-		x = (position * 3) % 64 + 2;
+		x = position % 64 * 3 + 2;
 		y = position / 64 + 1;
 		mvwprintw(g_arena, y, x, "%02x", cells[position].v);
 		position++;
@@ -162,11 +162,8 @@ void 		update_view(t_cell *arena)
 
 void		show_on_arena(t_cell *arena, int where, int size)
 {
-	print_into_arena(arena, g_carriage);
-	print_bold(arena, where, size);
-	print_carrs(arena, g_carriage);
+	// print_bold(arena, where, size);
 	refr();
-	usleep(1000);
 }
 
 // t_cell	*create_cells()
