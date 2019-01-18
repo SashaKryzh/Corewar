@@ -1,0 +1,5 @@
+.DS_Store
+*.o
+libft.a
+a.out
+main.c
