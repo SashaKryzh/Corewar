@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:49:57 by vlytvyne          #+#    #+#             */
-/*   Updated: 2019/01/17 17:22:48 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/18 17:36:44 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ WINDOW *g_statusbar;
 
 void	refr(void)
 {
+	mvwprintw(g_statusbar, 10, 4, "Cycle: %i", g_cnt_cycles);
 	refresh();
 	wrefresh(g_arena);
 	wrefresh(g_statusbar);
@@ -70,13 +71,14 @@ void	init(void)
 	wprintw(g_statusbar, "/ /___/ /_/ / /  /  __/ |/ |/ / /_/ / /    ");
 	wmove(g_statusbar, 6, 4);
 	wprintw(g_statusbar, "\\____/\\____/_/   \\___/|__/|__/\\__,_/_/     ");
-	//вывести всех игроков
-	MOVE_SHIFT(wprintw(g_statusbar, "Player1: ", "Pasha"))
-	MOVE_SHIFT(wprintw(g_statusbar, "Player2: ", "Sasha"))
-	MOVE_SHIFT(wprintw(g_statusbar, "Player3: ", "Anton"))
-	MOVE_SHIFT(wprintw(g_statusbar, "Player4: ", "Vadym"))
+
 	MOVE_SHIFT(wprintw(g_statusbar, "Cycle: %i", g_cnt_cycles))
-	MOVE_SHIFT(wprintw(g_statusbar, "Procceses alive: %i", 4))
+	int i = 0;
+	while (g_players[i].id != -1)
+	{
+		MOVE_SHIFT(wprintw(g_statusbar, "Player%d: %s", i, g_players[i].name))
+		i++;
+	}
 	MOVE_SHIFT(wprintw(g_statusbar, "_________________________________________"))
 	MOVE_SHIFT(wprintw(g_statusbar, "                CONSTANTS                "))
 	MOVE_SHIFT(wprintw(g_statusbar, "CYCLE_TO_DIE: %i", CYCLE_TO_DIE))
