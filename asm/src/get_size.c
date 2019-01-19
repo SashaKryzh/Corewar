@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 11:44:15 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/18 11:44:19 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/19 12:34:41 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static int	instruction_size(t_token *cur, int *dir_size)
 {
-	if (ft_strequ(cur->value, "zjmp") || ft_strequ(cur->value, "ldi") || 
-		ft_strequ(cur->value, "sti") || ft_strequ(cur->value, "fork") || 
+	if (ft_strequ(cur->value, "zjmp") || ft_strequ(cur->value, "ldi") ||
+		ft_strequ(cur->value, "sti") || ft_strequ(cur->value, "fork") ||
 		ft_strequ(cur->value, "lldi") || ft_strequ(cur->value, "lfork"))
 		*dir_size = 2;
 	else
 		*dir_size = 4;
-	if (ft_strequ(cur->value, "live") || ft_strequ(cur->value, "zjmp") || 
+	if (ft_strequ(cur->value, "live") || ft_strequ(cur->value, "zjmp") ||
 		ft_strequ(cur->value, "lfork") || ft_strequ(cur->value, "fork"))
 		return (1);
 	else

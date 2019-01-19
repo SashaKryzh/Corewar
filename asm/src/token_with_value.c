@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 12:50:39 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/16 16:28:31 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/19 13:26:50 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,21 @@ static int	get_label(t_asm *champ, t_token *token, char *value, int line_idx)
 int			token_with_value(t_asm *champ, t_token *token,
 		char *value, int line_idx)
 {
+	int		res;
+
 	if (is_instruction(value))
 	{
 		token->value = ft_strdup(value);
 		token->type = INSTRUCTION;
+		ft_strdel(&value);
 		return (1);
 	}
 	if (ft_strchr(value, DIRECT_CHAR) == value)
-		return (get_direct_value(token, value, line_idx));
-	if (ft_strchr(value, LABEL_CHAR) && !ft_strchr(value, LABEL_CHAR)[1])
-		return (get_label(champ, token, value, line_idx));
-	return (get_indirect_value(token, value, line_idx));
+		res = get_direct_value(token, value, line_idx);
+	else if (ft_strchr(value, LABEL_CHAR) && !ft_strchr(value, LABEL_CHAR)[1])
+		res = get_label(champ, token, value, line_idx);
+	else
+		res = get_indirect_value(token, value, line_idx);
+	ft_strdel(&value);
+	return (res);
 }

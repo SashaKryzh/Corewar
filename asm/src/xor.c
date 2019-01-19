@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 15:07:37 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/16 16:39:09 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/19 12:33:48 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int			xor(t_asm *champ, t_token **cur)
 		return (0);
 	start = champ->cur_pos;
 	temp = ft_strnew(1);
-	temp [0] = 8;
+	temp[0] = 8;
 	add_to_code(champ, temp, 1);
 	add_codes(champ, cur);
 	*cur = (*cur)->next;

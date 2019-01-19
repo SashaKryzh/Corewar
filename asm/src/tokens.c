@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 11:40:18 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/16 16:12:54 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/19 13:24:40 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	split_line_into_tokens(char **code, t_asm *champ, int i)
 		if (unknown_character(code[i][j]))
 			return (err_mesg(UNKNOWN_CHARACTER, i));
 		if (!ft_isspace(code[i][j]))
-			if(!add_token(code[i], i, &j, champ))
+			if (!add_token(code[i], i, &j, champ))
 				return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 #    By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/15 14:37:31 by amoroziu          #+#    #+#              #
-#    Updated: 2019/01/15 16:10:22 by amoroziu         ###   ########.fr        #
+#    Updated: 2019/01/19 12:52:50 by amoroziu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC_N			=	add_token.c \
 					add.c \
 					aff.c \
 					and.c \
+					delete.c \
 					fork.c \
 					ld.c \
 					ldi.c \

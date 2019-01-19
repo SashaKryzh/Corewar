@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 14:32:18 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/16 16:58:42 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/19 13:44:59 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		add_label(t_asm *champ, t_token *label)
 	t_label	*new;
 
 	new = (t_label*)malloc(sizeof(t_label));
-	new->label_name = label->value;
+	new->label_name = ft_strdup(label->value);
 	new->code_pos = champ->size;
 	new->next = champ->labels;
 	champ->labels = new;

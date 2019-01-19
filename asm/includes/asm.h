@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 13:30:52 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/16 16:36:17 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/19 13:42:36 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void			work_with_file(char *filename);
 /*
 ** write_to_file.c
 */
-int				write_to_file(t_asm *champ, char *line, int size);
+int				write_to_file(t_asm *champ, char **line, int size);
 int				write_magic(t_asm *champ);
 int				write_size(t_asm *champ);
 
@@ -107,7 +107,7 @@ int				token_with_value(t_asm *champ, t_token *token, char *value,
 /*
 ** get_indirect_value.c
 */
-int				get_indirect_value(t_token *token, char *value,	int line_idx);
+int				get_indirect_value(t_token *token, char *value, int line_idx);
 
 /*
 ** check.c
@@ -123,12 +123,18 @@ int				label_exists(char *label, t_asm *champ);
 ** label_stuff.c
 */
 void			add_label(t_asm *champ, t_token *label);
-int				get_label_value(t_token **label, t_asm *champ, int size, int start);
+int				get_label_value(t_token **label, t_asm *champ, int size,
+								int start);
 
 /*
 ** add_token.c
 */
 int				add_token(char *line, int i, int *j, t_asm *champ);
+
+/*
+** delete.c
+*/
+void			delete_champ(t_asm *champ);
 
 /*
 ** assembler functions, each in it's own file

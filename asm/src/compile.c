@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 15:59:28 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/16 16:29:40 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/19 13:48:17 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,30 @@ static void	transform_comment(t_asm *champ)
 	champ->comment = comment;
 }
 
+static int	write_null(t_asm *champ)
+{
+	char	*str;
+
+	str = ft_strnew(3);
+	return (write_to_file(champ, &str, 4));
+}
+
+static void	write_everything(t_asm *champ)
+{
+	transform_name(champ);
+	transform_comment(champ);
+	get_size(champ);
+	if (!get_code(champ) ||
+		!write_magic(champ) ||
+		!write_to_file(champ, &champ->name, PROG_NAME_LENGTH) ||
+		!write_null(champ) ||
+		!write_size(champ) ||
+		!write_to_file(champ, &champ->comment, COMMENT_LENGTH) ||
+		!write_null(champ) ||
+		!write_to_file(champ, &champ->code, champ->size))
+		return ;
+}
+
 void		compile(char **code, char *filename)
 {
 	t_asm	champ;
@@ -54,20 +78,16 @@ void		compile(char **code, char *filename)
 	champ.code = NULL;
 	champ.labels = NULL;
 	if (!get_tokens(code, &champ))
+	{
+		delete_champ(&champ);
 		return ;
+	}
 	if ((champ.fd = open(filename, O_RDWR | O_TRUNC |
 		O_CREAT, 0666)) < 0)
+	{
+		delete_champ(&champ);
 		return (perror("Error: "));
-	transform_name(&champ);
-	transform_comment(&champ);
-	get_size(&champ);
-	if (!get_code(&champ) ||
-		!write_magic(&champ) ||
-		!write_to_file(&champ, champ.name, PROG_NAME_LENGTH) ||
-		!write_to_file(&champ, ft_strnew(3), 4) ||
-		!write_size(&champ) ||
-		!write_to_file(&champ, champ.comment, COMMENT_LENGTH) ||
-		!write_to_file(&champ, ft_strnew(3), 4) ||
-		!write_to_file(&champ, champ.code, champ.size))
-		return ;
+	}
+	write_everything(&champ);
+	delete_champ(&champ);
 }
