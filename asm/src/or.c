@@ -42,20 +42,20 @@ static void	add_codes(t_asm *champ, t_token **cur)
 	arg_code = 4;
 	if ((*cur)->next->type == DIRECT_LABEL ||
 		(*cur)->next->type == DIRECT_VALUE)
-		arg_code += 32;
+		arg_code += 128;
 	else if ((*cur)->next->type == INDIRECT_LABEL ||
 		(*cur)->next->type == INDIRECT_VALUE)
-		arg_code += 48;
-	else
-		arg_code += 16;
-	if ((*cur)->next->next->next->type == DIRECT_LABEL ||
-		(*cur)->next->next->next->type == DIRECT_VALUE)
-		arg_code += 128;
-	else if ((*cur)->next->next->next->type == INDIRECT_LABEL ||
-		(*cur)->next->next->next->type == INDIRECT_VALUE)
 		arg_code += 192;
 	else
 		arg_code += 64;
+	if ((*cur)->next->next->next->type == DIRECT_LABEL ||
+		(*cur)->next->next->next->type == DIRECT_VALUE)
+		arg_code += 32;
+	else if ((*cur)->next->next->next->type == INDIRECT_LABEL ||
+		(*cur)->next->next->next->type == INDIRECT_VALUE)
+		arg_code += 48;
+	else
+		arg_code += 16;
 	add_to_code(champ, int_to_hex(arg_code, 1), 1);
 }
 

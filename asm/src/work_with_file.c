@@ -75,7 +75,7 @@ void		work_with_file(char *filename)
 	i = -1;
 	while (filename[++i])
 		new_name[i] = filename[i];
-	new_name[i - 1] = 'c';
+	new_name[i - 1] = 'm';
 	new_name[i] = 'o';
 	new_name[i + 1] = 'r';
 	compile(content, new_name);
