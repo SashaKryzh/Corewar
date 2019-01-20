@@ -6,7 +6,7 @@
 /*   By: amoroziu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 15:08:42 by amoroziu          #+#    #+#             */
-/*   Updated: 2019/01/15 15:06:00 by amoroziu         ###   ########.fr       */
+/*   Updated: 2019/01/20 12:32:19 by amoroziu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			aff(t_asm *champ, t_token **cur)
 	temp[0] = 64;
 	add_to_code(champ, temp, 1);
 	*cur = (*cur)->next;
-	add_to_code(champ, (*cur)->value, 1);
+	add_to_code(champ, int_to_hex(ft_atoi((*cur)->value), 1), 1);
 	*cur = (*cur)->next;
 	return (1);
 }
