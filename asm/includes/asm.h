@@ -137,6 +137,11 @@ int				add_token(char *line, int i, int *j, t_asm *champ);
 void			delete_champ(t_asm *champ);
 
 /*
+** skip_coment.c
+*/
+int				skip_coment(char **code, int *i, int *j);
+
+/*
 ** assembler functions, each in it's own file
 */
 int				add(t_asm *champ, t_token **cur);

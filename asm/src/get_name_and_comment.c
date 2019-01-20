@@ -42,17 +42,16 @@ static int	get_multiline_string(char **str, char **code, int *i)
 		temp = ft_strsub(code[*i], 0, j);
 		*str = freejoin(*str, temp);
 		free(temp);
-		return (check_rest(code[*i], j));
+		return (check_rest(code[(*i)++], j));
 	}
 }
 
-static int	get_name(char **code, t_asm *champ, int *i)
+static int	get_name(char **code, t_asm *champ, int *i, int j)
 {
-	int		j;
 	int		len;
 	char	*str;
 
-	j = 4;
+	j += 4;
 	while (ft_isspace(code[*i][++j]))
 		;
 	if (!code[*i][j] || code[*i][j] != '"')
@@ -62,7 +61,7 @@ static int	get_name(char **code, t_asm *champ, int *i)
 		;
 	if (!code[*i][j + len])
 	{
-		str = ft_strsub(code[*i], j + 1, len - 2);
+		str = ft_strsub(code[*i], j + 1, len - 1);
 		champ->name = str;
 		(*i)++;
 		return (get_multiline_string(&champ->name, code, i));
@@ -74,13 +73,12 @@ static int	get_name(char **code, t_asm *champ, int *i)
 	return (1);
 }
 
-static int	get_comment(char **code, t_asm *champ, int *i)
+static int	get_comment(char **code, t_asm *champ, int *i, int j)
 {
-	int		j;
 	int		len;
 	char	*str;
 
-	j = 7;
+	j += 7;
 	while (ft_isspace(code[*i][++j]))
 		;
 	if (!code[*i][j] || code[*i][j] != '"')
@@ -90,7 +88,7 @@ static int	get_comment(char **code, t_asm *champ, int *i)
 		;
 	if (!code[*i][j + len])
 	{
-		str = ft_strsub(code[*i], j + 1, len - 2);
+		str = ft_strsub(code[*i], j + 1, len - 1);
 		champ->comment = str;
 		(*i)++;
 		return (get_multiline_string(&champ->comment, code, i));
@@ -104,18 +102,26 @@ static int	get_comment(char **code, t_asm *champ, int *i)
 
 int			get_name_and_comment(char **code, t_asm *champ, int *i)
 {
-	while (code[++(*i)] && code[*i][0] == COMMENT_CHAR)
+	int 	j;
+
+	j = -1;
+	while (code[++(*i)] &&
+		(code[*i][0] == COMMENT_CHAR || code[*i][0] == 0))
 		;
 	if (!code[*i])
 		return (err_mesg(NO_NAME_AND_NO_COMMENT, *i));
-	if (code[*i][0] != '.')
+	while (ft_isspace(code[*i][++j]))
+		;
+	if (code[*i][j] != '.')
 		return (err_mesg(INCORRECT_FIRST_LINE, *i));
-	if (ft_strnequ(".name", code[*i], 5) && ft_isspace(code[*i][5]))
-		return (get_name(code, champ, i) &&
-				get_comment(code, champ, i));
-	else if (ft_strnequ(".comment", code[*i], 8) && ft_isspace(code[*i][8]))
-		return (get_comment(code, champ, i) &&
-				get_name(code, champ, i));
+	if (ft_strnequ(".name", code[*i] + j, 5))
+		return (get_name(code, champ, i, j) &&
+				skip_coment(code, i, &j) &&
+				get_comment(code, champ, i, j));
+	else if (ft_strnequ(".comment", code[*i] + j, 8))
+		return (get_comment(code, champ, i, j) &&
+				skip_coment(code, i, &j) &&
+				get_name(code, champ, i, j));
 	else
 		return (err_mesg(INCORRECT_FIRST_LINE, *i));
 }

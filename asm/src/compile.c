@@ -54,7 +54,7 @@ static int	write_null(t_asm *champ)
 	return (write_to_file(champ, &str, 4));
 }
 
-static void	write_everything(t_asm *champ)
+static void	write_everything(t_asm *champ, char *filename)
 {
 	transform_name(champ);
 	transform_comment(champ);
@@ -68,6 +68,9 @@ static void	write_everything(t_asm *champ)
 		!write_null(champ) ||
 		!write_to_file(champ, &champ->code, champ->size))
 		return ;
+	ft_putstr("\033[1;32mWriting output program to ");
+	ft_putendl(filename);
+	ft_putstr("\033[0m");
 }
 
 void		compile(char **code, char *filename)
@@ -77,6 +80,8 @@ void		compile(char **code, char *filename)
 	champ.tokens = NULL;
 	champ.code = NULL;
 	champ.labels = NULL;
+	champ.name = NULL;
+	champ.comment = NULL;
 	if (!get_tokens(code, &champ))
 	{
 		delete_champ(&champ);
@@ -88,6 +93,6 @@ void		compile(char **code, char *filename)
 		delete_champ(&champ);
 		return (perror("Error: "));
 	}
-	write_everything(&champ);
+	write_everything(&champ, filename);
 	delete_champ(&champ);
 }

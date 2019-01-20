@@ -27,7 +27,7 @@ static int	valid(t_token **cur)
 		|| (*cur)->next->next->next->next->type != SEPARATOR)
 		return (err_mesg(SEPARATOR_IS_MISSING, (*cur)->line));
 	if (!(*cur)->next->next->next->next->next
-		|| (*cur)->next->next->next->next->next->type == REGISTER)
+		|| (*cur)->next->next->next->next->next->type != REGISTER)
 		return (err_mesg(NEXT_TOKEN_MUST_BE_REGISTER, (*cur)->line));
 	if ((*cur)->next->next->next->next->next->next &&
 		(*cur)->next->next->next->next->next->next->line == (*cur)->line)

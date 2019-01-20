@@ -46,7 +46,8 @@ SRC_N			=	add_token.c \
 					token_with_value.c \
 					tokens.c \
 					work_with_file.c \
-					write_to_file.c
+					write_to_file.c \
+					skip_coment.c
 
 SRC_P 			= ./src/
 OBJ 			= $(addprefix $(OBJ_P),$(SRC_N:.c=.o))

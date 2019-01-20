@@ -14,7 +14,13 @@
 
 static void	error(char *mesg, int line)
 {
-	ft_putstr_fd("Error in line ", 2);
+	if (line < 0)
+	{
+		ft_putstr_fd("\033[1;4;31mError:\033[0m ", 2);
+		ft_putendl_fd(mesg, 2);
+		return ;
+	}
+	ft_putstr_fd("\033[1;4;31mError\033[0m in line ", 2);
 	ft_putnbr_fd(line + 1, 2);
 	ft_putendl_fd(mesg, 2);
 }
@@ -30,6 +36,8 @@ static int	another_variants2(int err_code, int line)
 	else if (err_code == NEXT_TOKEN_MUST_BE_DIR_OR_REG)
 		error(": Next argument for function must be register or direct value!"
 			, line);
+	else if (err_code == NO_NEWLINE_AT_END)
+		error("No newline at the end of the file!", -1);
 	return (0);
 }
 
@@ -75,9 +83,9 @@ int			err_mesg(int err_code, int line)
 	else if (err_code == UNKNOWN_CHARACTER)
 		error(": Unknown character!", line);
 	else if (err_code == TOO_LONG_CHAMPION_NAME)
-		ft_putendl_fd("Champion name is too long!", 2);
+		error("Champion name is too long!", -1);
 	else if (err_code == TOO_LONG_COMMENT)
-		ft_putendl_fd("Comment is too long", 2);
+		error("Comment is too long!", -1);
 	else if (err_code == BAD_CHARACTER_IN_LABEL)
 		error(": Bad character in label!", line);
 	else if (err_code == BAD_LABEL_FORMAT)

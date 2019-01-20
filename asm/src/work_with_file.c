@@ -45,6 +45,7 @@ static char	**read_file(const int fd)
 	if (line[0] != '\n')
 	{
 		free(line);
+		err_mesg(NO_NEWLINE_AT_END, -1);
 		return (NULL);
 	}
 	lseek(fd, 0, SEEK_SET);

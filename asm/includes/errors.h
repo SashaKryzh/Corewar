@@ -35,6 +35,7 @@
 # define SEPARATOR_IS_MISSING 20
 # define ARGUMENT_IS_MISSING 21
 # define NEXT_TOKEN_MUST_BE_DIR_OR_REG 22
+# define NO_NEWLINE_AT_END 23
 
 int		err_mesg(int err_code, int line);
 
