@@ -28,9 +28,9 @@ void		fork_op(t_cell *arena, t_car *car)
 	int		where;
 
 	where = get_value(arena, (car->position + 1) % MEM_SIZE, OP.t_dir_size);
+	fork_debug(car, where);
 	if (car->op == 0x0C)
 		where %= IDX_MOD;
-	fork_debug(car, where);
 	new = (t_car *)ft_memalloc(sizeof(t_car));
 	ft_memcpy(new, car, sizeof(t_car));
 	new->id = ++g_cnt_cars;
