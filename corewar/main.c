@@ -13,6 +13,8 @@
 #include "libft.h"
 #include "corewar.h"
 
+int 		g_start_to_show;
+
 int			g_visual;
 int			g_debug;
 int			g_dump = -1;

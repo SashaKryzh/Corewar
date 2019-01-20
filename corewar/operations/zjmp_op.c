@@ -15,7 +15,7 @@
 
 void		zjmp_debug(t_car *car, int arg)
 {
-	if (SHOW_OPERS)
+	if (SHOW_OPERS && g_cnt_cycles >= g_start_to_show)
 	{
 		ft_printf(OPER_INFO);
 		ft_printf("%d ", arg);

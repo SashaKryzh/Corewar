@@ -76,7 +76,7 @@ void	init(void)
 	int i = 0;
 	while (g_players[i].id != -1)
 	{
-		MOVE_SHIFT(wprintw(g_statusbar, "Player%d: %s", i, g_players[i].name))
+		MOVE_SHIFT(wprintw(g_statusbar, "Player %d: %s", i + 1, g_players[i].name))
 		i++;
 	}
 	MOVE_SHIFT(wprintw(g_statusbar, "_________________________________________"))

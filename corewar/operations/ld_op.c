@@ -15,7 +15,7 @@
 
 void		ld_debug(t_car *car, int reg_num, int arg)
 {
-	if (!SHOW_OPERS)
+	if (!SHOW_OPERS || g_cnt_cycles < g_start_to_show)
 		return ;
 	ft_printf(OPER_INFO);
 	ft_printf("%d r%d\n", arg, reg_num);

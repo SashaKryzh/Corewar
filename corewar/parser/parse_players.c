@@ -40,7 +40,7 @@ int		check_flag(int ac, char *av[], int *i)
 			exit_func("-dump error");
 		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
-	else if (ft_strequ(av[*i], "-n"))
+	else if (ft_strequ(av[*i], "-nc"))
 	{
 		g_visual = 1;
 		*i += 1;
@@ -51,8 +51,7 @@ int		check_flag(int ac, char *av[], int *i)
 		if (*i + 1 >= ac)
 			exit_func("-v error");
 		*i += 2;
-		if ((g_debug += ft_atoi(av[*i - 1])) <= 0)
-			exit_func("-v error");
+		g_debug |= ft_atoi(av[*i - 1]);
 		return (*i >= ac ? 0 : check_flag(ac, av, i));
 	}
 	return (1);
@@ -64,11 +63,11 @@ int		read_champ(char *file, uint8_t *champ)
 	int		ret;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
-		exit_func("File error");
+		exit_func("File open error");
 	if ((ret = read(fd, champ, MAX_READ + 1)) < 0)
 		exit_func("File read error");
 	if (ret < MIN_READ || ret > MAX_READ)
-		exit_func("Champ file error");
+		exit_func("Champ size error");
 	close(fd);
 	return (ret);
 }

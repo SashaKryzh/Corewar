@@ -15,7 +15,7 @@
 
 void			and_or_xor_debug(t_car *car, int reg_num, int *args)
 {
-	if (SHOW_OPERS)
+	if (SHOW_OPERS && g_cnt_cycles >= g_start_to_show)
 	{
 		ft_printf(OPER_INFO);
 		ft_printf("%d %d r%d\n", args[0], args[1], reg_num);

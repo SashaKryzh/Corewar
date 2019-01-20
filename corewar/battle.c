@@ -15,8 +15,6 @@
 
 void		manage_op(t_cell *arena, t_car *car)
 {
-	// if (g_cnt_cycles == g_dump - 1)
-	// 	ft_printf("%d %02x\n", car->position, arena[car->position].v);
 	if (g_op[car->op - 1].is_args_types)
 	{
 		if (get_op_data(arena, car))
@@ -34,7 +32,7 @@ void		battle(t_cell *arena, t_car *car)
 	while (1)
 	{
 		tmp = g_carriage;
-		if (SHOW_CYCLES)
+		if (SHOW_CYCLES && g_cnt_cycles >= g_start_to_show)
 			ft_printf("It is now cycle %d\n", g_cnt_cycles);
 		while (tmp)
 		{
@@ -71,7 +69,6 @@ void		check_battle(t_car *car)
 	int			changed;
 
 	cnt_c++;
-	// ft_printf("cnt_c: %d, to_die: %d, cycle: %d\n", cnt_c, g_cycles_to_die, g_cnt_cycles);
 	prev_to_die = !prev_to_die ? g_cycles_to_die : prev_to_die;
 	if (cnt_c % g_cycles_to_die == 0 || g_cycles_to_die <= 0)
 	{
@@ -111,12 +108,13 @@ void		check_cars(t_car *car, int to_do)
 	while (to_do == 1 && tmp)
 	{
 		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
-			delete_t_car(tmp);
-		tmp = tmp ? tmp->next : NULL;
+			tmp = delete_t_car(tmp);
+		else
+			tmp = tmp->next;
 	}
 	if (to_do == 2 && !g_carriage)
 	{
-		ft_printf("Contestant %d, \"%s\", has won ! (%d)\n", g_last_alive, g_players[g_last_alive - 1].name, g_cnt_cycles);
+		ft_printf("Contestant %d, \"%s\", has won !\n", g_last_alive, g_players[g_last_alive - 1].name);
 		exit(1);
 	}
 }

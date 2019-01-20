@@ -22,6 +22,9 @@
 # define OP g_op[car->op - 1]
 # define MOST_LEFT_BIT 2147483648
 
+# define DO_SHOW_CYCLES 2
+# define DO_SHOW_OPERS 4
+
 # define SHOW_CYCLES (g_debug & 2)
 # define SHOW_OPERS (g_debug & 4)
 # define OPER_INFO "P %4d | %s ", car->id, OP.name
@@ -29,6 +32,8 @@
 # define ON_CODE 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4
 # define MIN_READ (4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4)
 # define MAX_READ (MIN_READ + CHAMP_MAX_SIZE)
+
+extern int	g_start_to_show;
 
 extern int	g_visual;
 extern int	g_debug;
@@ -86,7 +91,7 @@ extern t_car	*g_carriage;
 void			battle(t_cell *arena, t_car *car);
 void			check_battle(t_car *car);
 void			check_cars(t_car *car, int to_do);
-void		 	delete_t_car(t_car *tmp);
+t_car		 	*delete_t_car(t_car *tmp);
 
 /*
 **	Get values

@@ -15,14 +15,11 @@
 
 void		st_debug(t_cell *arena, t_car *car, int reg_num, int where)
 {
-	if (!SHOW_OPERS)
+	if (!SHOW_OPERS || g_cnt_cycles < g_start_to_show)
 		return ;
 	ft_printf(OPER_INFO);
 	ft_printf("r%d ", reg_num);
-	if (car->args_types[1] == REG_CODE)
-		ft_printf("r%d\n", where);
-	else
-		ft_printf("%d\n", where);
+	ft_printf("%d\n", where);
 }
 
 void		st_op(t_cell *arena, t_car *car)

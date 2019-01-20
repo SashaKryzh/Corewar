@@ -15,7 +15,7 @@
 
 void		add_sub_debug(t_car *car, int *reg_nums)
 {
-	if (SHOW_OPERS)
+	if (SHOW_OPERS && g_cnt_cycles >= g_start_to_show)
 	{
 		ft_printf(OPER_INFO);
 		ft_printf("r%d r%d r%d\n", reg_nums[0], reg_nums[1], reg_nums[2]);

@@ -27,10 +27,6 @@ void		skip_op(t_cell *arena, t_car *car)
 		car->no_jump = 0;
 		return ;
 	}
-	// ft_printf("id: %d, args type byte: ", car->id);
-	// ft_print_bits(arena[car->position + 1].v);
-	// ft_printf(" - %d %d %d -> ", car->args_sizes[0], car->args_sizes[1], car->args_sizes[2]);
-	// ft_printf("from: %d ", car->position);
 	car->position += 1 + (OP.is_args_types ? 1 : OP.t_dir_size);
 	while (i < OP.args_num && OP.is_args_types)
 	{
@@ -38,9 +34,6 @@ void		skip_op(t_cell *arena, t_car *car)
 		i++;
 	}
 	car->position %= MEM_SIZE;
-	// ft_printf("to: %d -> ", car->position);
-	// putbyte_hex(arena[car->position].v);
-	// ft_printf("\n");
 }
 
 /*
@@ -60,8 +53,7 @@ int			to_arg(t_cell *arena, t_car *car, int arg_num)
 		to_jump += car->args_sizes[i];
 		i++;
 	}
-	to_jump++; // to got on the next byte
-	// putbyte_hex(arena[(car->position + to_jump) % MEM_SIZE]); // points on ...
+	to_jump++;
 	return ((car->position + to_jump) % MEM_SIZE);
 }
 

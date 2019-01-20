@@ -13,24 +13,20 @@
 #include "libft.h"
 #include "corewar.h"
 
-void 	delete_t_car(t_car *tmp)
+t_car 	*delete_t_car(t_car *to_del)
 {
-	t_car *s;
+	t_car *tmp;
 
-	if (g_carriage == tmp)
+	if (g_carriage == to_del)
 	{
-		g_carriage = tmp->next;
-		free(tmp);
-		return ;
+		g_carriage = to_del->next;
+		free(to_del);
+		return (g_carriage);
 	}
-	s = g_carriage;
-	while (s->next && s->next != tmp)
-		s = s->next;
-	if (!s->next)
-	{
-		ft_printf("Shoto ne tak!\n");
-		exit(1);
-	}
-	s->next = s->next->next;
-	free(tmp);
+	tmp = g_carriage;
+	while (tmp->next && tmp->next != to_del)
+		tmp = tmp->next;
+	tmp->next = tmp->next->next;
+	free(to_del);
+	return (tmp->next);
 }
