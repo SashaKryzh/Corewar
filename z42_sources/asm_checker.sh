@@ -29,6 +29,7 @@ for filename in $(find . -name "*.s"); do
         echo $filename
         mv ./vm_champs/test_cor/*.cor vm_champs/test_cor/original
         own_out=$(../asm/asm $filename);
+        echo "own: $own_out"
         own_ret=$?
         mv ./vm_champs/test_cor/*.cor vm_champs/test_cor/own
         get_error own_ret

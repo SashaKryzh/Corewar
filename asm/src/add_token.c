@@ -45,7 +45,11 @@ int			add_token(char *line, int i, int *j, t_asm *champ)
 	new->line = i;
 	new->value = NULL;
 	if (!clasify_token(champ, new, line, j))
+	{
+		ft_strdel(&new->value);
+		free(new);
 		return (0);
+	}
 	if (!champ->tokens)
 		champ->tokens = new;
 	else

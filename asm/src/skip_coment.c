@@ -17,7 +17,7 @@ int	skip_coment(char **code, int *i, int *j)
 	*j = -1;
 	while (code[(*i)] &&
 		(code[*i][0] == COMMENT_CHAR || code[*i][0] == 0))
-			(*i)++;
+		(*i)++;
 	if (!code[*i])
 		return (err_mesg(NO_NAME_AND_NO_COMMENT, *i));
 	while (ft_isspace(code[*i][++(*j)]))

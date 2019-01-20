@@ -102,7 +102,7 @@ static int	get_comment(char **code, t_asm *champ, int *i, int j)
 
 int			get_name_and_comment(char **code, t_asm *champ, int *i)
 {
-	int 	j;
+	int	j;
 
 	j = -1;
 	while (code[++(*i)] &&
