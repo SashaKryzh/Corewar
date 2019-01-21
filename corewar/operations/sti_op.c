@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sti_op.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 13:45:12 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/11 13:45:12 by okryzhan         ###   ########.fr       */
+/*   Updated: 2019/01/21 17:14:51 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,5 @@ void		sti_op(t_cell *arena, t_car *car)
 	ft_memrev(&reg_val, 4);
 	put_on_arena(arena, (MEM_SIZE + addr) % MEM_SIZE,
 		(uint8_t *)(&reg_val), (int[]){ REG_SIZE, car->color });
-	if (g_visual)
-		show_on_arena(arena, (MEM_SIZE + addr) % MEM_SIZE, REG_SIZE);
 	sti_debug(car, reg_num, args);
 }

@@ -1,19 +1,19 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+         #
+#    By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/20 16:06:58 by okryzhan          #+#    #+#              #
-#    Updated: 2018/12/20 16:06:59 by okryzhan         ###   ########.fr        #
+#    Updated: 2019/01/21 18:11:49 by vlytvyne         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME = corewar
 
 FLAGS = -Wall -Werror -Wextra
-CC = gcc
+CC = gcc $(FLAGS)
 
 VPATH = ./operations || ./parser
 
@@ -42,7 +42,8 @@ players_id.c \
 check_flags.c \
 tests.c\
 put_funcs.c \
-vis.c
+vis.c \
+vis_init.c
 
 OBJS_DIR = ./objs
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 08:32:17 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/17 17:21:58 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/21 17:26:18 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,10 +167,9 @@ void			introduce_champs(t_player *champs);
 void			putarena(t_cell *arena);
 void			is_winner(void);
 
-void			print_into_arena(t_cell *cells, t_car *carrs);
+void			print_into_arena(t_cell *cells);
 void			print_bold(t_cell *cells, int position, int size);
 void			print_carrs(t_cell *cells, t_car *carrs);
-void			show_on_arena(t_cell *arena, int where, int size);
 void			update_view(t_cell *arena);
 void			refr(void);
 void			disinit(void);

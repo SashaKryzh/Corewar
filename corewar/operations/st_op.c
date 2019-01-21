@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st_op.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:25:45 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/15 13:25:45 by okryzhan         ###   ########.fr       */
+/*   Updated: 2019/01/21 17:14:46 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void		st_op(t_cell *arena, t_car *car)
 		ft_memrev(&reg_val, 4);
 		put_on_arena(arena, where, (uint8_t *)(&reg_val),
 			(int[]){ REG_SIZE, car->color });
-		if (g_visual)
-			show_on_arena(arena, where, REG_SIZE);
 	}
 	st_debug(car, reg_num, tmp);
 }
