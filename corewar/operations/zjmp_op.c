@@ -29,11 +29,14 @@ void		zjmp_debug(t_car *car, int arg)
 void		zjmp_op(t_cell *arena, t_car *car)
 {
 	int arg;
+	int	tmp;
 
 	arg = get_value(arena, (car->position + 1) % MEM_SIZE, OP.t_dir_size);
 	if (car->carry)
 	{
-		car->position = (MEM_SIZE + car->position + arg % IDX_MOD) % MEM_SIZE;
+		tmp = arg % IDX_MOD;
+		car->position = (MEM_SIZE + (car->position + tmp)
+			% MEM_SIZE) % MEM_SIZE;
 		car->no_jump = 1;
 	}
 	zjmp_debug(car, arg);

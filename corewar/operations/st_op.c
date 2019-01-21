@@ -41,7 +41,8 @@ void		st_op(t_cell *arena, t_car *car)
 	{
 		where = get_value(arena, to_arg(car, 2), IND_SIZE);
 		tmp = where;
-		where = (MEM_SIZE + car->position + where % IDX_MOD) % MEM_SIZE;
+		where = (MEM_SIZE + (car->position + where % IDX_MOD)
+			% MEM_SIZE) % MEM_SIZE;
 		ft_memrev(&reg_val, 4);
 		put_on_arena(arena, where, (uint8_t *)(&reg_val),
 			(int[]){ REG_SIZE, car->color });
