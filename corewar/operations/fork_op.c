@@ -38,7 +38,7 @@ void		fork_op(t_cell *arena, t_car *car)
 	new = (t_car *)ft_memalloc(sizeof(t_car));
 	ft_memcpy(new, car, sizeof(t_car));
 	new->id = ++g_cnt_cars;
-	new->position = (MEM_SIZE + car->position + where) % MEM_SIZE;
+	new->position = (SHRPL + car->position + where) % SHRPL % MEM_SIZE;
 	new->next = g_carriage;
 	g_carriage = new;
 }

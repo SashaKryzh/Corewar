@@ -45,7 +45,7 @@ int			get_ind(t_cell *arena, t_car *car, int arg_num, int size)
 	addr = get_value(arena, to_arg(car, arg_num), IND_SIZE);
 	if (car->op != 0x0D)
 		addr %= IDX_MOD;
-	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
+	addr = (SHRPL + car->position + addr) % SHRPL % MEM_SIZE;
 	res = get_value(arena, addr, size);
 	return (res);
 }

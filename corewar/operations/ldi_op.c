@@ -48,7 +48,7 @@ void	ldi_op(t_cell *arena, t_car *car)
 			args[i] = car->regs[get_reg_num(arena, car, i + 1) - 1];
 	addr = args[0] + args[1];
 	addr = car->op == 0x0A ? addr % IDX_MOD : addr;
-	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
+	addr = (SHRPL + car->position + addr) % SHRPL % MEM_SIZE;
 	car->regs[reg_num - 1] = get_value(arena, addr, 4);
 	if (car->op == 0x0E)
 		car->carry = car->regs[reg_num - 1] == 0 ? 1 : 0;
