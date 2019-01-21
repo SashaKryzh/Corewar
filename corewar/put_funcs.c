@@ -46,7 +46,7 @@ void		putarena(t_cell *arena)
 			printf("\n");
 		i++;
 	}
-	system("leaks corewar");
+	// system("leaks corewar");
 	exit(0);
 }
 
@@ -61,7 +61,7 @@ void		is_winner(void)
 		}
 		else
 			disinit();
-		system("leaks corewar");
+		// system("leaks corewar");
 		exit(0);
 	}
 }
