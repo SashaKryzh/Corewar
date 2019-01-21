@@ -21,7 +21,7 @@ void	check_null(uint8_t *champ)
 	while (i < 4)
 	{
 		if (champ[i] != 0)
-			ft_printf("NULL ERROR");
+			exit_func("Null error");
 		i++;
 	}
 }
