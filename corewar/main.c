@@ -23,8 +23,9 @@ int			g_dump = -1;
 t_player	g_players[MAX_PLAYERS + 1];
 t_car		*g_carriage;
 
-int			g_last_alive;
+int			g_cnt_players;
 int			g_cnt_cars;
+int			g_last_alive;
 
 int			g_cycles_to_die = CYCLE_TO_DIE;
 
@@ -33,7 +34,7 @@ int			g_cnt_cycles = 1;
 
 void		exit_func(char *msg)
 {
-	ft_printf(msg);
+	printf("%s\n", msg);
 	exit(0);
 }
 
@@ -43,6 +44,7 @@ int			main(int ac, char *av[])
 
 	g_last_alive = parse_players(g_players, ac, av);
 	g_cnt_cars = g_last_alive;
+	g_cnt_players = g_last_alive;
 	arena = init_battlefield(g_players);
 	g_carriage = init_cars();
 	check_flags_priority();

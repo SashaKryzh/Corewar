@@ -33,7 +33,7 @@ void		battle(t_cell *arena)
 	{
 		tmp = g_carriage;
 		if (SHOW_CYCLES && g_cnt_cycles >= g_start_to_show)
-			ft_printf("It is now cycle %d\n", g_cnt_cycles);
+			printf("It is now cycle %d\n", g_cnt_cycles);
 		while (tmp)
 		{
 			if (!tmp->remain_cycles)
@@ -97,6 +97,6 @@ void		check_battle_2(int *cnt_cycles, int *changed)
 	*cnt_cycles = 0;
 	*changed -= 1;
 	if (SHOW_CYCLES && *changed == 0)
-		ft_printf("Cycle to die is now %d\n", g_cycles_to_die);
+		printf("Cycle to die is now %d\n", g_cycles_to_die);
 	is_winner();
 }

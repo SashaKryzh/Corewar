@@ -37,6 +37,7 @@ extern int	g_debug;
 extern int	g_format;
 extern int	g_dump;
 
+extern int	g_cnt_players;
 extern int	g_cnt_cars;
 extern int	g_last_alive;
 extern int	g_cnt_cycles;

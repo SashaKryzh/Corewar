@@ -19,10 +19,10 @@ void		fork_debug(t_car *car, int where)
 
 	if (SHOW_OPERS && g_cnt_cycles >= g_start_to_show)
 	{
-		ft_printf(OPER_INFO);
+		printf(OPER_INFO);
 		tmp = car->op == 0x0C ? where % IDX_MOD : where;
 		tmp = car->position + tmp;
-		ft_printf("%d (%d)\n", where, tmp);
+		printf("%d (%d)\n", where, tmp);
 	}
 }
 

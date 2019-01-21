@@ -20,5 +20,5 @@ void	aff_op(t_cell *arena, t_car *car)
 	if (g_debug)
 		return ;
 	reg_num = get_reg_num(arena, car, 1);
-	ft_printf("%c\n", (char)(car->regs[reg_num - 1]));
+	printf("%c\n", (char)(car->regs[reg_num - 1]));
 }
