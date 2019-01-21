@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-void		sti_debug(t_cell *arena, t_car *car, int reg_num, int *args)
+void		sti_debug(t_car *car, int reg_num, int *args)
 {
 	int	sum;
 
@@ -36,23 +36,20 @@ void		sti_op(t_cell *arena, t_car *car)
 
 	reg_num = get_reg_num(arena, car, 1);
 	reg_val = car->regs[reg_num - 1];
-	i = 0;
-	while (i < 2)
-	{
+	i = -1;
+	while (++i < 2)
 		if (car->args_types[i + 1] == DIR_CODE)
-			args[i] = get_value(arena, to_arg(arena, car, i + 2),
+			args[i] = get_value(arena, to_arg(car, i + 2),
 				OP.t_dir_size);
 		else if (car->args_types[i + 1] == IND_CODE)
 			args[i] = get_ind(arena, car, i + 2, OP.t_dir_size);
 		else
 			args[i] = car->regs[get_reg_num(arena, car, i + 2) - 1];
-		i++;
-	}
 	addr = car->position + (args[0] + args[1]) % IDX_MOD;
 	ft_memrev(&reg_val, 4);
 	put_on_arena(arena, (MEM_SIZE + addr) % MEM_SIZE,
-		(uint8_t *)(&reg_val), (int []){ REG_SIZE, car->color });
+		(uint8_t *)(&reg_val), (int[]){ REG_SIZE, car->color });
 	if (g_visual)
 		show_on_arena(arena, (MEM_SIZE + addr) % MEM_SIZE, REG_SIZE);
-	sti_debug(arena, car, reg_num, args);
+	sti_debug(car, reg_num, args);
 }

@@ -32,7 +32,7 @@ void		ld_op(t_cell *arena, t_car *car)
 
 	reg_num = get_reg_num(arena, car, 2);
 	if (car->args_types[0] == DIR_CODE)
-		arg = get_value(arena, to_arg(arena, car, 1), OP.t_dir_size);
+		arg = get_value(arena, to_arg(car, 1), OP.t_dir_size);
 	else
 		arg = get_ind(arena, car, 1, OP.t_dir_size);
 	car->regs[reg_num - 1] = arg;

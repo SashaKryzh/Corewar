@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "corewar.h"
 
-void		st_debug(t_cell *arena, t_car *car, int reg_num, int where)
+void		st_debug(t_car *car, int reg_num, int where)
 {
 	if (!SHOW_OPERS || g_cnt_cycles < g_start_to_show)
 		return ;
@@ -39,13 +39,14 @@ void		st_op(t_cell *arena, t_car *car)
 	}
 	else
 	{
-		where = get_value(arena, to_arg(arena, car, 2), IND_SIZE);
+		where = get_value(arena, to_arg(car, 2), IND_SIZE);
 		tmp = where;
 		where = (MEM_SIZE + car->position + where % IDX_MOD) % MEM_SIZE;
 		ft_memrev(&reg_val, 4);
-		put_on_arena(arena, where, (uint8_t *)(&reg_val), (int []){ REG_SIZE, car->color });
+		put_on_arena(arena, where, (uint8_t *)(&reg_val),
+			(int[]){ REG_SIZE, car->color });
 		if (g_visual)
 			show_on_arena(arena, where, REG_SIZE);
 	}
-	st_debug(arena, car, reg_num, tmp);
+	st_debug(car, reg_num, tmp);
 }

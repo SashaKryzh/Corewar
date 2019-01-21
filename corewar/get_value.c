@@ -42,7 +42,7 @@ int			get_ind(t_cell *arena, t_car *car, int arg_num, int size)
 	int addr;
 	int	res;
 
-	addr = get_value(arena, to_arg(arena, car, arg_num), IND_SIZE);
+	addr = get_value(arena, to_arg(car, arg_num), IND_SIZE);
 	if (car->op != 0x0D)
 		addr %= IDX_MOD;
 	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;
@@ -55,7 +55,7 @@ int			get_ind(t_cell *arena, t_car *car, int arg_num, int size)
 **  n[3] >> 7... for negative values when size == 2
 */
 
-int		get_value(t_cell *arena, int start, int size)
+int			get_value(t_cell *arena, int start, int size)
 {
 	char	n[4];
 	int		res;
@@ -68,11 +68,11 @@ int		get_value(t_cell *arena, int start, int size)
 		n[i + size % 4] = arena[(start + i) % MEM_SIZE].v;
 		i++;
 	}
-    if (n[2] >> 7 && size == 2)
-    {
-        n[0] = -1;
-        n[1] = -1;
-    }
+	if (n[2] >> 7 && size == 2)
+	{
+		n[0] = -1;
+		n[1] = -1;
+	}
 	ft_memcpy(&res, n, 4);
 	ft_memrev(&res, 4);
 	return (res);

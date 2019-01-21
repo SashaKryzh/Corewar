@@ -22,9 +22,6 @@
 # define OP g_op[car->op - 1]
 # define MOST_LEFT_BIT 2147483648
 
-# define DO_SHOW_CYCLES 2
-# define DO_SHOW_OPERS 4
-
 # define SHOW_CYCLES (g_debug & 2)
 # define SHOW_OPERS (g_debug & 4)
 # define OPER_INFO "P %4d | %s ", car->id, OP.name
@@ -37,6 +34,7 @@ extern int	g_start_to_show;
 
 extern int	g_visual;
 extern int	g_debug;
+extern int	g_format;
 extern int	g_dump;
 
 extern int	g_cnt_cars;
@@ -44,7 +42,6 @@ extern int	g_last_alive;
 extern int	g_cnt_cycles;
 extern int	g_cnt_live;
 extern int	g_cycles_to_die;
-extern int	g_cnt_checks;
 
 typedef struct	s_player
 {
@@ -88,10 +85,12 @@ extern t_car	*g_carriage;
 **	Battle
 */
 
-void			battle(t_cell *arena, t_car *car);
-void			check_battle(t_car *car);
-void			check_cars(t_car *car, int to_do);
-t_car		 	*delete_t_car(t_car *tmp);
+void			battle(t_cell *arena);
+void			check_battle_status(t_cell *arena);
+void			check_battle(void);
+void			check_battle_2(int *cnt_cycles, int *changed);
+void			check_cars(void);
+t_car			*delete_t_car(t_car *tmp);
 
 /*
 **	Get values
@@ -107,9 +106,10 @@ int				get_ind(t_cell *arena, t_car *car, int arg_num, int size);
 **	Utils
 */
 
-void			skip_op(t_cell *arena, t_car *car);
-int				to_arg(t_cell *arena, t_car *car, int arg_num);
-void			put_on_arena(t_cell *arena, int start, uint8_t *val, int s_c[2]);
+void			skip_op(t_car *car);
+int				to_arg(t_car *car, int arg_num);
+void			put_on_arena(t_cell *arena, int start, uint8_t *val,
+				int s_c[2]);
 
 /*
 **	Parser
@@ -159,14 +159,18 @@ static void		(*g_opers[17])() = {0, &live_op, &ld_op, &st_op, &add_sub_op,
 **	Visual
 */
 
-void	print_into_arena(t_cell *cells, t_car *carrs);
-void	print_bold(t_cell *cells, int position, int size);
-void	print_carrs(t_cell *cells, t_car *carrs);
-void	show_on_arena(t_cell *arena, int where, int size);
-void 	update_view(t_cell *arena);
-void	refr(void);
-void	disinit(void);
-void	init(void);
+void			introduce_champs(t_player *champs);
+void			putarena(t_cell *arena);
+void			is_winner(void);
+
+void			print_into_arena(t_cell *cells, t_car *carrs);
+void			print_bold(t_cell *cells, int position, int size);
+void			print_carrs(t_cell *cells, t_car *carrs);
+void			show_on_arena(t_cell *arena, int where, int size);
+void			update_view(t_cell *arena);
+void			refr(void);
+void			disinit(void);
+void			init(void);
 
 /*
 **	Tests
@@ -178,6 +182,5 @@ void			putfile_hex(int ret, t_cell *file, int space, int newline);
 void			putbyte_hex(uint8_t n);
 void			putbytes_bit(char *n, int size);
 void			print_args_type(t_car *car);
-void			print_oper_data(t_cell *arena, t_car *car);
 
 #endif

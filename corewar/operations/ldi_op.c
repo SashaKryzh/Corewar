@@ -33,19 +33,16 @@ void	ldi_op(t_cell *arena, t_car *car)
 	int	i;
 
 	reg_num = get_reg_num(arena, car, 3);
-	i = 0;
-	while (i < 2)
-	{
+	i = -1;
+	while (++i < 2)
 		if (car->args_types[i] == DIR_CODE)
-			args[i] = get_value(arena, to_arg(arena, car, i + 1),
+			args[i] = get_value(arena, to_arg(car, i + 1),
 				OP.t_dir_size);
 		else if (car->args_types[i] == IND_CODE)
-			args[i] = get_ind(arena, car, to_arg(arena, car, i + 1),
+			args[i] = get_ind(arena, car, to_arg(car, i + 1),
 				OP.t_dir_size);
 		else if (car->args_types[i] == REG_CODE)
 			args[i] = car->regs[get_reg_num(arena, car, i + 1) - 1];
-		i++;
-	}
 	addr = args[0] + args[1];
 	addr = car->op == 0x0A ? addr % IDX_MOD : addr;
 	addr = (MEM_SIZE + car->position + addr) % MEM_SIZE;

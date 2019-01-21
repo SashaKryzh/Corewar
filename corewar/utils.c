@@ -17,7 +17,7 @@
 **	Skips command with invalid args types or reg number
 */
 
-void		skip_op(t_cell *arena, t_car *car)
+void		skip_op(t_car *car)
 {
 	int i;
 
@@ -38,10 +38,10 @@ void		skip_op(t_cell *arena, t_car *car)
 
 /*
 **	Sets the pointer on the first byte of needed arg
-**	Use it only when args type byte is there, otherwise do position + 1 
+**	Use it only when args type byte is there, otherwise do position + 1
 */
 
-int			to_arg(t_cell *arena, t_car *car, int arg_num)
+int			to_arg(t_car *car, int arg_num)
 {
 	int i;
 	int	to_jump;

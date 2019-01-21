@@ -21,6 +21,7 @@ SRCS = main.c \
 check_args_byte.c \
 utils.c \
 battle.c \
+check_cars.c \
 get_value.c \
 init_oper.c \
 live_op.c \
@@ -39,7 +40,7 @@ parser.c \
 parser_checks.c \
 players_id.c \
 tests.c\
-delete_t_car.c \
+put_funcs.c \
 vis.c
 
 OBJS_DIR = ./objs

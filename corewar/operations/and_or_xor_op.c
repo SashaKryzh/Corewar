@@ -81,7 +81,7 @@ void			and_or_xor_op(t_cell *arena, t_car *car)
 	while (i < 2)
 	{
 		if (car->args_types[i] == DIR_CODE)
-			args[i] = get_value(arena, to_arg(arena, car, i + 1),
+			args[i] = get_value(arena, to_arg(car, i + 1),
 				OP.t_dir_size);
 		else if (car->args_types[i] == IND_CODE)
 			args[i] = get_ind(arena, car, i + 1, 4);

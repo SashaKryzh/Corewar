@@ -37,7 +37,7 @@ t_cell		*init_battlefield(t_player *champs)
 	return (arena);
 }
 
-t_car	*new_carriage(int id, int position)
+t_car		*new_carriage(int id, int position)
 {
 	t_car	*new;
 
@@ -49,7 +49,7 @@ t_car	*new_carriage(int id, int position)
 	return (new);
 }
 
-t_car	*init_cars(void)
+t_car		*init_cars(void)
 {
 	t_car		*carriage;
 	t_car		*tmp;

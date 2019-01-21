@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delete_t_car.c                                     :+:      :+:    :+:   */
+/*   check_cars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzakala <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/16 15:34:02 by pzakala           #+#    #+#             */
-/*   Updated: 2019/01/16 15:34:07 by pzakala          ###   ########.fr       */
+/*   Created: 2019/01/21 08:18:57 by okryzhan          #+#    #+#             */
+/*   Updated: 2019/01/21 08:18:57 by okryzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "corewar.h"
 
-t_car 	*delete_t_car(t_car *to_del)
+t_car		*delete_t_car(t_car *to_del)
 {
 	t_car *tmp;
 
@@ -29,4 +29,18 @@ t_car 	*delete_t_car(t_car *to_del)
 	tmp->next = tmp->next->next;
 	free(to_del);
 	return (tmp->next);
+}
+
+void		check_cars(void)
+{
+	t_car *tmp;
+
+	tmp = g_carriage;
+	while (tmp)
+	{
+		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
+			tmp = delete_t_car(tmp);
+		else
+			tmp = tmp->next;
+	}
 }
