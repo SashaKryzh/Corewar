@@ -24,6 +24,5 @@ int		main(int argc, char **argv)
 		while (++i < argc)
 			work_with_file(argv[i]);
 	}
-	system("leaks -q asm");
 	return (0);
 }
