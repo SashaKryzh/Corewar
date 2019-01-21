@@ -33,7 +33,7 @@ int			g_cnt_cycles = 1;
 
 void		exit_func(char *msg)
 {
-	perror(msg);
+	ft_printf(msg);
 	exit(0);
 }
 

@@ -90,7 +90,6 @@ void			check_battle_status(t_cell *arena);
 void			check_battle(void);
 void			check_battle_2(int *cnt_cycles, int *changed);
 void			check_cars(void);
-t_car			*delete_t_car(t_car *tmp);
 
 /*
 **	Get values

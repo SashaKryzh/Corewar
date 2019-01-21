@@ -15,10 +15,14 @@
 
 void		fork_debug(t_car *car, int where)
 {
+	int tmp;
+
 	if (SHOW_OPERS && g_cnt_cycles >= g_start_to_show)
 	{
 		ft_printf(OPER_INFO);
-		ft_printf("%d (%d)\n", where, car->position + where);
+		tmp = car->op == 0x0C ? where % IDX_MOD : where;
+		tmp = car->position + tmp;
+		ft_printf("%d (%d)\n", where, tmp);
 	}
 }
 

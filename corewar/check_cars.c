@@ -13,34 +13,34 @@
 #include "libft.h"
 #include "corewar.h"
 
-t_car		*delete_t_car(t_car *to_del)
+t_car		*delete_t_car(t_car *prev, t_car *to_del)
 {
-	t_car *tmp;
-
 	if (g_carriage == to_del)
 	{
 		g_carriage = to_del->next;
 		free(to_del);
 		return (g_carriage);
 	}
-	tmp = g_carriage;
-	while (tmp->next && tmp->next != to_del)
-		tmp = tmp->next;
-	tmp->next = tmp->next->next;
+	prev->next = to_del->next;
 	free(to_del);
-	return (tmp->next);
+	return (prev->next);
 }
 
 void		check_cars(void)
 {
-	t_car *tmp;
+	t_car *prev;
+	t_car *cur;
 
-	tmp = g_carriage;
-	while (tmp)
+	prev = NULL;
+	cur = g_carriage;
+	while (cur)
 	{
-		if (g_cnt_cycles - tmp->last_live >= g_cycles_to_die)
-			tmp = delete_t_car(tmp);
+		if (g_cnt_cycles - cur->last_live >= g_cycles_to_die)
+			cur = delete_t_car(prev, cur);
 		else
-			tmp = tmp->next;
+		{
+			prev = cur;
+			cur = cur->next;
+		}
 	}
 }
