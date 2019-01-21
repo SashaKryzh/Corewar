@@ -1,4 +1,4 @@
-.name			"I_Kill_You"
+.name			"ANTON MOROZIUK"
 .comment		"The strongest champion created by pzakala, okryzhan, amoroziu and vlytvyne!"
 
 xor		r2, r1, r1

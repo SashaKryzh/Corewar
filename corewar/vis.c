@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:49:57 by vlytvyne          #+#    #+#             */
-/*   Updated: 2019/01/21 18:09:55 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/21 19:46:14 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,33 @@
 
 WINDOW *g_arena;
 WINDOW *g_statusbar;
+int		g_delay;
 
 void	refr(void)
 {
-	mvwprintw(g_statusbar, 13, 4, "Cycle: %i", g_cnt_cycles);
+	char	ch;
+
+	mvwprintw(g_statusbar, 13, 4, "Cycle: %i", g_cnt_cycles, g_delay);
 	mvwprintw(g_statusbar, 15, 4, "Cycle to die: %i", g_cycles_to_die);
+	ch = getch();
+	if (ch == 32)
+	{
+		mvwprintw(g_statusbar, 63, 19, "***PAUSE***");
+		refresh();
+		wrefresh(g_statusbar);
+		while (getch() != 32);
+		mvwprintw(g_statusbar, 63, 19, "           ");
+		refresh();
+		wrefresh(g_statusbar);
+	}
+	else if (ch == 'f' && g_delay > 10)
+		g_delay /= 10;
+	else if (ch == 's' && g_delay < 100000)
+		g_delay *= 10;
 	refresh();
 	wrefresh(g_arena);
 	wrefresh(g_statusbar);
-	usleep(10000);
+	usleep(g_delay);
 }
 
 void	print_carrs(t_cell *cells, t_car *carrs)
@@ -54,7 +72,7 @@ void	print_into_arena(t_cell *cells)
 	i = 0;
 	x = 2;
 	y = 0;
-	while (i < 4096)
+	while (i < MEM_SIZE)
 	{
 		if (i % 64 == 0)
 		{
