@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 08:32:17 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/21 17:26:18 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:18:50 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void			print_bold(t_cell *cells, int position, int size);
 void			print_carrs(t_cell *cells, t_car *carrs);
 void			update_view(t_cell *arena);
 void			refr(void);
-void			disinit(void);
+void			disinit(int end);
 void			init(void);
 
 /*

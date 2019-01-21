@@ -6,7 +6,7 @@
 #    By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/20 16:06:58 by okryzhan          #+#    #+#              #
-#    Updated: 2019/01/21 18:11:49 by vlytvyne         ###   ########.fr        #
+#    Updated: 2019/01/21 20:31:14 by vlytvyne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ check_flags.c \
 tests.c\
 put_funcs.c \
 vis.c \
-vis_init.c
+vis_init.c \
+vis_disinit.c
 
 OBJS_DIR = ./objs
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))

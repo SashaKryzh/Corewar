@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:49:57 by vlytvyne          #+#    #+#             */
-/*   Updated: 2019/01/21 19:46:14 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:30:44 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ WINDOW *g_arena;
 WINDOW *g_statusbar;
 int		g_delay;
 
+void	refr_statusbar(void)
+{
+	refresh();
+	wrefresh(g_statusbar);
+}
+
 void	refr(void)
 {
 	char	ch;
@@ -30,16 +36,17 @@ void	refr(void)
 	if (ch == 32)
 	{
 		mvwprintw(g_statusbar, 63, 19, "***PAUSE***");
-		refresh();
-		wrefresh(g_statusbar);
-		while (getch() != 32);
+		refr_statusbar();
+		while ((ch = getch()) != 32 && ch != 27)
+			;
 		mvwprintw(g_statusbar, 63, 19, "           ");
-		refresh();
-		wrefresh(g_statusbar);
+		refr_statusbar();
 	}
-	else if (ch == 'f' && g_delay > 10)
+	if (ch == 27)
+		disinit(0);
+	if (ch == 'f' && g_delay > 10)
 		g_delay /= 10;
-	else if (ch == 's' && g_delay < 100000)
+	if (ch == 's' && g_delay < 100000)
 		g_delay *= 10;
 	refresh();
 	wrefresh(g_arena);
@@ -97,12 +104,4 @@ void	update_view(t_cell *arena)
 	print_into_arena(arena);
 	print_carrs(arena, g_carriage);
 	refr();
-}
-
-void	disinit(void)
-{
-	getch();
-	wattroff(g_arena, A_BOLD);
-	wattroff(g_statusbar, A_BOLD);
-	endwin();
 }

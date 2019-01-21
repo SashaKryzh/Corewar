@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 18:07:57 by vlytvyne          #+#    #+#             */
-/*   Updated: 2019/01/21 19:34:40 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:29:31 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		print_options(void)
 	mvwprintw(g_statusbar, 40, 4, "[SPACE] - pause/resume");
 	mvwprintw(g_statusbar, 42, 4, "[F] - speed up");
 	mvwprintw(g_statusbar, 44, 4, "[S] - slow down");
-
+	mvwprintw(g_statusbar, 46, 4, "[ESC] - exit");
 }
 
 void		init(void)

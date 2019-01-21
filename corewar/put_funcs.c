@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_funcs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 07:59:23 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/21 07:59:23 by okryzhan         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:18:53 by vlytvyne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		is_winner(void)
 				g_last_alive, g_players[g_last_alive - 1].name);
 		}
 		else
-			disinit();
+			disinit(1);
 		// system("leaks corewar");
 		exit(0);
 	}
