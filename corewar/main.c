@@ -17,7 +17,7 @@ int			g_start_to_show;
 
 int			g_visual;
 int			g_debug;
-int			g_format = 64;
+int			g_format = 32;
 int			g_dump = -1;
 
 t_player	g_players[MAX_PLAYERS + 1];
@@ -45,6 +45,7 @@ int			main(int ac, char *av[])
 	g_cnt_cars = g_last_alive;
 	arena = init_battlefield(g_players);
 	g_carriage = init_cars();
+	check_flags_priority();
 	introduce_champs(g_players);
 	if (!g_dump)
 		putarena(arena);

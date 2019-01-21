@@ -39,6 +39,7 @@ parse_players.c \
 parser.c \
 parser_checks.c \
 players_id.c \
+check_flags.c \
 tests.c\
 put_funcs.c \
 vis.c

@@ -115,6 +115,9 @@ void			put_on_arena(t_cell *arena, int start, uint8_t *val,
 **	Parser
 */
 
+int				check_flags(int ac, char *av[], int *i);
+void			check_flags_priority(void);
+
 int				parse_players(t_player *champs, int ac, char *av[]);
 
 void			get_name(t_player *champs, uint8_t *champ);

@@ -29,34 +29,6 @@ int		check_n_flag(int ac, char *av[], int *i)
 	return (MAX_PLAYERS + 1);
 }
 
-int		check_flag(int ac, char *av[], int *i)
-{
-	if (ft_strequ(av[*i], "-dump"))
-	{
-		if (*i + 1 >= ac || g_dump >= 0)
-			exit_func("-dump error");
-		*i += 2;
-		if ((g_dump = ft_atoi(av[*i - 1])) < 0)
-			exit_func("-dump error");
-		return (*i >= ac ? 0 : check_flag(ac, av, i));
-	}
-	else if (ft_strequ(av[*i], "-nc"))
-	{
-		g_visual = 1;
-		*i += 1;
-		return (*i >= ac ? 0 : check_flag(ac, av, i));
-	}
-	else if (ft_strequ(av[*i], "-v"))
-	{
-		if (*i + 1 >= ac)
-			exit_func("-v error");
-		*i += 2;
-		g_debug |= ft_atoi(av[*i - 1]);
-		return (*i >= ac ? 0 : check_flag(ac, av, i));
-	}
-	return (1);
-}
-
 int		read_champ(char *file, uint8_t *champ)
 {
 	int		fd;
@@ -87,7 +59,7 @@ int		parse_players(t_player *champs, int ac, char *av[])
 	j = -1;
 	while (i < ac)
 	{
-		if (!check_flag(ac, av, &i))
+		if (!check_flags(ac, av, &i))
 			break ;
 		if (++j == MAX_PLAYERS)
 			exit_func("Too many players");

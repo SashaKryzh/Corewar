@@ -54,9 +54,9 @@ void		battle(t_cell *arena)
 
 void		check_battle_status(t_cell *arena)
 {
+	check_battle();
 	if (g_cnt_cycles == g_dump)
 		putarena(arena);
-	check_battle();
 	if (g_visual)
 		update_view(arena);
 	g_cnt_cycles++;

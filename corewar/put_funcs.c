@@ -37,7 +37,9 @@ void		putarena(t_cell *arena)
 	i = 0;
 	while (i < MEM_SIZE)
 	{
-		if (g_debug && i % g_format == 0)
+		if (g_debug && i == 0)
+			ft_printf("0x0000 : ");
+		else if (g_debug && i % g_format == 0)
 			ft_printf("%#06x : ", i);
 		ft_printf("%02x", arena[i].v);
 		if ((i + 1) % g_format != 0)
@@ -46,7 +48,6 @@ void		putarena(t_cell *arena)
 			ft_printf("\n");
 		i++;
 	}
-	ft_printf("\n");
 	exit(1);
 }
 
@@ -54,8 +55,11 @@ void		is_winner(void)
 {
 	if (!g_carriage)
 	{
-		ft_printf("Contestant %d, \"%s\", has won !\n",
-			g_last_alive, g_players[g_last_alive - 1].name);
-		exit(1);
+		if (!g_visual)
+		{
+			ft_printf("Contestant %d, \"%s\", has won !\n",
+				g_last_alive, g_players[g_last_alive - 1].name);
+			exit(1);
+		}
 	}
 }
