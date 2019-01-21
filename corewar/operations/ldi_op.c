@@ -17,12 +17,16 @@ void	ldi_debug(t_car *car, int reg_num, int *args)
 {
 	if (!SHOW_OPERS || g_cnt_cycles < g_start_to_show)
 		return ;
-	ft_printf(OPER_INFO);
-	ft_printf("%d %d r%d\n", args[0], args[1], reg_num);
-	ft_printf("       | -> load from ");
-	ft_printf("%d + %d = %d ", args[0], args[1], args[0] + args[1]);
-	ft_printf("(with pc and mod %d)\n", car->position +
-		(args[0] + args[1]) % IDX_MOD);
+	printf(OPER_INFO);
+	printf("%d %d r%d\n", args[0], args[1], reg_num);
+	printf("       | -> load from ");
+	printf("%d + %d = %d ", args[0], args[1], args[0] + args[1]);
+	if (car->op == 0x0A)
+		printf("(with pc and mod %d)\n", car->position +
+			(args[0] + args[1]) % IDX_MOD);
+	else
+		printf("(with pc %d)\n", car->position +
+			args[0] + args[1]);
 }
 
 void	ldi_op(t_cell *arena, t_car *car)
@@ -39,8 +43,7 @@ void	ldi_op(t_cell *arena, t_car *car)
 			args[i] = get_value(arena, to_arg(car, i + 1),
 				OP.t_dir_size);
 		else if (car->args_types[i] == IND_CODE)
-			args[i] = get_ind(arena, car, to_arg(car, i + 1),
-				OP.t_dir_size);
+			args[i] = get_ind(arena, car, i + 1, 4);
 		else if (car->args_types[i] == REG_CODE)
 			args[i] = car->regs[get_reg_num(arena, car, i + 1) - 1];
 	addr = args[0] + args[1];
