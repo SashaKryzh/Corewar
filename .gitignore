@@ -1,3 +1,5 @@
 .DS_Store
 *.o
 corewar/corewar
+corewar/ttorg
+corewar/ttown

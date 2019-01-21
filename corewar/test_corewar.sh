@@ -1,4 +1,4 @@
-for filename in $(find .. -name "*cor");do
+for filename in $(find ../champs -name "*cor");do
 	echo $filename
 	./corewar $filename -v 6 > ttown;
 	./../z42_sources/corewar $filename -v 6 > ttorg

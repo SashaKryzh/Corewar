@@ -35,6 +35,7 @@ int			g_cnt_cycles = 1;
 void		exit_func(char *msg)
 {
 	printf("%s\n", msg);
+	system("leaks corewar");
 	exit(0);
 }
 
@@ -54,7 +55,5 @@ int			main(int ac, char *av[])
 	if (g_visual)
 		init();
 	battle(arena);
-	if (g_visual)
-		disinit();
 	return (0);
 }

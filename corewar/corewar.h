@@ -31,8 +31,6 @@
 # define MIN_READ (4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4)
 # define MAX_READ (MIN_READ + CHAMP_MAX_SIZE)
 
-# define SHRPL (SHRT_MAX + 2)
-
 extern int	g_start_to_show;
 
 extern int	g_visual;

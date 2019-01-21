@@ -46,7 +46,8 @@ void		putarena(t_cell *arena)
 			printf("\n");
 		i++;
 	}
-	exit(1);
+	system("leaks corewar");
+	exit(0);
 }
 
 void		is_winner(void)
@@ -57,7 +58,10 @@ void		is_winner(void)
 		{
 			printf("Contestant %d, \"%s\", has won !\n",
 				g_last_alive, g_players[g_last_alive - 1].name);
-			exit(1);
 		}
+		else
+			disinit();
+		system("leaks corewar");
+		exit(0);
 	}
 }
