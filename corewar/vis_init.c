@@ -61,7 +61,7 @@ static void	print_inf(void)
 		wattron(g_statusbar, COLOR_PAIR(i + 1));
 		mvwprintw(g_statusbar, 20 + (i * 2), 4,
 		"Player %d: %.25s", i + 1, g_players[i].name);
-		wattroff(g_statusbar, COLOR_PAIR(i));
+		wattroff(g_statusbar, COLOR_PAIR(i + 1));
 		i++;
 	}
 	mvwprintw(g_statusbar, 28, 4, "_________________________________________");
