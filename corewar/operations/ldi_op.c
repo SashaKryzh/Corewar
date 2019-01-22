@@ -17,15 +17,15 @@ void	ldi_debug(t_car *car, int reg_num, int *args)
 {
 	if (!SHOW_OPERS || g_cnt_cycles < g_start_to_show)
 		return ;
-	printf(OPER_INFO);
-	printf("%d %d r%d\n", args[0], args[1], reg_num);
-	printf("       | -> load from ");
-	printf("%d + %d = %d ", args[0], args[1], args[0] + args[1]);
+	ft_printf(OPER_INFO);
+	ft_printf("%d %d r%d\n", args[0], args[1], reg_num);
+	ft_printf("       | -> load from ");
+	ft_printf("%d + %d = %d ", args[0], args[1], args[0] + args[1]);
 	if (car->op == 0x0A)
-		printf("(with pc and mod %d)\n", car->position +
+		ft_printf("(with pc and mod %d)\n", car->position +
 			(args[0] + args[1]) % IDX_MOD);
 	else
-		printf("(with pc %d)\n", car->position +
+		ft_printf("(with pc %d)\n", car->position +
 			args[0] + args[1]);
 }
 

@@ -19,13 +19,13 @@ void		introduce_champs(t_player *champs)
 
 	if (g_visual)
 		return ;
-	printf("Introducing contestants...\n");
+	ft_printf("Introducing contestants...\n");
 	i = 0;
 	while (champs[i].id != -1)
 	{
-		printf("* Player %d, weighing %d bytes, \"%s\" ",
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" ",
 			champs[i].id, champs[i].code_size, champs[i].name);
-		printf("(\"%s\") !\n", champs[i].comment);
+		ft_printf("(\"%s\") !\n", champs[i].comment);
 		i++;
 	}
 }
@@ -35,15 +35,17 @@ void		putarena(t_cell *arena)
 	int i;
 
 	i = 0;
+	g_debug = 1;
+	g_format = 64;
 	while (i < MEM_SIZE)
 	{
 		if (g_debug && i == 0)
-			printf("0x0000 : ");
+			ft_printf("0x0000 : ");
 		else if (g_debug && i % g_format == 0)
-			printf("%#06x : ", i);
-		printf("%02x ", arena[i].v);
+			ft_printf("%#06x : ", i);
+		ft_printf("%02x ", arena[i].v);
 		if ((i + 1) % g_format == 0)
-			printf("\n");
+			ft_printf("\n");
 		i++;
 	}
 	// system("leaks corewar");
@@ -56,7 +58,7 @@ void		is_winner(void)
 	{
 		if (!g_visual)
 		{
-			printf("Contestant %d, \"%s\", has won !\n",
+			ft_printf("Contestant %d, \"%s\", has won !\n",
 				g_last_alive, g_players[g_last_alive - 1].name);
 		}
 		else

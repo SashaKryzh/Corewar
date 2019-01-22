@@ -34,9 +34,9 @@ int			g_cnt_cycles = 1;
 
 void		exit_func(char *msg)
 {
-	printf("%s\n", msg);
+	ft_printf("%s\n", msg);
 	// system("leaks corewar");
-	exit(0);
+	exit(1);
 }
 
 int			main(int ac, char *av[])

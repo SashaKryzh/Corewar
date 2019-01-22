@@ -17,12 +17,12 @@ void		zjmp_debug(t_car *car, int arg)
 {
 	if (SHOW_OPERS && g_cnt_cycles >= g_start_to_show)
 	{
-		printf(OPER_INFO);
-		printf("%d ", arg);
+		ft_printf(OPER_INFO);
+		ft_printf("%d ", arg);
 		if (car->carry)
-			printf("OK\n");
+			ft_printf("OK\n");
 		else
-			printf("FAILED\n");
+			ft_printf("FAILED\n");
 	}
 }
 

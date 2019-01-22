@@ -17,8 +17,8 @@ void		live_debug(t_car *car, int arg)
 {
 	if (SHOW_OPERS && g_cnt_cycles >= g_start_to_show)
 	{
-		printf(OPER_INFO);
-		printf("%d\n", arg);
+		ft_printf(OPER_INFO);
+		ft_printf("%d\n", arg);
 	}
 }
 

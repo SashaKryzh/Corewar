@@ -17,9 +17,9 @@ void		st_debug(t_car *car, int reg_num, int where)
 {
 	if (!SHOW_OPERS || g_cnt_cycles < g_start_to_show)
 		return ;
-	printf(OPER_INFO);
-	printf("r%d ", reg_num);
-	printf("%d\n", where);
+	ft_printf(OPER_INFO);
+	ft_printf("r%d ", reg_num);
+	ft_printf("%d\n", where);
 }
 
 void		st_op(t_cell *arena, t_car *car)
