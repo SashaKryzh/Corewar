@@ -33,8 +33,8 @@ static void	add_codes(t_asm *champ, t_token **cur)
 	int32_t	arg_code;
 
 	arg_code = 64;
-	if ((*cur)->next->next->type == INDIRECT_LABEL ||
-		(*cur)->next->next->type == INDIRECT_VALUE)
+	if ((*cur)->next->next->next->type == INDIRECT_LABEL ||
+		(*cur)->next->next->next->type == INDIRECT_VALUE)
 		arg_code += 48;
 	else
 		arg_code += 16;
