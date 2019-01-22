@@ -6,4 +6,5 @@ st		r1, 6
 loop:
 	live %0
 	fork %100
+	ld %0, r10
 	zjmp %:loop

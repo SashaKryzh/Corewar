@@ -123,7 +123,7 @@ $(NAME): $(OBJS)
 	@ranlib $(NAME)
 
 $(OBJ_DIR)/%.o: %.c $(INC_DIR)/*.h
-	$(CC) -o $@ -c $< -I $(INC_DIR)
+	@$(CC) -o $@ -c $< -I $(INC_DIR)
 
 clean:
 	@rm -rf $(OBJ_DIR)

@@ -35,7 +35,6 @@ int			g_cnt_cycles = 1;
 void		exit_func(char *msg)
 {
 	ft_printf("%s\n", msg);
-	// system("leaks corewar");
 	exit(1);
 }
 

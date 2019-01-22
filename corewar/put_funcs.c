@@ -35,8 +35,6 @@ void		putarena(t_cell *arena)
 	int i;
 
 	i = 0;
-	g_debug = 1;
-	g_format = 64;
 	while (i < MEM_SIZE)
 	{
 		if (g_debug && i == 0)
@@ -48,7 +46,6 @@ void		putarena(t_cell *arena)
 			ft_printf("\n");
 		i++;
 	}
-	// system("leaks corewar");
 	exit(0);
 }
 
@@ -63,7 +60,6 @@ void		is_winner(void)
 		}
 		else
 			disinit(1);
-		// system("leaks corewar");
 		exit(0);
 	}
 }

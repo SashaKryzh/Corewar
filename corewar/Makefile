@@ -12,7 +12,7 @@
 
 NAME = corewar
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Wextra -Werror
 CC = gcc $(FLAGS)
 
 VPATH = ./operations || ./parser
@@ -40,7 +40,6 @@ parser.c \
 parser_checks.c \
 players_id.c \
 check_flags.c \
-tests.c\
 put_funcs.c \
 vis.c \
 vis_init.c \
@@ -62,16 +61,16 @@ INCLFORPARSER = .
 all: $(NAME)
 
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT)
-	$(CC) -lncurses -o $(NAME) $(OBJS) $(LIB) -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
+	@$(CC) -lncurses -o $(NAME) $(OBJS) $(LIB) -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
 
-$(OBJS_DIR)/%.o: %.c
-	$(CC) -o $@ -c $< -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
+$(OBJS_DIR)/%.o: %.c *.h ../includes/*.h
+	@$(CC) -o $@ -c $< -I $(LIB_HEAD) -I $(INCL) -I $(INCLFORPARSER)
 
 $(OBJS_DIR):
 	@mkdir objs
 
 $(LIBFT):
-	$(MAKE) -C $(LIB_DIR)
+	@$(MAKE) -C $(LIB_DIR)
 
 clean:
 	@rm -rf $(OBJS_DIR)

@@ -64,8 +64,8 @@ LNK_LIB			= -L ../libft -l ft
 
 # compiler
 
-CC 				= gcc
 CC_FLAGS 		= -Wall -Wextra -Werror
+CC 				= gcc $(CC_FLAGS)
 
 all: obj $(ADD_LIB) $(NAME)
 
@@ -73,7 +73,7 @@ obj:
 	@mkdir -p $(OBJ_P)
 
 $(OBJ_P)%.o:$(SRC_P)%.c ./includes/asm.h ./includes/op.h ./includes/errors.h
-	@$(CC) $(CC_FLAGS) $(INC_LIB) -I $(INC_P) -o $@ -c $<
+	@$(CC) $(INC_LIB) -I $(INC_P) -o $@ -c $<
 
 $(ADD_LIB):
 	@make -C $(LIB_P)
