@@ -34,7 +34,7 @@ void		ld_op(t_cell *arena, t_car *car)
 	if (car->args_types[0] == DIR_CODE)
 		arg = get_value(arena, to_arg(car, 1), REG_SIZE);
 	else
-		arg = get_ind(arena, car, 1, REG_SIZE);
+		arg = get_ind(arena, car, 1, car->op == 0x02 ? 4 : 2);
 	car->regs[reg_num - 1] = arg;
 	car->carry = arg == 0 ? 1 : 0;
 	ld_debug(car, reg_num, arg);
