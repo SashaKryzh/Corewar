@@ -31,6 +31,8 @@ static int	get_direct_value(t_token *token, char *value, int line_idx)
 	if (value[1] != LABEL_CHAR)
 	{
 		i = 0 + (value[1] == '-');
+		if (!value[i + 1])
+			return (err_mesg(BAD_CHARACTER_IN_DIRECT_VALUE, line_idx));
 		while (ft_isdigit(value[++i]))
 			;
 		if (value[i])
