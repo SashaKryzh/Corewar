@@ -6,7 +6,7 @@
 /*   By: vlytvyne <vlytvyne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:49:57 by vlytvyne          #+#    #+#             */
-/*   Updated: 2019/01/21 20:30:44 by vlytvyne         ###   ########.fr       */
+/*   Updated: 2019/01/22 14:03:06 by okryzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	refr(void)
 	char	ch;
 
 	mvwprintw(g_statusbar, 13, 4, "Cycle: %i", g_cnt_cycles, g_delay);
-	mvwprintw(g_statusbar, 15, 4, "Cycle to die: %i", g_cycles_to_die);
+	mvwprintw(g_statusbar, 15, 4, "Cycle to die: %4i", g_cycles_to_die);
 	ch = getch();
 	if (ch == 32)
 	{
