@@ -1,9 +1,6 @@
-.DS_Store
 *.o
-corewar/corewar
-*ttorg
-*ttown
-*t1
-*t2
-*t3
-.vscode
+*.cor
+corewar
+asm
+*.a
+.DS_Store
